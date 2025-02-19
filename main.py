@@ -60,7 +60,7 @@ def force_responce():
         msgs.append(
             {
                 'role': 'assistant',
-                'content': plain_text.encode().decode('unicode_escape', errors='ignore')
+                'content': plain_text
             }
         )
         
@@ -69,7 +69,7 @@ def force_responce():
         try:
             bot.send_message(
                 prefs.chat_to_interact, 
-                plain_text.encode().decode('unicode_escape', errors='ignore'), 
+                plain_text.encode(), 
                 parse_mode="Markdown"
             )
         except Exception as e: 
@@ -121,7 +121,7 @@ def force_responce():
                                 {
                                     'role': 'function',
                                     "name" : str(func_name),
-                                    'output': str(res.encode().decode('unicode_escape', errors='ignore')),
+                                    'output': str(res),
                                     # "type" : str(call_type),
                                     # "index" : str(call_index),
                                     # 'tool_call_id' : call_id

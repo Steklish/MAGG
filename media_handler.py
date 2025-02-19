@@ -143,7 +143,7 @@ def extract_voice(url: str, message, file_path):
                 "username": message.from_user.username
             },
             "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-            "message": response.text.encode().decode('utf-8', errors='ignore')
+            "message": response
         }, indent=4, ensure_ascii=False)
     }
     

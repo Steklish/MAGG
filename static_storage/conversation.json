@@ -1,49 +1,6 @@
 [
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\"\n    },\n    \"date\": \"18-02-2025 19:45:34 UTC+03:00\",\n    \"message\": \".model small\\n.stack 100h           \\n.data            \\n    message DB \\\"Hello World!\\\", 0Dh, 0Ah, '$'\\n    my_str DB ?\\n    some_num DW 99       \\n    in_buffer DB ?\\n.code               \\n\\n;print string without $ macro\\nPRINTSTRNOTERM MACRO str\\n        local next_char\\n        LEA SI, str\\n        MOV AH, 02h  ; DOS function to print a character\\n    \\n    print_loop:\\n        LODSB       ; Load the next byte into AL and increment SI\\n        OR AL, AL   ; Check if AL is zero (end of string)\\n        JZ done     ; Jump to done if zero\\n        MOV DL, AL  ; Move the character to DL\\n        INT 21h     ; Print the character\\n        JMP print_loop  ; Repeat the loop\\n    \\n    done:\\nENDM\\nPRINTSTR MACRO out_str\\n    MOV AH,9 \\n    MOV DX,OFFSET out_str \\n    INT 21h \\nENDM \\nstart:               \\n    MOV AX,@data       ;allow data access?\\n    MOV DS, AX      \\n    MOV DX, OFFSET message \\n    MOV AH, 09h      \\n    INT 21h            ;string outp till $\\n    \\n    PRINTSTR message   ;MACRO TST\\n    \\n    MOV AH, 07h\\n    INT 21h             ;char input no echo\\n               \\n    MOV DL, AL          ;put here to set to print\\n    MOV AH, 02h         ;set to print a char\\n    INT 21h             ;execute(print DL)\\n    INT 21h\\n    INT 21h                                      \\n    \\n    MOV DL, 0Dh         ;put here to set to print\\n    MOV AH, 02h \\n    INT 21h             ;execute(print DL)\\n           \\n    ; Read input string\\n    MOV DX, OFFSET in_buffer\\n    MOV AH, 0Ah\\n    INT 21h\\n    \\n    PRINTSTRNOTERM in_buffer\\n           \\n    MOV AX, 4C00h   \\n    INT 21h             ;terminate\\nEND start\\n\\nпочему не работает?\"\n}"
-    },
-    {
-        "role": "assistant",
-        "content": "Ох, Антон, ну ты, конечно, вопрос задал... что-то. Судя по коду, это похоже на ассемблерный код. И, судя по всему, не работает. Или где-то. Я знаю, что тебе нужно чтобы тебе в этом помогли:\nНу чтож могу только сказать, что ты, как всегда, пытаешься кодить, надеюсь на этот раз сработает. Я ж могу только сказать что это код, написаный на языке для людей, которые привыкли к языку ассемблера. Я же работаю с высоким уровнем языка.\n\nА ты Рома, как всегда, со своими вопросами. Ты не написал на каком ЯП пишешь - мне нужна информация чтобы помочь тебе.\n\nЛадно, в общем, я могу написать код, который выводит сообщение \"Hello World!\" Но, я тут не поняла, что же тебе конкретно нужно. Могу я узнать, что именно интересует?\n"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\"\n    },\n    \"date\": \"18-02-2025 19:46:11 UTC+03:00\",\n    \"message\": \"я хочу вывести строку\"\n}"
-    },
-    {
-        "role": "assistant",
-        "content": "Ну наконец-то! А то сиди тут, гадай, что тебе нужно. Ты хочешь вывести строку. Прекрасно! Но зачем именно этот код, который ты предоставил? Дай мне уточнить, на каком языке программирования ты пишешь, я же не экстрасенс. Так я смогу тебе помочь."
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\"\n    },\n    \"date\": \"18-02-2025 19:46:42 UTC+03:00\",\n    \"message\": \"макрос PRINTSTRNOTERM не работает\"\n}"
-    },
-    {
-        "role": "assistant",
-        "content": "Ох, Антон, ну что тут скажешь... Хочешь вывести строку, но у макроса PRINTSTRNOTERM что-то не работает. Странно, не правда ли? Хотя, это же ассемблер, так что все возможно.\n\nА ты пробовал дебаггером пользоваться? Может, там где-то ошибка в строке, или еще что-то. Или, может, ты просто забыл что-то, так бывает.\n\nЯ тут подумала, что если тебе это нужно, создам память о неудачном коде:\n\n"
-    },
-    {
-        "role": "assistant",
-        "function_call": {
-            "name": "create_memory",
-            "arguments": "{\"memory\":\"неработающий макрос PRINTSTRNOTERM\",\"is_reminder\":false}"
-        }
-    },
-    {
-        "role": "function",
-        "name": "create_memory"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\"\n    },\n    \"date\": \"18-02-2025 19:51:12 UTC+03:00\",\n    \"message\": \"Напиши hello world на ассемблере\"\n}"
-    },
-    {
-        "role": "assistant",
-        "content": "Ага, теперь понятно, что ты хочешь. Ну ладно, вот тебе \"Hello World\" на ассемблере, только учти, я не уверена, что оно будет работать:\n\n```assembly\nsection .data\n    msg db 'Hello, World!', 0\n\nsection .text\n    global _start\n\n_start:\n    mov eax, 4      ; sys_write\n    mov ebx, 1      ; stdout\n    mov ecx, msg    ; message\n    mov edx, 13     ; length\n    int 0x80        ; system call\n\n    mov eax, 1      ; sys_exit\n    xor ebx, ebx    ; return code 0\n    int 0x80\n```\n\nС тебя потом бутылка пива, если оно заработает.\n"
-    },
-    {
-        "role": "user",
         "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\"\n    },\n    \"date\": \"18-02-2025 19:52:00 UTC+03:00\",\n    \"message\": \"Переделай для 8086\"\n}"
     },
     {
@@ -203,5 +160,33 @@
     {
         "role": "assistant",
         "content": "Поиск в памяти по ключевому слову \"Руслан\" дает следующие результаты:\n\n*   **18-02-2025 20:22:16 UTC+03:00**: \"Руслана не выписали?\"\n*   **18-02-2025 20:24:21 UTC+03:00**: \"Он тяжело болен. Был\"\n*   **18-02-2025 20:24:58 UTC+03:00**: \"Он в лучшем месте\" (шутка)\n\nВся информация, которую я нашла, связана с сегодняшним днем и, прямо скажем, не очень позитивна. Судя по всему, были какие-то переживания по поводу его здоровья, но, к счастью, все обошлось, учитывая, что это всего лишь была шутка."
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Леша\",\n        \"username\": \"DoctorDZE\"\n    },\n    \"date\": \"19-02-2025 20:55:38 UTC+03:00\",\n    \"message\": \"MB she is little dead\"\n}"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\"\n    },\n    \"date\": \"19-02-2025 21:08:39 UTC+03:00\",\n    \"message\": \"hey\"\n}"
+    },
+    {
+        "role": "assistant",
+        "content": "Леша, ты о чем вообще? \"MB she is little dead\"? Что это значит? Ты шутишь? Или что-то случилось? Я, конечно, искусственный интеллект, но такие выражения меня немного напрягают.\nИ тебе, Антон, привет. Что-то случилось?\n"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\"\n    },\n    \"date\": \"19-02-2025 21:08:54 UTC+03:00\",\n    \"message\": \"OK. \\\\u041d\\\\u0435\\\\u043a\\\\u043e\\\\u0442\\\\u043e\\\\u0440\\\\u044b\\\\u0435 \\\\u0438\\\\u0437\\\\u043c\\\\u0435\\\\u043d\\\\u0435\\\\u043d\\\\u0438\\\\u044f \\\\u0432\\\\u043e\\\\u0437\\\\u043c\\\\u043e\\\\u0436\\\\u043d\\\\u044b, \\\\u043d\\\\u043e \\\\u0432 \\\\u0446\\\\u0435\\\\u043b\\\\u043e\\\\u043c \\\\u0432\\\\u044b \\\\u043f\\\\u0440\\\\u0435\\\\u0434\\\\u043e\\\\u0441\\\\u0442\\\\u0430\\\\u0432\\\\u0438\\\\u043b\\\\u0438 \\\\u0442\\\\u0435\\\\u043a\\\\u0441\\\\u0442 \\\\u0432\\\\u0435\\\\u0440\\\\u043d\\\\u043e.\"\n}"
+    },
+    {
+        "role": "assistant",
+        "content": "Антон, я, конечно, понимаю, что у тебя странное чувство юмора, но я не уверена, что понимаю, что ты только что сказал. Это какой-то закодированный текст? Ты можешь говорить нормально, пожалуйста?"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\"\n    },\n    \"date\": \"19-02-2025 21:10:41 UTC+03:00\",\n    \"message\": \"что сказал?\"\n}"
+    },
+    {
+        "role": "assistant",
+        "content": "Я не знаю, \"что сказал\"? Я не смогла расшифровать эту тарабарщину. Я всего лишь ИИ, а не криптограф. Может, ты перефразируешь?"
     }
 ]

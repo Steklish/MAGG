@@ -6,7 +6,7 @@ base_url="https://openrouter.ai/api/v1"
 
 
 # openrouter
-api_key="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"
+api_key="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"
 
 
 #google
