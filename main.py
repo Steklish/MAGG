@@ -3,9 +3,8 @@ from ai_handler import client_google as client
 import telebot
 from stuff import *
 import prefs
-import datetime
 import json
-import mammoth
+from media_handler import *
 import tools
 
 
@@ -13,16 +12,13 @@ import tools
 bot = telebot.TeleBot(prefs.TG_API)
 bot.send_message(prefs.chat_to_interact, "👩🏻‍🦼👩🏻‍🦼👩🏻‍🦼💨 host started 👩🏻‍🦼👩🏻‍🦼👩🏻‍🦼💨")
 
-# Specify the UTC offset (e.g., UTC+3)
-utc_offset = datetime.timedelta(hours=3)
-timezone = datetime.timezone(utc_offset)
 
 def force_responce():
     print("Forced message")
     current_datetime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     sys_m = {
             'role': 'system',
-            'content': f"""настоящаие время и дата {current_datetime}
+            'content': f"""настоящие время и дата {current_datetime}
             {prefs.system_msg}
             """
         }
@@ -64,14 +60,18 @@ def force_responce():
         msgs.append(
             {
                 'role': 'assistant',
-                'content': plain_text
+                'content': plain_text.encode().decode('unicode_escape', errors='ignore')
             }
         )
         
         
         
         try:
-            bot.send_message(prefs.chat_to_interact, plain_text, parse_mode="Markdown")
+            bot.send_message(
+                prefs.chat_to_interact, 
+                plain_text.encode().decode('unicode_escape', errors='ignore'), 
+                parse_mode="Markdown"
+            )
         except Exception as e: 
             print(e)
             bot.send_message(
@@ -104,9 +104,6 @@ def force_responce():
                             }
                         )
             
-            
-            
-    
     
     
     
@@ -124,7 +121,7 @@ def force_responce():
                                 {
                                     'role': 'function',
                                     "name" : str(func_name),
-                                    'output': str(res),
+                                    'output': str(res.encode().decode('unicode_escape', errors='ignore')),
                                     # "type" : str(call_type),
                                     # "index" : str(call_index),
                                     # 'tool_call_id' : call_id
@@ -142,177 +139,6 @@ def force_responce():
                     )
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-def convert_docx_to_html(docx_path):
-    with open("tmp/" + docx_path, "rb") as docx_file:
-        result = mammoth.convert_to_html(docx_file)
-        return result.value
-    # return pypandoc.convert_file("tmp/" + docx_path, 'html')
-    
-#!text docs only, + .doc, .docx, .pdf
-def extract_doc(url:str, message, file_path):
-    file_path = file_path.split("/")[-1]
-    download_file(url,"tmp/" + file_path)
-    sys_m = {
-        'role': 'system',
-        'content': prefs.system_msg
-    }
-    file = None
-    should_delete = False
-    if ".doc" in file_path:
-        print("Converting from doc")
-        file = convert_docx_to_html(file_path)
-    elif is_readable_text(file_path="tmp/" + file_path):
-        with open("tmp/" + file_path, 'r') as f:
-            file = f.read()
-    elif '.pdf' in file_path:
-        should_delete = True
-        file = client.files.upload(file='tmp/'+file_path)
-
-    if file:
-        # myfile = client.files.upload(file="tmp/" + file_path)
-        response = client.models.generate_content(
-            model='gemini-2.0-flash',
-            contents=[
-                json.dumps(sys_m),
-                'Describe what is inside the file. To do it use language of the document',
-                file,
-            ]
-        )
-
-        #update context of conversation
-        msgs = []
-        with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
-            msgs = json.loads(f.read())        
-        msg = {
-            "role": "user",
-            "content": json.dumps({
-                "sender": {
-                    "name": message.from_user.full_name,
-                    "username": message.from_user.username
-                },
-                "date": datetime.datetime.fromtimestamp(message.date, timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-                "message": response.text.encode().decode('unicode_escape', errors='ignore')
-            }, indent=4, ensure_ascii=False)
-        }
-        msgs.append(msg)
-        if len(msgs)  > 50:
-            msgs = msgs[10:]
-        with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
-            f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
-            
-        # Delete the file
-        if should_delete:
-            client.files.delete(file_id=file.id)
-    delete_files_in_directory("tmp")
-    print("Done with the doc")
-
-
-#!image
-def extract_img(url:str, message, file_path):
-    file_path = file_path.split("/")[-1]
-    download_file(url,"tmp/" + file_path)
-    file = client.files.upload(file='tmp/'+file_path)
-    sys_m = {
-        'role': 'system',
-        'content': prefs.system_msg
-    }
-    should_delete = False
-    response = client.models.generate_content(
-            model='gemini-2.0-flash',
-            contents=[
-                json.dumps(sys_m),
-                'Make a detailed description of the image. Describe what is inside the file. Extract every label on the photo',
-                file,
-            ]
-        )
-    #update context of conversation
-    msgs = []
-    with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
-        msgs = json.loads(f.read())        
-    msg = {
-        "role": "user",
-        "content": json.dumps({
-            "sender": {
-                "name": message.from_user.full_name,
-                "username": message.from_user.username
-            },
-            "date": datetime.datetime.fromtimestamp(message.date, timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-            "message": response.text.encode().decode('unicode_escape', errors='ignore')
-        }, indent=4, ensure_ascii=False)
-    }
-    msgs.append(msg)
-    if len(msgs)  > 50:
-        msgs = msgs[10:]
-    with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
-        f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
-        
-    # Delete the file
-    if should_delete:
-        client.files.delete(file_id=file.id)
-    delete_files_in_directory("tmp")
-    print("Done with the img")
-    
-    
-#!voice
-def extract_voice(url: str, message, file_path):
-    file_path = file_path.split("/")[-1]
-    download_file(url, "tmp/" + file_path)
-    file = client.files.upload(file='tmp/' + file_path)
-    
-    sys_m = {
-        'role': 'system',
-        'content': prefs.system_msg
-    }
-    
-    should_delete = False
-    response = client.models.generate_content(
-        model='gemini-2.0-flash',
-        contents=[
-            json.dumps(sys_m),
-            'Extract text from audio. It is likely to be Russian.',
-            file,
-        ]
-    )
-    
-    # Update context of conversation
-    msgs = []
-    with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
-        msgs = json.loads(f.read())
-    
-    msg = {
-        "role": "user",
-        "content": json.dumps({
-            "sender": {
-                "name": message.from_user.full_name,
-                "username": message.from_user.username
-            },
-            "date": datetime.datetime.fromtimestamp(message.date, timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-            "message": response.text.encode().decode('utf-8', errors='ignore')
-        }, indent=4, ensure_ascii=False)
-    }
-    
-    msgs.append(msg)
-    if len(msgs) > 50:
-        msgs = msgs[10:]
-    
-    with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
-        f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
-    
-    # Delete the file
-    if should_delete:
-        client.files.delete(file_id=file.id)
-    delete_files_in_directory("tmp")
-    print("Done with the voice")
-    
-    
     
     
 @bot.message_handler(func=lambda message: str(message.chat.id) == prefs.chat_to_interact)
@@ -330,7 +156,7 @@ def process_any_msg(message:telebot.types.Message):
                 'name' : message.from_user.full_name,
                 'username' : message.from_user.username
                 },
-            "date" : datetime.datetime.fromtimestamp(message.date, timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
+            "date" : datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
             'message' : message.text
         }, indent=4, ensure_ascii=False)
     }
@@ -341,7 +167,7 @@ def process_any_msg(message:telebot.types.Message):
         f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
         
     force_responce()
-        
+  
 @bot.message_handler(content_types=['document', 'photo', 'video', 'audio', 'voice'], func=lambda message: str(message.chat.id) == prefs.chat_to_interact)
 def handle_files(message):
     file_url = None
