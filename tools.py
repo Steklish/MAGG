@@ -58,10 +58,6 @@ long_term_memory_tool = {
                 }
             },
             "required": ["keywords"]
-        },
-        "return_value": {
-            "type": "string",
-            "description": "A JSON-formatted string containing the relevant memories filtered based on the provided keywords."
         }
     }
 }
@@ -120,12 +116,7 @@ create_memory_tool = {
             },
             "required": ["memory", "is_reminder"]
         },
-        "return_value": {
-            "type": "None",
-            "description": (
-                "This function does not return a value. It writes the new memory to the 'long_term_memory.json' file."
-            )
-        }
+        
     }
 }
 

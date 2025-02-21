@@ -1,7 +1,6 @@
 import mammoth
 from ai_handler import client as OR_client
 from ai_handler import client_google as client
-import telebot
 from stuff import *
 import prefs
 import datetime
@@ -54,7 +53,7 @@ def extract_doc(url:str, message, file_path):
             }, indent=4, ensure_ascii=False)
         }
         msgs.append(msg)
-        if len(msgs)  > 50:
+        if len(msgs)  >30:
             msgs = msgs[10:]
         with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
             f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
@@ -84,7 +83,8 @@ def extract_img(url:str, message, file_path):
     #update context of conversation
     msgs = []
     with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
-        msgs = json.loads(f.read())        
+        msgs = json.loads(f.read())
+    
     msg = {
         "role": "user",
         "content": json.dumps({
@@ -97,7 +97,7 @@ def extract_img(url:str, message, file_path):
         }, indent=4, ensure_ascii=False)
     }
     msgs.append(msg)
-    if len(msgs)  > 50:
+    if len(msgs)  >30:
         msgs = msgs[10:]
     with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
         f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
@@ -115,26 +115,31 @@ def extract_voice(url: str, message, file_path):
     download_file(url, "tmp/" + file_path)
     file = client.files.upload(file='tmp/' + file_path)
     
+    msgs = []
+    with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
+        msgs = json.loads(f.read())
+    
+    
+    
+    
     sys_m = {
         'role': 'system',
         'content': prefs.system_msg
     }
+    sys_m = [sys_m, *msgs]
     
     should_delete = False
     response = client.models.generate_content(
         model='gemini-2.0-flash',
         contents=[
             json.dumps(sys_m),
-            'Extract text from audio. It is likely to be Russian.',
+            'Extract text from audio. It is likely to be Russian. Also describe emotions and intonations of the speaker in Russsian. Think about the context (it can improve spelling recognition) of the conversation',
             file,
         ]
     )
     
+    print(YELLOW + response.text + RESET)
     # Update context of conversation
-    msgs = []
-    with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
-        msgs = json.loads(f.read())
-    
     msg = {
         "role": "user",
         "content": json.dumps({
@@ -143,12 +148,13 @@ def extract_voice(url: str, message, file_path):
                 "username": message.from_user.username
             },
             "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-            "message": response
+            "extra" : "voice message from user (user sent a voice message), so description provided not a real text",
+            "message": response.text.encode().decode('unicode_escape', errors='ignore')
         }, indent=4, ensure_ascii=False)
     }
-    
+    print(BACKGROUND_RED + BLACK + "context updated" + RESET)
     msgs.append(msg)
-    if len(msgs) > 50:
+    if len(msgs) >30:
         msgs = msgs[10:]
     
     with open("static_storage/conversation.json", "w", encoding="utf-8") as f:

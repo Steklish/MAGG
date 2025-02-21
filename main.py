@@ -6,6 +6,8 @@ import prefs
 import json
 from media_handler import *
 import tools
+import datetime  # Add this import
+import sys  # Add this import
 
 
 # Telegram creds
@@ -35,17 +37,16 @@ def force_responce():
         messages = [sys_m, *msgs],
         tool_choice='auto',
         tools=tools.TOOLS,
-        stream=False,
-        parallel_tool_calls=True
+        stream=False
     )
     print(resp)
     
-    if resp.id is None:
-        bot.send_message(
-                    prefs.TST_chat_id,
-                    "```Error_from_AI_client```", parse_mode="Markdown"
-                )
-        return
+    # if resp.id is None:
+    #     bot.send_message(
+    #                 prefs.TST_chat_id,
+    #                 "```Error_from_AI_client```", parse_mode="Markdown"
+    #             )
+    #     return
     
     plain_text = ''
     shoul_call_once_more = False
@@ -64,12 +65,10 @@ def force_responce():
             }
         )
         
-        
-        
         try:
             bot.send_message(
                 prefs.chat_to_interact, 
-                plain_text.encode(), 
+                plain_text,  # Fix payload encoding issue
                 parse_mode="Markdown"
             )
         except Exception as e: 
