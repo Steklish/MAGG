@@ -45,7 +45,7 @@ long_term_memory_tool = {
     "type": "function",
     "function": {
         "name": "get_long_term_memory",
-        "description": "This is MEMORY. Always use it when you cannot get into unclear context or you need addidional information on a subject. Filtered based on provided keywords. Use this function if the user is asking to recall something related to the past, or if the context of the conversation is not clear. You can also include date formatted like this DD-MM",
+        "description": "Use it if you can't get into unclear context or you need addidional information on a subject. Use it to provide addidional inforamtion to user. Filtered based on provided keywords. Use this function if the user is asking to find informatio about something. You can also include date formatted like this DD-MM as a keyword",
         "parameters": {
             "type": "object",
             "properties": {
