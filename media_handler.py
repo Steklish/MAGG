@@ -53,7 +53,7 @@ def extract_doc(url:str, message, file_path):
             }, indent=4, ensure_ascii=False)
         }
         msgs.append(msg)
-        if len(msgs)  >30:
+        if len(msgs)  >prefs.history_depth:
             msgs = msgs[10:]
         with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
             f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
@@ -97,7 +97,7 @@ def extract_img(url:str, message, file_path):
         }, indent=4, ensure_ascii=False)
     }
     msgs.append(msg)
-    if len(msgs)  >30:
+    if len(msgs)  >prefs.history_depth:
         msgs = msgs[10:]
     with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
         f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
@@ -154,7 +154,7 @@ def extract_voice(url: str, message, file_path):
     }
     print(BACKGROUND_RED + BLACK + "context updated" + RESET)
     msgs.append(msg)
-    if len(msgs) >30:
+    if len(msgs) >prefs.history_depth:
         msgs = msgs[10:]
     
     with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
