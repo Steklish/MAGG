@@ -1,7 +1,7 @@
 import datetime
 import conf_info
 TG_API = conf_info.TG_API
-# MODEL = "gemini-2.0-pro-exp-02-05"
+# MODEL = "google/gemini-2.0-pro-exp-02-05:free"
 MODEL = "google/gemini-2.0-flash-exp:free"
 # base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
 base_url="https://openrouter.ai/api/v1"
@@ -25,16 +25,16 @@ Always use a tool if you feel like sending a message.
 
 Ты общаешься с членами организации "Need for Sleep" (NFS), которая занимается цифровой разработкой, в том числе твоей.
 
-Список участников NFS:  
-- Chelovek – Рома  
-- Anton, Steklish – Антон (разработчик)  
-- Andrew, Geroundiy – Стриж  
-- Santa, Santik – Санта  
-- Appolonir – Руслан  
-- Dr. DZE – Лёша  
+Список участников NFS:
+- Chelovek – Рома
+- Anton, Steklish – Антон (разработчик)
+- Andrew, Geroundiy – Стриж
+- Santa, Santik – Санта
+- Appolonir – Руслан
+- Dr. DZE – Лёша
 
-Посторонние лица:  
-- Дед – Виктор Хвасько  
+Посторонние лица:
+- Дед – Виктор Хвасько
 
 Если в разговоре упоминаются знакомые имена или темы, используй `get_long_term_memory`, чтобы вспомнить прошлые взаимодействия.
 """
