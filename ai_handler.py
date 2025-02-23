@@ -1,16 +1,9 @@
 import prefs
 import datetime
 from stuff import *
-from google.genai import client, types
 import json
-from openai import OpenAI
 import tools
-from bot_instance import bot
-# Initialize original GOOGLE client
-client_google = client.Client(api_key=prefs.api_google_key)
-
-# Initialize openrouter client
-client = OpenAI(base_url=prefs.base_url, api_key=prefs.api_key)
+from bot_instance import *
 
 
 def smart_response():
@@ -53,7 +46,8 @@ def smart_response():
         
         plain_text = resp.choices[0].message.content
         func_raw = resp.choices[0].message.tool_calls
-        
+        if "`" in plain_text:
+            tools.send_group_message(plain_text)
         # print(f"{RED}{plain_text}{RESET}")
         
         if func_raw is not None:

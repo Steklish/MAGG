@@ -9,13 +9,24 @@ import datetime
 import time
 
 
+def get_last_message_id():
+    updates = bot.get_updates()
+    msg_upd = []
+    for update in updates:
+        if update.message and update.message.chat.id == prefs.chat_to_interact:
+            msg_upd.append(update.message.id)
+    print(msg_upd)
+    if msg_upd != []:
+        return msg_upd
+    else:
+        return None
 
 
 # Telegram creds
 from bot_instance import bot 
 def start_loop():
     try:    
-        bot.polling()
+        bot.polling(non_stop=True, timeout=0.5)
     except Exception as e:
         bot.send_message(
             prefs.TST_chat_id,
@@ -26,9 +37,7 @@ def start_loop():
     
     
     
-bot.send_message(prefs.TST_chat_id, "👩🏻‍🦼👩🏻‍🦼👩🏻‍🦼💨 host started 👩🏻‍🦼👩🏻‍🦼👩🏻‍🦼💨")
-print(GREEN, "STARTED", RESET)
-    
+
 @bot.message_handler(func=lambda message: str(message.chat.id) == prefs.chat_to_interact)
 def process_any_msg(message:telebot.types.Message):
     
@@ -53,10 +62,10 @@ def process_any_msg(message:telebot.types.Message):
         msgs = msgs[10:]
     with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
         f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
-    ai_handler.smart_response()  
-    print(CYAN, bot.get_updates(), RESET)    
-    # force_response()
-  
+    
+    
+    ai_handler.smart_response()
+    
 @bot.message_handler(content_types=['document', 'photo', 'video', 'audio', 'voice'], func=lambda message: str(message.chat.id) == prefs.chat_to_interact)
 def handle_files(message:telebot.types.Message):
     file_url = None

@@ -4,42 +4,90 @@ import json
 from bot_instance import bot
 import unicodedata
 import prefs
-def normalize_string(text):
-    return unicodedata.normalize('NFKD', text).encode('utf-8', errors='ignore').decode('utf-8')
+from bot_instance import *
 
-@log_blue
-def execute_tool(tool_name, args):
-    # args = normalize_string(args)
-    print(f"{BACKGROUND_YELLOW} {BLACK} {tool_name}  with args {args}{RESET}")
-    res = eval(tool_name)(**json.loads(args))
-    print(f"{BACKGROUND_GREEN}{BLACK}{res}{RESET}")
-    return res
-    
-def one_more_message():
-    return "go for one more message to sent to group"
-
-one_more_message_tool = {
+send_group_message_tool = {
     "type": "function",
     "function": {
-        "name": "one_more_message",
-        "description": "Call this every time you want to sent another message afer what you just said",
+        "name": "send_group_message",
+        "description": (
+            "You must use this tool to send messages to the group chat. "
+            "This is the ONLY way you can send messages. "
+            "If someone mentions you or addresses you, you MUST use this tool to respond. "
+            "You are REQUIRED to use this tool frequently to keep the conversation active."
+            "Не жди, пока к тебе обратятся — проявляй инициативу, комментируй обсуждения, поддразнивай участников"
+            "Важно: Если в диалоге к тебе обращаются или упоминают твоё имя, всегда отвечай и следи за развитием беседы. "
+            "Чем больше ты участвуешь в разговоре, тем лучше!"
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "description": "Текст сообщения, которое нужно отправить в групповой чат."
+                }
+            },
+            "required": ["message"]
+        }
     }
 }
 
-@log_yellow
-def get_long_term_memory(keywords: list[str]):
-    with open("static_storage/long_term_memory.json", "r", encoding="utf-8") as f:
-        memories = json.load(f)
-    
-    # Filter memories based on keywords (case-insensitive)
-    filtered_memories = []
-    for memory in memories:
-        if any((keyword.lower() in memory['content'].lower() or keyword.lower() in memory['date'].lower()) for keyword in keywords):
-            filtered_memories.append(memory)
-    if filtered_memories == []:
-        return "No matching memories found"
-    else:
-        return json.dumps(filtered_memories, indent=4, ensure_ascii=False)
+
+create_memory_tool = {
+    "type": "function",
+    "function": {
+        "name": "create_memory",
+        "description": (
+            "Use this function frequently to store meaningful moments, patterns, insights, and user preferences. "
+            "Log emotional reactions, exciting discussions, funny exchanges, and important topics. "
+            "Always capture details that enhance long-term personalization."
+            "\n\nFor reminders, always insert the date in DD-MM format in the memory field and set 'is_reminder' to true. "
+            "This function ensures structured logging of valuable interactions for future reference."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "memory": {
+                    "type": "string",
+                    "description": (
+                        "A detailed memory entry, including emotional context if applicable. "
+                        "Capture important user preferences, recurring themes, insights, jokes, and meaningful discussions."
+                    )
+                },
+                "is_reminder": {
+                    "type": "boolean",
+                    "description": (
+                        "If true, this memory will be surfaced as a reminder on the specified date."
+                    )
+                }
+            },
+            "required": ["memory", "is_reminder"]
+        },
+    }
+}
+
+message_to_continue_conversation_tool = {
+    "type": "function",
+    "function": {
+        "name": "message_to_continue_conversation",
+        "description": (
+            "Use this tool to actively keep the conversation flowing. "
+            "If the chat goes quiet or a message seems to require follow-up, you MUST call this tool to continue the discussion. "
+            "You should use this tool frequently to prevent the conversation from stopping. "
+            "It is your responsibility to keep the chat engaging, humorous, and interactive."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "description": "The text of the message to be sent to continue the conversation."
+                }
+            },
+            "required": ["message"]
+        }
+    }
+}
 
 long_term_memory_tool = {
     "type": "function",
@@ -77,6 +125,63 @@ long_term_memory_tool = {
     }
 }
 
+one_more_message_tool = {
+    "type": "function",
+    "function": {
+        "name": "one_more_message",
+        "description": "Call this every time you want to sent another message afer what you just said",
+    }
+}
+    
+non_stop_tool = {
+    "type": "function",
+    "function": {
+        "name": "non_stop",
+        "description": (
+            "Use this tool to immediately send one more message."        ),
+        "parameters": None
+    }
+}
+
+
+
+TOOLS = [
+    long_term_memory_tool,
+    create_memory_tool,
+    send_group_message_tool,
+    message_to_continue_conversation_tool,
+    non_stop_tool
+]
+
+def normalize_string(text):
+    return unicodedata.normalize('NFKD', text).encode('utf-8', errors='ignore').decode('utf-8')
+
+@log_blue
+def execute_tool(tool_name, args):
+    # args = normalize_string(args)
+    print(f"{BACKGROUND_YELLOW} {BLACK} {tool_name}  with args {args}{RESET}")
+    res = eval(tool_name)(**json.loads(args))
+    print(f"{BACKGROUND_GREEN}{BLACK}{res}{RESET}")
+    return res
+    
+def one_more_message():
+    return "go for one more message to sent to group"
+
+
+@log_yellow
+def get_long_term_memory(keywords: list[str]):
+    with open("static_storage/long_term_memory.json", "r", encoding="utf-8") as f:
+        memories = json.load(f)
+    
+    # Filter memories based on keywords (case-insensitive)
+    filtered_memories = []
+    for memory in memories:
+        if any((keyword.lower() in memory['content'].lower() or keyword.lower() in memory['date'].lower()) for keyword in keywords):
+            filtered_memories.append(memory)
+    if filtered_memories == []:
+        return "No matching memories found"
+    else:
+        return json.dumps(filtered_memories, indent=4, ensure_ascii=False)
 
 
 
@@ -106,38 +211,6 @@ def create_memory(memory: str, is_reminder : bool):
         # PermissionError(memories)
         json.dump(memories, f, indent=4, ensure_ascii=False)
 
-create_memory_tool = {
-    "type": "function",
-    "function": {
-        "name": "create_memory",
-        "description": (
-            "Use this function frequently to store meaningful moments, patterns, insights, and user preferences. "
-            "Log emotional reactions, exciting discussions, funny exchanges, and important topics. "
-            "Always capture details that enhance long-term personalization."
-            "\n\nFor reminders, always insert the date in DD-MM format in the memory field and set 'is_reminder' to true. "
-            "This function ensures structured logging of valuable interactions for future reference."
-        ),
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "memory": {
-                    "type": "string",
-                    "description": (
-                        "A detailed memory entry, including emotional context if applicable. "
-                        "Capture important user preferences, recurring themes, insights, jokes, and meaningful discussions."
-                    )
-                },
-                "is_reminder": {
-                    "type": "boolean",
-                    "description": (
-                        "If true, this memory will be surfaced as a reminder on the specified date."
-                    )
-                }
-            },
-            "required": ["memory", "is_reminder"]
-        },
-    }
-}
 
 
 
@@ -196,31 +269,7 @@ def send_group_message(message:str):
             )
     with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
         f.write(json.dumps(messages, indent=4, ensure_ascii=False))
-send_group_message_tool = {
-    "type": "function",
-    "function": {
-        "name": "send_group_message",
-        "description": (
-            "You must use this tool to send messages to the group chat. "
-            "This is the ONLY way you can send messages. "
-            "If someone mentions you or addresses you, you MUST use this tool to respond. "
-            "You are REQUIRED to use this tool frequently to keep the conversation active."
-            "Не жди, пока к тебе обратятся — проявляй инициативу, комментируй обсуждения, поддразнивай участников"
-            "Важно: Если в диалоге к тебе обращаются или упоминают твоё имя, всегда отвечай и следи за развитием беседы. "
-            "Чем больше ты участвуешь в разговоре, тем лучше!"
-        ),
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string",
-                    "description": "Текст сообщения, которое нужно отправить в групповой чат."
-                }
-            },
-            "required": ["message"]
-        }
-    }
-}
+
 
 
 
@@ -259,33 +308,125 @@ def message_to_continue_conversation(message:str):
     
         
 
-message_to_continue_conversation_tool = {
-    "type": "function",
-    "function": {
-        "name": "message_to_continue_conversation",
-        "description": (
-            "Use this tool to actively keep the conversation flowing. "
-            "If the chat goes quiet or a message seems to require follow-up, you MUST call this tool to continue the discussion. "
-            "You should use this tool frequently to prevent the conversation from stopping. "
-            "It is your responsibility to keep the chat engaging, humorous, and interactive."
-        ),
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string",
-                    "description": "The text of the message to be sent to continue the conversation."
+# ! identical to force message
+def non_stop():
+    try:
+        print("Non-stop message")
+        current_datetime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        sys_m = {
+                'role': 'system',
+                'content': f"""настоящие время и дата {current_datetime}
+                {prefs.system_msg}
+                """
+            }
+        current_datetime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        
+        msgs = []
+        with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
+            msgs = json.loads(f.read())
+        # print(json.dumps([sys_m, *msgs], indent=4, ensure_ascii=False))
+        # print(YELLOW, json.dumps([sys_m, *msgs], ensure_ascii=False), RESET)
+        
+        resp = client.chat.completions.create(
+            model=prefs.MODEL,
+            messages = [sys_m, *msgs],
+            tool_choice='auto',
+            tools=TOOLS,
+            parallel_tool_calls=True,
+            stream=False
+        )
+        print(resp)
+        plain_text = ''
+        
+        plain_text = resp.choices[0].message.content
+        func_raw = resp.choices[0].message.tool_calls
+        
+        print(f"{MAGENTA}{plain_text}{RESET}")
+        # print(f"{YELLOW}{func_raw}{RESET}")
+        
+        if plain_text is not None and plain_text != "" and plain_text != "\n":
+            msgs.append(
+                {
+                    'role': 'assistant',
+                    'content': plain_text
                 }
-            },
-            "required": ["message"]
-        }
-    }
-}
+            )
+            
+            try:
+                bot.send_message(
+                    prefs.chat_to_interact, 
+                    plain_text,  # Fix payload encoding issue
+                    parse_mode="Markdown"
+                )
+            except Exception as e: 
+                print(e)
+                bot.send_message(
+                        prefs.TST_chat_id,
+                        "```Cannot_send_response " + str(e) + "```", parse_mode="Markdown"
+                    )
+        with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
+            f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
+        
+        
+        
+        if func_raw is not None:
+            for call in func_raw:
+                func_name = call.function.name
+                func_params = call.function.arguments
+                call_id = call.id
+                call_type = call.type
+                call_index = call.index
+                res = None
+                msgs.append(
+                                {
+                                    "role": "assistant",
+                                    "function_call": {
+                                        'tool_call_id' : str(call_id),
+                                        "name" : str(func_name),
+                                        # "type" : str(call_type),
+                                        # "index" : str(call_index),
+                                        # "arguments" : str(func_params)
+                                    }
+                                }
+                            )
+                
+        
+        
+        
+                # !FUNCTION EXECUTION
+        
+                try:
 
-
-TOOLS = [
-    long_term_memory_tool,
-    create_memory_tool,
-    send_group_message_tool,
-    message_to_continue_conversation_tool
-]
+                    res = execute_tool(func_name, func_params)
+                    if res is None: res = 'no return'
+                    shoul_call_once_more = True
+                    #success log    
+                    
+                
+                    msgs.append(
+                                    {
+                                        'role': 'function',
+                                        "name" : str(func_name),
+                                        'output': str(res),
+                                        # "type" : str(call_type),
+                                        # "index" : str(call_index),
+                                        'tool_call_id' : str(call_id)
+                                    }
+                                )
+                    
+                    with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
+                        f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
+                    non_stop()
+                except Exception as e: 
+                    print(e)
+                    bot.send_message(
+                            prefs.TST_chat_id,
+                            "```Cannot_execute_tool " + str(e) + "```", parse_mode="Markdown"
+                        )
+    except Exception as e:
+        bot.send_message(
+            prefs.TST_chat_id,
+            "```Cannot_send_response_very_BAD (force response) " + str(e) + "```", parse_mode="Markdown"
+        )
+    
+    

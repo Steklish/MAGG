@@ -71,9 +71,12 @@ def extract_img(url:str, message, file_path):
         'role': 'system',
         'content': prefs.system_msg
     }
+    
     message_text = "no subscription"
-    if message.text:
-        message_text = message.text
+    
+    if message.caption:
+        message_text = message.caption
+    
     should_delete = False
     response = client.models.generate_content(
             model='gemini-2.0-flash',
@@ -97,11 +100,30 @@ def extract_img(url:str, message, file_path):
                 "username": message.from_user.username
             },
             "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-            "message(assistant analysys)": response.text.encode().decode('unicode_escape', errors='ignore'),
-            "original_subscription" : message_text
+            "message(assistant analysys)": response.text.encode().decode('unicode_escape', errors='ignore')
         }, indent=4, ensure_ascii=False)
     }
+    
     msgs.append(msg)
+    
+    
+    if message.caption:
+        message_text = message.caption
+    
+        bonus_mwssage = msg = {
+            "role": "user",
+            "content": json.dumps({
+                "sender": {
+                    "name": message.from_user.full_name,
+                    "username": message.from_user.username
+                },
+                "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
+                "message": message_text
+            }, indent=4, ensure_ascii=False)
+        }
+
+        
+        msgs.append(bonus_mwssage)
     if len(msgs)  >prefs.history_depth:
         msgs = msgs[10:]
     with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
