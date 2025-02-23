@@ -8,20 +8,6 @@ from media_handler import *
 import datetime
 import time
 
-
-def get_last_message_id():
-    updates = bot.get_updates()
-    msg_upd = []
-    for update in updates:
-        if update.message and update.message.chat.id == prefs.chat_to_interact:
-            msg_upd.append(update.message.id)
-    print(msg_upd)
-    if msg_upd != []:
-        return msg_upd
-    else:
-        return None
-
-
 # Telegram creds
 from bot_instance import bot 
 def start_loop():
