@@ -12,7 +12,7 @@ client_google = client.Client(api_key=prefs.api_google_key)
 client = OpenAI(base_url=prefs.base_url, api_key=prefs.api_key)
 
 
-bot.send_message(prefs.TST_chat_id, "👩🏻‍🦼👩🏻‍🦼👩🏻‍🦼💨 host started\n`" + prefs.datetime.datetime.now().strftime("%H:%M:%S") + "`",
+bot.send_message(prefs.TST_chat_id, "👩🏻‍🦼💨 host started\n`" + prefs.datetime.datetime.now().strftime("%H:%M:%S") + "`",
                  parse_mode="Markdown")
 print(GREEN, "STARTED", RESET)
     

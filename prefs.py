@@ -39,7 +39,7 @@ TST_chat_id = "-1002425394723"
 NFS_chat_id = "-1002411316656"
 
 
-chat_to_interact = TST_chat_id
+chat_to_interact = NFS_chat_id
 
 # Specify the UTC offset (e.g., UTC+3)
 utc_offset = datetime.timedelta(hours=3)
