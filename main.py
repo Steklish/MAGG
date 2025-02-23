@@ -26,11 +26,11 @@ def get_last_message_id():
 from bot_instance import bot 
 def start_loop():
     try:    
-        bot.polling(non_stop=True, timeout=0.5)
+        bot.polling(non_stop=True)
     except Exception as e:
         bot.send_message(
             prefs.TST_chat_id,
-            "```TELEGRAM ERROR```", parse_mode="Markdown"
+            "```TELEGRAM_ERROR \n" + str(e) + "```", parse_mode="Markdown"
         )
         time.sleep(5)
         start_loop()
@@ -132,9 +132,8 @@ def handle_files(message:telebot.types.Message):
     ai_handler.smart_response()
     if random.randint(1, 5) == 3:    
         ai_handler.force_response()
-
 start_loop()
-
+# bot.polling()
     
 @bot.message_handler(commands=["alive"])
 def is_alive(message):
