@@ -255,6 +255,8 @@ def message_to_continue_conversation(message:str):
             )
     with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
         f.write(json.dumps(messages, indent=4, ensure_ascii=False))
+    
+    
         
 
 message_to_continue_conversation_tool = {

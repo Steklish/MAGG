@@ -1,3 +1,4 @@
+import random
 import ai_handler
 import telebot
 from stuff import *
@@ -7,10 +8,26 @@ from media_handler import *
 import datetime
 import time
 
+
+
+
 # Telegram creds
 from bot_instance import bot 
+def start_loop():
+    try:    
+        bot.polling()
+    except Exception as e:
+        bot.send_message(
+            prefs.TST_chat_id,
+            "```TELEGRAM ERROR```", parse_mode="Markdown"
+        )
+        time.sleep(5)
+        start_loop()
+    
+    
+    
 bot.send_message(prefs.TST_chat_id, "👩🏻‍🦼👩🏻‍🦼👩🏻‍🦼💨 host started 👩🏻‍🦼👩🏻‍🦼👩🏻‍🦼💨")
-
+print(GREEN, "STARTED", RESET)
     
 @bot.message_handler(func=lambda message: str(message.chat.id) == prefs.chat_to_interact)
 def process_any_msg(message:telebot.types.Message):
@@ -37,10 +54,11 @@ def process_any_msg(message:telebot.types.Message):
     with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
         f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
     ai_handler.smart_response()  
+    print(CYAN, bot.get_updates(), RESET)    
     # force_response()
   
 @bot.message_handler(content_types=['document', 'photo', 'video', 'audio', 'voice'], func=lambda message: str(message.chat.id) == prefs.chat_to_interact)
-def handle_files(message):
+def handle_files(message:telebot.types.Message):
     file_url = None
     try:
         if message.document:
@@ -102,19 +120,12 @@ def handle_files(message):
             prefs.TST_chat_id,
             "```GENERAL_Error: General_error_in_handle_files " + str(e) + "```", parse_mode="Markdown"
         )
-        
-    ai_handler.force_response()
-def start_loop():
-    try:    
-        bot.polling()
-    except Exception as e:
-        bot.send_message(
-            prefs.TST_chat_id,
-            "```TELEGRAM ERROR```", parse_mode="Markdown"
-        )
-        time.sleep(5)
-        start_loop()
-    
+    ai_handler.smart_response()
+    if random.randint(1, 5) == 3:    
+        ai_handler.force_response()
+
+start_loop()
+
     
 @bot.message_handler(commands=["alive"])
 def is_alive(message):

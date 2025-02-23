@@ -71,6 +71,9 @@ def extract_img(url:str, message, file_path):
         'role': 'system',
         'content': prefs.system_msg
     }
+    message_text = "no subscription"
+    if message.text:
+        message_text = message.text
     should_delete = False
     response = client.models.generate_content(
             model='gemini-2.0-flash',
@@ -78,6 +81,7 @@ def extract_img(url:str, message, file_path):
                 json.dumps(sys_m),
                 'Make a detailed description of the image. Describe what is inside the file. Extract every label on the photo',
                 file,
+                "\nsender subscription: " + message_text
             ]
         )
     #update context of conversation
@@ -93,7 +97,8 @@ def extract_img(url:str, message, file_path):
                 "username": message.from_user.username
             },
             "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-            "message": response.text.encode().decode('unicode_escape', errors='ignore')
+            "message(assistant analysys)": response.text.encode().decode('unicode_escape', errors='ignore'),
+            "original_subscription" : message_text
         }, indent=4, ensure_ascii=False)
     }
     msgs.append(msg)
