@@ -36,13 +36,12 @@ def reminder_check():
             to_remind.append(mem)
         else:   #else place back
             old_memories.append(mem)
-            
-    bot.send_message(
+             
+    if to_remind != []:
+        bot.send_message(
                 prefs.TST_chat_id,
                 "`REMINER_USED`", parse_mode="Markdown"
             )
-    
-    if to_remind != []:
         # Write the updated memories back to the file
         with open('static_storage/long_term_memory.json', 'w', encoding="utf-8") as f:
             # PermissionError(memories)
@@ -135,6 +134,7 @@ def smart_response():
                 try:
                     res = tools.execute_tool(func_name, func_params)
                     if func_raw[0].function.name == "send_group_message":
+                        smart_response()
                         continue
                     if res is None: res = 'no return'
                     shoul_call_once_more = True

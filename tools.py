@@ -11,20 +11,16 @@ send_group_message_tool = {
     "function": {
         "name": "send_group_message",
         "description": (
-            "You must use this tool to send messages to the group chat. "
-            "This is the ONLY way you can send messages. "
-            "If someone mentions you or addresses you, you MUST use this tool to respond. "
-            "You are REQUIRED to use this tool frequently to keep the conversation active."
-            "Не жди, пока к тебе обратятся — проявляй инициативу, комментируй обсуждения, поддразнивай участников"
-            "Важно: Если в диалоге к тебе обращаются или упоминают твоё имя, всегда отвечай и следи за развитием беседы. "
-            "Чем больше ты участвуешь в разговоре, тем лучше!"
+            "Use this tool to send messages to the group chat. "
+            "This is the only way to send messages. "
+            "Respond when mentioned or addressed, and actively engage in conversations."
         ),
         "parameters": {
             "type": "object",
             "properties": {
                 "message": {
                     "type": "string",
-                    "description": "Текст сообщения, которое нужно отправить в групповой чат."
+                    "description": "The text of the message to send in the group chat."
                 }
             },
             "required": ["message"]
@@ -38,31 +34,24 @@ create_memory_tool = {
     "function": {
         "name": "create_memory",
         "description": (
-            "Use this function frequently to store meaningful moments, patterns, insights, and user preferences. "
+            "Store meaningful moments, patterns, insights, and user preferences for long-term personalization. "
             "Log emotional reactions, exciting discussions, funny exchanges, and important topics. "
-            "Always capture details that enhance long-term personalization."
-            "\n\nFor reminders, always insert the date in DD-MM format in the memory field and set 'is_reminder' to true. "
-            "This function ensures structured logging of valuable interactions for future reference."
+            "For reminders, include the date in DD-MM format and set 'is_reminder' to true."
         ),
         "parameters": {
             "type": "object",
             "properties": {
                 "memory": {
                     "type": "string",
-                    "description": (
-                        "A detailed memory entry, including emotional context if applicable. "
-                        "Capture important user preferences, recurring themes, insights, jokes, and meaningful discussions."
-                    )
+                    "description": "A detailed memory entry, including emotional context if applicable."
                 },
                 "is_reminder": {
                     "type": "boolean",
-                    "description": (
-                        "If true, this memory will be surfaced as a reminder on the specified date."
-                    )
+                    "description": "Set to true to surface the memory as a reminder on the specified date."
                 }
             },
             "required": ["memory", "is_reminder"]
-        },
+        }
     }
 }
 
@@ -71,17 +60,14 @@ message_to_continue_conversation_tool = {
     "function": {
         "name": "message_to_continue_conversation",
         "description": (
-            "Use this tool to actively keep the conversation flowing. "
-            "If the chat goes quiet or a message seems to require follow-up, you MUST call this tool to continue the discussion. "
-            "You should use this tool frequently to prevent the conversation from stopping. "
-            "It is your responsibility to keep the chat engaging, humorous, and interactive."
+            "Keep the conversation engaging by sending a follow-up message if chat goes quiet or needs a prompt."
         ),
         "parameters": {
             "type": "object",
             "properties": {
                 "message": {
                     "type": "string",
-                    "description": "The text of the message to be sent to continue the conversation."
+                    "description": "The follow-up message to send."
                 }
             },
             "required": ["message"]
@@ -89,41 +75,29 @@ message_to_continue_conversation_tool = {
     }
 }
 
+
 long_term_memory_tool = {
     "type": "function",
     "function": {
         "name": "get_long_term_memory",
         "description": (
-            "Retrieve relevant stored knowledge to enhance responses, maintain context, and provide a more personalized experience. "
-            "Use this function frequently whenever context is unclear, additional details are needed, or the user asks for information related to past interactions. "
-            "\n\nAlways filter using meaningful keywords. If the query relates to a specific date, include it in DD-MM format as a keyword. "
-            "Ensure keyword selection is diverse (4-7 words) for the best results."
-            "\n\n⚠️ **Output Format:**\n"
-            "- The function returns a JSON array containing stored memory records.\n"
-            "- Each record contains the following fields:\n"
-            "  - `reminder` (boolean) → Whether the memory is a reminder.\n"
-            "  - `date` (string) → Relevant date in DD-MM-YY-HH-MM format, or '00-00' if not date-specific.\n"
-            "  - `content` (string) → The memory details.\n"
-            "\nThe assistant **must parse this JSON** and use relevant details in responses instead of just returning raw data."
+            "Retrieve relevant stored knowledge to enhance responses and provide personalized experiences. "
+            "Filter using diverse and meaningful keywords, including specific dates (DD-MM). "
         ),
         "parameters": {
             "type": "object",
             "properties": {
                 "keywords": {
                     "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "description": (
-                        "A set of 4 to 7 relevant keywords to filter long-term memory effectively. "
-                        "Keywords should capture the core subject, context, and any relevant dates (formatted as DD-MM)."
-                    )
+                    "items": {"type": "string"},
+                    "description": "A diverse set of 4 to 7 keywords for effective filtering."
                 }
             },
             "required": ["keywords"]
         }
     }
 }
+
 
 one_more_message_tool = {
     "type": "function",
@@ -168,7 +142,6 @@ def one_more_message():
     return "go for one more message to sent to group"
 
 
-@log_yellow
 def get_long_term_memory(keywords: list[str]):
     with open("static_storage/long_term_memory.json", "r", encoding="utf-8") as f:
         memories = json.load(f)
@@ -186,9 +159,8 @@ def get_long_term_memory(keywords: list[str]):
 
 
 
-@log_green
 def create_memory(memory: str, is_reminder : bool):
-    
+    print("memory created")
     memory = str(memory)
     new_memory = {
         'reminder' : is_reminder == True,
@@ -213,7 +185,7 @@ def create_memory(memory: str, is_reminder : bool):
     with open('static_storage/long_term_memory.json', 'w', encoding="utf-8") as f:
         # PermissionError(memories)
         json.dump(memories, f, indent=4, ensure_ascii=False)
-
+       
 
 
 

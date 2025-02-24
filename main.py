@@ -21,7 +21,12 @@ def start_loop():
         time.sleep(5)
         start_loop()
     
-    
+@bot.message_handler(commands=["ok"])
+def is_alive(message):
+    bot.send_message(
+        prefs.TST_chat_id,
+        "```STATUS_CHECK```", parse_mode="Markdown"
+    )    
 
 @bot.message_handler(commands=['bio'])
 def send_file(message:telebot.types.Message):
@@ -121,14 +126,8 @@ def handle_files(message:telebot.types.Message):
             "```GENERAL_Error: General_error_in_handle_files " + str(e) + "```", parse_mode="Markdown"
         )
     ai_handler.smart_response()
-    if random.randint(1, 5) == 3:    
+    if random.randint(1, 4) == 3:    
         ai_handler.force_response()
 start_loop()
 # bot.polling()
     
-@bot.message_handler(commands=["alive"])
-def is_alive(message):
-    bot.send_message(
-        prefs.TST_chat_id,
-        "```STATUS CHECK```", parse_mode="Markdown"
-    )
