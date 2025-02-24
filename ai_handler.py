@@ -4,7 +4,63 @@ from stuff import *
 import json
 import tools
 from bot_instance import *
+import re
 
+def reminder_check():
+    
+    date_pattern = r'\b(\d{2})-(\d{2})\b'
+    
+    # Read the existing memories
+    try:
+        with open('static_storage/long_term_memory.json', 'r', encoding="utf-8") as f:
+            memories = json.load(f)
+    except FileNotFoundError:
+        memories = []
+    to_remind = []
+    old_memories = []
+    for mem in memories:
+        done = False
+        
+        # Get the current date
+        current_date = datetime.datetime.now()
+        
+        
+        match = re.findall(date_pattern, mem["content"])
+        if match:
+            for day, month in match:
+                matched_date = datetime.datetime(year=current_date.year, month=int(month), day=int(day))
+                if matched_date.date() <= current_date.date():
+                    done = True
+                    break
+        if mem["reminder"] and done:
+            to_remind.append(mem)
+        else:   #else place back
+            old_memories.append(mem)
+            
+    bot.send_message(
+                prefs.TST_chat_id,
+                "`REMINER_USED`", parse_mode="Markdown"
+            )
+    
+    if to_remind != []:
+        # Write the updated memories back to the file
+        with open('static_storage/long_term_memory.json', 'w', encoding="utf-8") as f:
+            # PermissionError(memories)
+            json.dump(old_memories, f, indent=4, ensure_ascii=False)
+        msgs = []
+        with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
+            msgs = json.loads(f.read())        
+        msg = {
+            'role' : 'user',
+            'extra' : 'reminder time has come',
+            'content' : json.dumps(to_remind, indent=4, ensure_ascii=False),
+        }
+        msgs.append(msg)
+        if len(msgs)  > prefs.history_depth:
+            msgs = msgs[10:]
+        with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
+            f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
+        force_response()
 
 def smart_response():
     try:
@@ -108,6 +164,7 @@ def smart_response():
                         )
         else:
             print(YELLOW, "deciced to stay silent...", RESET)
+        reminder_check()
     except Exception as e:
         bot.send_message(
             prefs.TST_chat_id,

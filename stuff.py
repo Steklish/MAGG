@@ -8,6 +8,7 @@ def delete_files_in_directory(directory_path):
     # Check if the directory exists
     if os.path.exists(directory_path):
         # Loop through all files in the directory
+
         for filename in os.listdir(directory_path):
             file_path = os.path.join(directory_path, filename)
             # Check if it's a file and delete it

@@ -205,7 +205,10 @@ def create_memory(memory: str, is_reminder : bool):
 
     # Append the new memory
     memories.append(new_memory)
-
+    bot.send_message(
+                prefs.TST_chat_id,
+                "```MEMORY_CREATED" + str(new_memory) + "```", parse_mode="Markdown"
+            )
     # Write the updated memories back to the file
     with open('static_storage/long_term_memory.json', 'w', encoding="utf-8") as f:
         # PermissionError(memories)

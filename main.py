@@ -22,7 +22,12 @@ def start_loop():
         start_loop()
     
     
-    
+
+@bot.message_handler(commands=['bio'])
+def send_file(message:telebot.types.Message):
+    bot.send_document(message.chat.id, open("static_storage/conversation.json", 'rb'))
+    bot.send_document(message.chat.id, open("static_storage/long_term_memory.json", 'rb'))
+        
 
 @bot.message_handler(func=lambda message: str(message.chat.id) == prefs.chat_to_interact)
 def process_any_msg(message:telebot.types.Message):

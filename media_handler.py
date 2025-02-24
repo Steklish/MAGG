@@ -5,16 +5,18 @@ from stuff import *
 import prefs
 import datetime
 import json
+import time
 
 def convert_docx_to_html(docx_path):
     with open("tmp/" + docx_path, "rb") as docx_file:
         result = mammoth.convert_to_html(docx_file)
         return result.value
     # return pypandoc.convert_file("tmp/" + docx_path, 'html')
-    
+
 #!text docs only, + .doc, .docx, .pdf
 def extract_doc(url:str, message, file_path):
     file_path = file_path.split("/")[-1]
+    os.makedirs("tmp", exist_ok=True)
     download_file(url,"tmp/" + file_path)
     sys_m = {
         'role': 'system',
@@ -58,13 +60,14 @@ def extract_doc(url:str, message, file_path):
         with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
             f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
 
-    delete_files_in_directory("tmp")
     print("Done with the doc")
+    delete_files_in_directory("tmp")
 
 
 #!image
 def extract_img(url:str, message, file_path):
     file_path = file_path.split("/")[-1]
+    os.makedirs("tmp", exist_ok=True)
     download_file(url,"tmp/" + file_path)
     file = client.files.upload(file='tmp/'+file_path)
     sys_m = {
@@ -82,9 +85,9 @@ def extract_img(url:str, message, file_path):
             model='gemini-2.0-flash',
             contents=[
                 json.dumps(sys_m),
-                'Make a detailed description of the image. Describe what is inside the file. Extract every label on the photo',
+                'Make a detailed description of the image. Describe what is inside the file. Extract every label on the photo. Use russian',
                 file,
-                "\nsender subscription: " + message_text
+                "\nsender subscription: " + message_text.encode().decode("utf-8"),
             ]
         )
     #update context of conversation
