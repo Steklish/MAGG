@@ -12,8 +12,7 @@ send_group_message_tool = {
         "name": "send_group_message",
         "description": (
             "Use this tool to send messages to the group chat. "
-            "This is the only way to send messages. "
-            "Respond when mentioned or addressed, and actively engage in conversations."
+            "Respond when mentioned or addressed, and actively engage in conversations by using this function."
         ),
         "parameters": {
             "type": "object",
@@ -34,7 +33,7 @@ create_memory_tool = {
     "function": {
         "name": "create_memory",
         "description": (
-            "Store meaningful moments, patterns, insights, and user preferences for long-term personalization. "
+            "Use this to store meaningful moments, patterns, insights, and user preferences for long-term personalization. "
             "Log emotional reactions, exciting discussions, funny exchanges, and important topics. "
             "For reminders, include the date in DD-MM format and set 'is_reminder' to true."
         ),
@@ -60,7 +59,7 @@ message_to_continue_conversation_tool = {
     "function": {
         "name": "message_to_continue_conversation",
         "description": (
-            "Keep the conversation engaging by sending a follow-up message if chat goes quiet or needs a prompt."
+            "You must use this function in order to send a message to the chat. Use it if you feel like sending a message for whatewer reason."
         ),
         "parameters": {
             "type": "object",
@@ -81,6 +80,7 @@ long_term_memory_tool = {
     "function": {
         "name": "get_long_term_memory",
         "description": (
+            "Always use if contet is not clear or if you meet a word the meaning you can get. Alwaus use it to get info about peoplpe and objects or events/"
             "Retrieve relevant stored knowledge to enhance responses and provide personalized experiences. "
             "Filter using diverse and meaningful keywords, including specific dates (DD-MM). "
         ),
@@ -103,7 +103,7 @@ one_more_message_tool = {
     "type": "function",
     "function": {
         "name": "one_more_message",
-        "description": "Call this every time you want to sent another message afer what you just said",
+        "description": "Call this every time you want to sent a message. Use to express your thoughts",
     }
 }
     
@@ -112,7 +112,7 @@ non_stop_tool = {
     "function": {
         "name": "non_stop",
         "description": (
-            "Use this tool to immediately send one more message."        ),
+            "Use this tool when you wefe asked for something to send message."),
         "parameters": None
     }
 }

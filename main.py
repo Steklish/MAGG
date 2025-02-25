@@ -28,6 +28,45 @@ def is_alive(message):
         "```STATUS_CHECK```", parse_mode="Markdown"
     )    
 
+@bot.message_handler(commands=['nfs'])
+def send_file(message:telebot.types.Message):
+    if prefs.chat_to_interact == prefs.NFS_chat_id:
+        bot.send_message(
+            message.chat.id,
+            "`CURRENTLY IS SET TO NFS`", parse_mode="Markdown"
+        )
+    else:
+        prefs.chat_to_interact = prefs.NFS_chat_id
+        
+        bot.send_message(
+            message.chat.id,
+            "`REDIRECTIND TO NFS`", parse_mode="Markdown"
+        )
+
+
+@bot.message_handler(commands=['chat'])
+def send_file(message:telebot.types.Message):
+    bot.send_message(
+            message.chat.id,
+            f"`{bot.get_chat(prefs.chat_to_interact).title}`", parse_mode="Markdown"
+        )
+
+@bot.message_handler(commands=['tst'])
+def send_file(message:telebot.types.Message):
+    if prefs.chat_to_interact == prefs.TST_chat_id:
+        bot.send_message(
+            message.chat.id,
+            "`CURRENTLY IS SET TO TST`", parse_mode="Markdown"
+        )
+    else:
+        prefs.chat_to_interact = prefs.TST_chat_id
+        
+        bot.send_message(
+            message.chat.id,
+            "`REDIRECTIND TO TST`", parse_mode="Markdown"
+        )
+
+
 @bot.message_handler(commands=['bio'])
 def send_file(message:telebot.types.Message):
     bot.send_document(message.chat.id, open("static_storage/conversation.json", 'rb'))

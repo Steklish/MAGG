@@ -89,17 +89,15 @@ def smart_response():
             stream=False
         )
         print(resp)
-        
-        # if resp.id is None:
-        #     bot.send_message(
-        #                 prefs.TST_chat_id,
-        #                 "```Error_from_AI_client```", parse_mode="Markdown"
-        #             )
-        #     return
-        
-        plain_text = ''
-        
-        plain_text = resp.choices[0].message.content
+        if resp.choices[0].finish_reason != 'stop':
+            smart_response()
+        else:
+            plain_text = ''
+            plain_text = resp.choices[0].message.content
+            if plain_text:
+                msgs[-1]["мысли Маг"] = plain_text.encode().decode("utf-8")
+                with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
+                    f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
         func_raw = resp.choices[0].message.tool_calls
         if "`" in plain_text:
             tools.send_group_message(plain_text)
