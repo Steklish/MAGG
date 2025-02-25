@@ -303,7 +303,7 @@ def non_stop():
         # print(YELLOW, json.dumps([sys_m, *msgs], ensure_ascii=False), RESET)
         
         resp = client.chat.completions.create(
-            model=prefs.MODEL,
+            model=prefs.MODEL(),
             messages = [sys_m, *msgs],
             tool_choice='auto',
             tools=TOOLS,

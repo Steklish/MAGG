@@ -7,7 +7,7 @@ import json
 from media_handler import *
 import datetime
 import time
-
+import tools
 # Telegram creds
 from bot_instance import bot 
 def start_loop():
@@ -73,6 +73,8 @@ def send_file(message:telebot.types.Message):
     bot.send_document(message.chat.id, open("static_storage/long_term_memory.json", 'rb'))
         
 
+
+# ! general message
 @bot.message_handler(func=lambda message: str(message.chat.id) == prefs.chat_to_interact)
 def process_any_msg(message:telebot.types.Message):
     
@@ -165,8 +167,8 @@ def handle_files(message:telebot.types.Message):
             "```GENERAL_Error: General_error_in_handle_files " + str(e) + "```", parse_mode="Markdown"
         )
     ai_handler.smart_response()
-    if random.randint(1, 4) == 3:    
-        ai_handler.force_response()
+    if random.randint(1, 3) == 3:    
+        tools.non_stop()
 start_loop()
 # bot.polling()
     
