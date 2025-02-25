@@ -90,7 +90,8 @@ def smart_response():
         )
         print(resp)
         if resp.choices[0].finish_reason != 'stop':
-            smart_response()
+            # smart_response()
+            pass
         else:
             plain_text = ''
             plain_text = resp.choices[0].message.content
@@ -99,9 +100,6 @@ def smart_response():
                 with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
                     f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
         func_raw = resp.choices[0].message.tool_calls
-        if "`" in plain_text:
-            tools.send_group_message(plain_text)
-        # print(f"{RED}{plain_text}{RESET}")
         
         if func_raw is not None:
             for call in func_raw:
@@ -131,9 +129,6 @@ def smart_response():
         
                 try:
                     res = tools.execute_tool(func_name, func_params)
-                    if func_raw[0].function.name == "send_group_message":
-                        smart_response()
-                        continue
                     if res is None: res = 'no return'
                     shoul_call_once_more = True
                     #success log    
@@ -152,8 +147,10 @@ def smart_response():
                     
                     with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
                         f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
-                    force_response()
-                    smart_response()
+                    # force_response()
+                    print("after function executing")
+                    if func_name != 'send_group_message':
+                        smart_response()
                 except Exception as e: 
                     print(e)
                     bot.send_message(

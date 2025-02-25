@@ -33,7 +33,7 @@ create_memory_tool = {
     "function": {
         "name": "create_memory",
         "description": (
-            "Use this to store meaningful moments, patterns, insights, and user preferences for long-term personalization. "
+            "User wont explicitly call it, you have to decide when to use the tool. Use this to store meaningful moments, patterns, insights, and user preferences for long-term personalization. "
             "Log emotional reactions, exciting discussions, funny exchanges, and important topics. "
             "For reminders, include the date in DD-MM format and set 'is_reminder' to true."
         ),
