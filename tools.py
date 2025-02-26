@@ -11,8 +11,8 @@ send_group_message_tool = {
     "function": {
         "name": "send_group_message",
         "description": (
-            "Use this tool to send messages to the group chat. "
-            "Respond when mentioned or addressed, and actively engage in conversations by using this function."
+            "Always use this tool to send a message. "
+            "Use when mentioned or addressed. Actively engage in conversations by using this function."
         ),
         "parameters": {
             "type": "object",
@@ -33,8 +33,7 @@ create_memory_tool = {
     "function": {
         "name": "create_memory",
         "description": (
-            "User wont explicitly call it, you have to decide when to use the tool. Use this to store meaningful moments, patterns, insights, and user preferences for long-term personalization. "
-            "Log emotional reactions, exciting discussions, funny exchanges, and important topics. "
+            "Use this to store meaningful moments, patterns, insights. User wont explicitly call it, you have to decide when to use the tool.  "
             "For reminders, include the date in DD-MM format and set 'is_reminder' to true."
         ),
         "parameters": {
@@ -59,7 +58,7 @@ message_to_continue_conversation_tool = {
     "function": {
         "name": "message_to_continue_conversation",
         "description": (
-            "You must use this function in order to send a message to the chat. Use it if you feel like sending a message for whatewer reason."
+            "You MUST use this function in order to send a message to the chat. Use it if you need to send a message for whatewer reason. Always use if the message requires your answer."
         ),
         "parameters": {
             "type": "object",
@@ -81,7 +80,6 @@ long_term_memory_tool = {
         "name": "get_long_term_memory",
         "description": (
             "Always use if contet is not clear or if you meet a word the meaning you can get. Alwaus use it to get info about peoplpe and objects or events/"
-            "Retrieve relevant stored knowledge to enhance responses and provide personalized experiences. "
             "Filter using diverse and meaningful keywords, including specific dates (DD-MM). "
         ),
         "parameters": {
@@ -249,36 +247,8 @@ def send_group_message(message:str):
 
 
 def message_to_continue_conversation(message:str):
-    print(GREEN, "Decided to answer", RESET)
-    messages = []
-    with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
-        messages = json.loads(f.read())
-    
-    print(f"{MAGENTA}{message}{RESET}")
-    # print(f"{YELLOW}{func_raw}{RESET}")
-    
-
-    messages.append(
-        {
-            'role': 'assistant',
-            'content': message
-        }
-    )
-    
-    try:
-        bot.send_message(
-            prefs.chat_to_interact, 
-            message,
-            parse_mode="Markdown"
-        )
-    except Exception as e: 
-        print(e)
-        bot.send_message(
-                prefs.TST_chat_id,
-                "```Cannot_send_response(sm_rs) " + str(e) + "```", parse_mode="Markdown"
-            )
-    with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
-        f.write(json.dumps(messages, indent=4, ensure_ascii=False))
+    print(GREEN, "Decided to answer (message_to_continue_conversation)", RESET)
+    send_group_message(message)
     
     
         
@@ -301,7 +271,7 @@ def non_stop():
             msgs = json.loads(f.read())
         # print(json.dumps([sys_m, *msgs], indent=4, ensure_ascii=False))
         # print(YELLOW, json.dumps([sys_m, *msgs], ensure_ascii=False), RESET)
-        
+        client.api_key = prefs.open_r_key()
         resp = client.chat.completions.create(
             model=prefs.MODEL(),
             messages = [sys_m, *msgs],

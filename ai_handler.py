@@ -79,7 +79,7 @@ def smart_response():
             msgs = json.loads(f.read())
         # print(json.dumps([sys_m, *msgs], indent=4, ensure_ascii=False))
         # print(YELLOW, json.dumps([sys_m, *msgs], ensure_ascii=False), RESET)
-        
+        client.api_key = prefs.open_r_key()
         resp = client.chat.completions.create(
             model=prefs.MODEL(),
             messages = [sys_m, *msgs],
@@ -137,7 +137,8 @@ def smart_response():
                     #success log    
                     
                 
-                    if func_name != 'send_group_message':
+                    if func_name != 'send_group_message' and \
+                        func_name != 'message_to_continue_conversation':
                         msgs.append(
                                         {
                                             'role': 'function',
