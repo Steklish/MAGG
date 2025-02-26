@@ -21,7 +21,7 @@ def reminder_check():
     for mem in memories:
         done = False
         
-        # Get the current date
+        # Get the current datef
         current_date = datetime.datetime.now()
         
         
@@ -60,109 +60,111 @@ def reminder_check():
         with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
             f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
         tools.non_stop()
-
 def smart_response():
     try:
-        print(GREEN)
-        print("Smart message launched", RESET)
-        current_datetime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        sys_m = {
-                'role': 'system',
-                'content': f"""настоящие время и дата {current_datetime}
-                {prefs.system_msg}
-                """
-            }
+        print(f"{GREEN}Smart message launched{RESET}")
         current_datetime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         
-        msgs = []
+        system_message = {
+            'role': 'system',
+            'content': f"""Current time: {current_datetime}
+            {prefs.system_msg}
+            """
+        }
+
         with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
-            msgs = json.loads(f.read())
-        # print(json.dumps([sys_m, *msgs], indent=4, ensure_ascii=False))
-        # print(YELLOW, json.dumps([sys_m, *msgs], ensure_ascii=False), RESET)
-        
-        resp = client.chat.completions.create(
+            conversation = json.load(f)
+
+        client.api_key = prefs.open_r_key()
+        response = client.chat.completions.create(
             model=prefs.MODEL(),
-            messages = [sys_m, *msgs],
-            tool_choice='auto',
+            messages=[system_message, *conversation],
             tools=tools.TOOLS,
-            parallel_tool_calls=True,
-            stream=False
+            tool_choice="auto",
+            # temperature=0.7,
+            # top_p=0.95
         )
-        print(resp)
+        print(response)
         
-        if resp.choices is None:
+        if not response.choices:
             bot.send_message(
-                            prefs.TST_chat_id,
-                            "```" + str(prefs.MODEL()) + " " + str(resp) + "```", parse_mode="Markdown"
-                        )    
+                prefs.TST_chat_id,
+                f"```API Error: {response}```",
+                parse_mode="Markdown"
+            )
             return
+
+        message = response.choices[0].message
+        plain_text = message.content
+        tool_calls = message.tool_calls
+
         
-        plain_text = resp.choices[0].message.content
-        if plain_text:
-            msgs[-1]["мысли Маг"] = plain_text.encode().decode("utf-8")
-            with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
-                f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
-        func_raw = resp.choices[0].message.tool_calls
-        
-        if func_raw is not None:
-            for call in func_raw:
+        result = None
+        # Process tool calls
+        if tool_calls:
+            for call in tool_calls:
                 func_name = call.function.name
-                func_params = call.function.arguments
-                call_id = call.id
-                call_type = call.type
-                call_index = call.index
-                res = None
-                msgs.append(
-                                {
-                                    "role": "assistant",
-                                    "function_call": {
-                                        'tool_call_id' : str(call_id),
-                                        "name" : str(func_name),
-                                        # "type" : str(call_type),
-                                        # "index" : str(call_index),
-                                        # "arguments" : str(func_params)
-                                    }
-                                }
-                            )
+                func_args = call.function.arguments
                 
-        
-        
-        
-                # !FUNCTION EXECUTION
-        
                 try:
-                    res = tools.execute_tool(func_name, func_params)
-                    if res is None: res = 'no return'
-                    shoul_call_once_more = True
-                    #success log    
                     
-                
-                    if func_name != 'send_group_message':
-                        msgs.append(
-                                        {
-                                            'role': 'function',
-                                            "name" : str(func_name),
-                                            'output': str(res),
-                                            'tool_call_id' : str(call_id)
-                                        }
-                                    )
-                        
-                        with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
-                            f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
-                        # tools.non_stop()
-                        print("after function executing")
-                        smart_response()
-                except Exception as e: 
-                    print(e)
-                    bot.send_message(
-                            prefs.TST_chat_id,
-                            "```Cannot_execute_tool " + str(e) + "```", parse_mode="Markdown"
+                    #! Execute tool
+                    
+                    result = tools.execute_tool(func_name, func_args)
+                    # Store tool result
+                    if not("send" in func_name):
+                        conversation.append(
+                            {
+                                "role": "assistant",
+                                "tool_calls": [{
+                                    'id' : str(call.id),
+                                    "type" : str(call.type),
+                                    "function":{
+                                        "name" : str(func_name),
+                                        "arguments" : str(func_args)
+                                    }
+                                    # "index" : str(call_index),
+                                }]
+                            }
                         )
-        else:
-            print(YELLOW, "deciced to stay silent...", RESET)
+                        conversation.append(
+                            {
+                                "role": "tool",
+                                "name": func_name,
+                                "tool_call_id": call.id,
+                                "content": str(result),
+                            }
+                        )
+                        smart_response()
+                    else:
+                        pass
+                        # if plain_text:
+                        #     clean_text = tools.normalize_string(plain_text)
+                        #     try:
+                        #         bot.send_message(
+                        #             prefs.chat_to_interact,
+                        #             clean_text,
+                        #             parse_mode="Markdown"
+                        #         )
+                        #         conversation.append({
+                        #             'role': 'assistant',
+                        #             'content': clean_text
+                        #         })
+                        #     except Exception as e:
+                        #         error_msg = f"Message send failed: {str(e)}"
+                        #         bot.send_message(prefs.TST_chat_id, f"```{error_msg}```", parse_mode="Markdown")
+                except Exception as e:
+                    error_msg = f"Tool {func_name} failed: {str(e)}"
+                    bot.send_message(prefs.TST_chat_id, f"```{error_msg}```", parse_mode="Markdown")
+
+        # Save conversation state
+        with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
+            json.dump(conversation, f, indent=4, ensure_ascii=False)
+        if result != 'send':
+            print(YELLOW, "Silence...", RESET)
+            
         reminder_check()
+
     except Exception as e:
-        bot.send_message(
-            prefs.TST_chat_id,
-            "```Cannot_send_response_very_BAD  (smart response)" + str(e) + "```", parse_mode="Markdown"
-        )    
+        error_msg = f"Critical failure: {str(e)}"
+        bot.send_message(prefs.TST_chat_id, f"```{error_msg}```", parse_mode="Markdown")
