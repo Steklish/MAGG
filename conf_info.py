@@ -5,7 +5,7 @@ TG_API = '7587368548:AAFuBJQ31-HpYw1HwxTdnVr70j2awg88iU4'
 
 
 #skls
-my_op_key="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"
+my_op_key="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"
 
 sn_op_key="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"
 
