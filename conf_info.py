@@ -21,7 +21,7 @@ api_google_key = "AIzaSyDs6aDAfp2fNSwJyJ5AGoO77K5DIa6X9As"
 san_google_key = "AIzaSyCbUhHQfx_lRIv3rH-7AzmnRekfGdmcF28"
 
 # op_list = [my_op_key, sn_op_key]
-op_list = [sn_op_key]
+op_list = [my_op_key]
 def get_op_key():
     return op_list[randint(0, len(op_list)-1)]
 

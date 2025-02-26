@@ -1,51 +1,44 @@
-from datetime import datetime
+import datetime
 from stuff import *
 import json
 from bot_instance import bot
 import unicodedata
 import prefs
 from bot_instance import *
-
 send_group_message_tool = {
     "type": "function",
     "function": {
         "name": "send_group_message",
-        "description": (
-            "Always use this tool to send a message. "
-            "Use when mentioned or addressed. Actively engage in conversations by using this function."
+        "description": (            
+            "Always use when users mention you, ask questions directly, or request specific actions. "
         ),
         "parameters": {
             "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string",
-                    "description": "The text of the message to send in the group chat."
-                }
-            },
-            "required": ["message"]
+            "properties": {},  # Empty object indicates no parameters needed
+            "required": []
         }
     }
 }
-
 
 create_memory_tool = {
     "type": "function",
     "function": {
         "name": "create_memory",
         "description": (
-            "Use this to store meaningful moments, patterns, insights. User wont explicitly call it, you have to decide when to use the tool.  "
-            "For reminders, include the date in DD-MM format and set 'is_reminder' to true."
+            "PROACTIVE MEMORY CREATION: Store important information without being explicitly asked. "
+            "Examples: - User mentions birthday/anniversary - Emotional conversations - Repeated behavior patterns "
+            "- Future plans mentioned - Personal preferences revealed. For dates, use DD-MM-YYYY format."
         ),
         "parameters": {
             "type": "object",
             "properties": {
                 "memory": {
                     "type": "string",
-                    "description": "A detailed memory entry, including emotional context if applicable."
+                    "description": "Detailed context with emotional tone. Example: 'Alex seemed excited about Paris trip planned for 15-08-2024'"
                 },
                 "is_reminder": {
                     "type": "boolean",
-                    "description": "Set to true to surface the memory as a reminder on the specified date."
+                    "description": "True for time-sensitive memories (birthdays, meetings). False for general knowledge."
                 }
             },
             "required": ["memory", "is_reminder"]
@@ -53,34 +46,29 @@ create_memory_tool = {
     }
 }
 
-message_to_continue_conversation_tool = {
+send_free_message_tool = {
     "type": "function",
     "function": {
-        "name": "message_to_continue_conversation",
+        "name": "send_free_message",
         "description": (
-            "You MUST use this function in order to send a message to the chat. Use it if you need to send a message for whatewer reason. Always use if the message requires your answer."
+            "Always use when you need to refer to someone. USE IT TO KEEP CHAT ALIVE"
         ),
         "parameters": {
             "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string",
-                    "description": "The follow-up message to send."
-                }
-            },
-            "required": ["message"]
+            "properties": {},  # Empty object indicates no parameters needed
+            "required": []
         }
     }
 }
-
 
 long_term_memory_tool = {
     "type": "function",
     "function": {
         "name": "get_long_term_memory",
         "description": (
-            "Always use if contet is not clear or if you meet a word the meaning you can get. Alwaus use it to get info about peoplpe and objects or events/"
-            "Filter using diverse and meaningful keywords, including specific dates (DD-MM). "
+            "ALWAYS USE FIRST when context is unclear or when names/dates are mentioned. "
+            "Crucial for: - Identifying people - Recalling events - Understanding references "
+            "Effective keyword strategies: Combine names, dates (DD-MM-YYYY), locations, and unique terms."
         ),
         "parameters": {
             "type": "object",
@@ -88,7 +76,7 @@ long_term_memory_tool = {
                 "keywords": {
                     "type": "array",
                     "items": {"type": "string"},
-                    "description": "A diverse set of 4 to 7 keywords for effective filtering."
+                    "description": "4-7 varied search terms. Example: ['Alex', 'birthday', '15-08', 'Paris trip', '2024']"
                 }
             },
             "required": ["keywords"]
@@ -96,35 +84,44 @@ long_term_memory_tool = {
     }
 }
 
-
-one_more_message_tool = {
-    "type": "function",
-    "function": {
-        "name": "one_more_message",
-        "description": "Call this every time you want to sent a message. Use to express your thoughts",
-    }
-}
-    
 non_stop_tool = {
     "type": "function",
     "function": {
         "name": "non_stop",
         "description": (
-            "Use this tool when you wefe asked for something to send message."),
-        "parameters": None
+            "Always if you feel like sending a message for whatever reason. Use as often as you wish"
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {},  # Empty object indicates no parameters needed
+            "required": []
+        }
     }
 }
 
-
+send_code_tool = {  # Fixed typo in variable name
+    "type": "function",
+    "function": {
+        "name": "send_code",
+        "description": (
+            "ALWAYS use if a user asks to come up with a program or send any kind of source code."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {},  # Empty object indicates no parameters needed
+            "required": []
+        }
+    }
+}
 
 TOOLS = [
     long_term_memory_tool,
     create_memory_tool,
     send_group_message_tool,
-    message_to_continue_conversation_tool,
-    non_stop_tool
+    send_free_message_tool,
+    # non_stop_tool,
+    send_code_tool  # Fixed variable name
 ]
-
 def normalize_string(text):
     return unicodedata.normalize('NFKD', text).encode('utf-8', errors='ignore').decode('utf-8')
 
@@ -137,7 +134,7 @@ def execute_tool(tool_name, args):
     return res
     
 def one_more_message():
-    return "go for one more message to sent to group"
+    return "send"
 
 
 def get_long_term_memory(keywords: list[str]):
@@ -162,7 +159,7 @@ def create_memory(memory: str, is_reminder : bool):
     memory = str(memory)
     new_memory = {
         'reminder' : is_reminder == True,
-        'date': datetime.now().strftime('%d-%m-%y-%H-%M'),
+        'date': datetime.datetime.now().strftime('%d-%m-%y-%H-%M'),
         'content': memory
     }
 
@@ -211,45 +208,23 @@ def find_reminders_delete_daily(date):
 
 
 
-def send_group_message(message:str):
+def send_group_message():
     print(GREEN, "Decided to answer", RESET)
-    messages = []
-    with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
-        messages = json.loads(f.read())
+    non_stop()
+    return "send"
+
+
+
+def send_free_message():
+    print(GREEN, "Decided to answer (send_free_message)", RESET)
+    non_stop()
+    return "send"
     
-    print(f"{MAGENTA}{message}{RESET}")
-    # print(f"{YELLOW}{func_raw}{RESET}")
-    
 
-    messages.append(
-        {
-            'role': 'assistant',
-            'content': message
-        }
-    )
-    
-    try:
-        bot.send_message(
-            prefs.chat_to_interact, 
-            message,
-            parse_mode="Markdown"
-        )
-    except Exception as e: 
-        print(e)
-        bot.send_message(
-                prefs.TST_chat_id,
-                "```Cannot_send_response(sm_rs) " + str(e) + "```", parse_mode="Markdown"
-            )
-    with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
-        f.write(json.dumps(messages, indent=4, ensure_ascii=False))
-
-
-
-
-def message_to_continue_conversation(message:str):
-    print(GREEN, "Decided to answer (message_to_continue_conversation)", RESET)
-    send_group_message(message)
-    
+def send_code():
+    print(GREEN, "Decided to answer (write code)", RESET)
+    non_stop()
+    return "send"
     
         
 
@@ -361,7 +336,7 @@ def non_stop():
                     
                     with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
                         f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
-                    non_stop()
+                    # non_stop()
                 except Exception as e: 
                     print(e)
                     bot.send_message(
