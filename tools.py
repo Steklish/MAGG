@@ -63,7 +63,7 @@ send_free_message_tool = {
             "properties": {
                 "message": {
                 "type": "string",
-                "description": "The text to send to the chat (may include references, urls etc)"
+                "description": "The text to send to the chat (may include references, urls, formatting expressions,  etc)"
                 },    
             }   
         },
@@ -121,7 +121,7 @@ send_code_tool = {  # Fixed typo in variable name
             "properties": {
                 "message": {
                 "type": "string",
-                "description": "The text to send to the chat (including the src code) (may include references, urls etc)"
+                "description": "The text to send to the chat. Format the message as a markdonw (especially src code)"
                 },    
             }   
         },
@@ -222,23 +222,53 @@ def find_reminders_delete_daily(date):
 
 
 
+def send_to_chat(message:str):
+    # print(GREEN, "Decided to answer", RESET)
+    messages = []
+    with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
+        messages = json.loads(f.read())
+    
+    print(f"{MAGENTA}{message}{RESET}")
+    # print(f"{YELLOW}{func_raw}{RESET}")
+    messages.append(
+        {
+            'role': 'assistant',
+            'content': message
+        }
+    )
+    
+    try:
+        bot.send_message(
+            prefs.chat_to_interact, 
+            message,
+            parse_mode="Markdown"
+        )
+    except Exception as e: 
+        print(e)
+        bot.send_message(
+                prefs.TST_chat_id,
+                "```Cannot_send_response \n(sm_rs)\n " + str(e) + "```", parse_mode="Markdown"
+            )
+    with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
+        f.write(json.dumps(messages, indent=4, ensure_ascii=False))
 
-def send_group_message():
-    print(GREEN, "Decided to answer", RESET)
-    non_stop()
+
+def send_group_message(message):
+    print(GREEN, "Decided to answer (send_group_message)", RESET)
+    send_to_chat(message)
     return "send"
 
 
 
-def send_free_message():
+def send_free_message(message):
     print(GREEN, "Decided to answer (send_free_message)", RESET)
-    non_stop()
+    send_to_chat(message)
     return "send"
     
 
-def send_code():
+def send_code(message):
     print(GREEN, "Decided to answer (write code)", RESET)
-    non_stop()
+    send_to_chat(message)
     return "send"
     
         
@@ -251,7 +281,7 @@ def non_stop():
         sys_m = {
                 'role': 'system',
                 'content': f"""настоящие время и дата {current_datetime}
-                {prefs.system_msg}
+                {prefs.system_message}
                 """
             }
         current_datetime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')

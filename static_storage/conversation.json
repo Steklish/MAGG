@@ -1,22 +1,26 @@
 [
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\"\n    },\n    \"date\": \"26-02-2025 20:32:43 UTC+03:00\",\n    \"message\": \"🖖\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\"\n    },\n    \"date\": \"27-02-2025 10:30:06 UTC+03:00\",\n    \"message\": \"Напиши  hello world на ассемблере, маг\"\n}"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\"\n    },\n    \"date\": \"26-02-2025 20:37:13 UTC+03:00\",\n    \"message\": \"whatsup\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\"\n    },\n    \"date\": \"27-02-2025 10:30:19 UTC+03:00\",\n    \"message\": \"Пожалуйста\"\n}"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\"\n    },\n    \"date\": \"26-02-2025 20:37:49 UTC+03:00\",\n    \"message\": \"watsup\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\"\n    },\n    \"date\": \"27-02-2025 10:30:33 UTC+03:00\",\n    \"message\": \"Ответь\"\n}"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\"\n    },\n    \"date\": \"26-02-2025 20:38:46 UTC+03:00\",\n    \"message\": \"hey&\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\"\n    },\n    \"date\": \"27-02-2025 10:30:48 UTC+03:00\",\n    \"message\": \"Пришли программу\"\n}"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Виктор Хвасько\",\n        \"username\": \"Ded_pogran\"\n    },\n    \"date\": \"26-02-2025 20:51:42 UTC+03:00\",\n    \"message\": \"эу\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\"\n    },\n    \"date\": \"27-02-2025 10:31:02 UTC+03:00\",\n    \"message\": \"Эй, ты где\"\n}"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\"\n    },\n    \"date\": \"27-02-2025 10:31:21 UTC+03:00\",\n    \"message\": \"Не пон\"\n}"
     }
 ]
