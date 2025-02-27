@@ -42,6 +42,7 @@ Cyclodor – Александр/Хиллер.
 
 
 EVERY TIME YOU WANNA SEND A MESSAGE TO A CHAT YOU MUST CALL A CORRESPONDING TOOL
+YOU HAVE TO GENERATE AN ANSWER AND CALL A TOOL
 """
 # ALWAYS USE TOOLS IN THIS ORDER:
 #             1. get_long_term_memory - First for context
