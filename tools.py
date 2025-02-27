@@ -10,7 +10,7 @@ send_group_message_tool = {
     "function": {
         "name": "send_group_message",
         "description": (            
-            "Always use when users mention you, ask questions directly, or request specific actions. "
+            "Используй всегда чтобы отправить сообщение в ответ, если к тебе обратились или попросили что-то сделать"
         ),
         "parameters": {
             "type": "object",
@@ -56,7 +56,7 @@ send_free_message_tool = {
     "function": {
         "name": "send_free_message",
         "description": (
-            "Always use when you need to refer to someone. USE IT TO KEEP CHAT ALIVE"
+            "Используй, если нужно что-то рассказать"
         ),
         "parameters": {
             "type": "object",
@@ -99,7 +99,7 @@ non_stop_tool = {
     "function": {
         "name": "non_stop",
         "description": (
-            "Always if you feel like sending a message for whatever reason. Use as often as you wish"
+            "Always if you need to send a message to comment something"
         ),
         "parameters": {
             "type": "object",
@@ -109,12 +109,12 @@ non_stop_tool = {
     }
 }
 
-send_code_tool = {  # Fixed typo in variable name
+send_next_message_tool = {  # Fixed typo in variable name
     "type": "function",
     "function": {
-        "name": "send_code",
+        "name": "send_next_message",
         "description": (
-            "ALWAYS use if a user asks to come up with a program or send any kind of source code."
+            "ALWAYS use if a conversation needs to be continued."
         ),
         "parameters": {
             "type": "object",
@@ -134,13 +134,30 @@ TOOLS = [
     create_memory_tool,
     send_group_message_tool,
     send_free_message_tool,
-    # non_stop_tool,
-    send_code_tool  # Fixed variable name
+    send_next_message_tool 
 ]
-def normalize_string(text):
-    return unicodedata.normalize('NFKD', text).encode('utf-8', errors='ignore').decode('utf-8')
+def decode_broken_string(broken_string):
+    encodings = ['utf-8', 'windows-1251', 'koi8-r', 'iso-8859-5', 'latin-1']
+    
+    for encoding in encodings:
+        try:
+            # Try decoding with different encodings
+            decoded_string = broken_string.encode().decode(encoding)
+            return decoded_string
+        except (UnicodeEncodeError, UnicodeDecodeError):
+            continue
+    
+    try:
+        # If still not properly decoded, try unicode escape
+        return broken_string.encode().decode('unicode_escape')
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        pass
 
-@log_blue
+    # If all fails, return original
+    return broken_string
+
+
+@log_green
 def execute_tool(tool_name, args):
     # args = normalize_string(args)
     print(f"{BACKGROUND_YELLOW} {BLACK} {tool_name}  with args {args}{RESET}")
@@ -200,17 +217,12 @@ def create_memory(memory: str, is_reminder : bool):
 
 
 def find_reminders_delete_daily(date):
-    # Open the file and load the reminders
     with open('static_storage/long_term_memory.json', 'r', encoding="utf-8") as f:
         reminders = json.load(f)
 
     # Find reminders that match the given date
     matching_reminders = [reminder for reminder in reminders if reminder['date'] in date]
-
-    # Remove the matching reminders from the original list
     reminders = [reminder for reminder in reminders if reminder['date'] not in date]
-
-    # Write the updated list back to the file
     with open('static_storage/long_term_memory.json', 'w', encoding="utf-8") as f:
         json.dump(reminders, f, indent=4, ensure_ascii=False)
 
@@ -266,7 +278,7 @@ def send_free_message(message):
     return "send"
     
 
-def send_code(message):
+def send_next_message(message):
     print(GREEN, "Decided to answer (write code)", RESET)
     send_to_chat(message)
     return "send"
@@ -281,7 +293,7 @@ def non_stop():
         sys_m = {
                 'role': 'system',
                 'content': f"""настоящие время и дата {current_datetime}
-                {prefs.system_message}
+                {prefs.system_msg}
                 """
             }
         current_datetime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')

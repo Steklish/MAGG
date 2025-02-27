@@ -135,24 +135,6 @@ def smart_response():
                                 "content": str(result),
                             }
                         )
-                        smart_response()
-                    else:
-                        pass
-                        # if plain_text:
-                        #     clean_text = tools.normalize_string(plain_text)
-                        #     try:
-                        #         bot.send_message(
-                        #             prefs.chat_to_interact,
-                        #             clean_text,
-                        #             parse_mode="Markdown"
-                        #         )
-                        #         conversation.append({
-                        #             'role': 'assistant',
-                        #             'content': clean_text
-                        #         })
-                        #     except Exception as e:
-                        #         error_msg = f"Message send failed: {str(e)}"
-                        #         bot.send_message(prefs.TST_chat_id, f"```{error_msg}```", parse_mode="Markdown")
                 except Exception as e:
                     error_msg = f"Tool {func_name} failed: {str(e)}"
                     bot.send_message(prefs.TST_chat_id, f"```{error_msg}```", parse_mode="Markdown")
@@ -162,7 +144,8 @@ def smart_response():
             json.dump(conversation, f, indent=4, ensure_ascii=False)
         if result != 'send':
             print(YELLOW, "Silence...", RESET)
-            
+        if tool_calls:   
+            smart_response()
         reminder_check()
 
     except Exception as e:

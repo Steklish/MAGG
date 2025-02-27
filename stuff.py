@@ -80,7 +80,6 @@ def download_file(url, dest_path):
 def file_to_bits(filename):
     with open(filename, 'rb') as file:
         file_data = file.read()
-        # encoded = base64.b64encode(file_data).decode('utf-8')
     return file_data
 
 # Basic Colors

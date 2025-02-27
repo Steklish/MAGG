@@ -1,3 +1,4 @@
+import tools
 import mammoth
 from ai_handler import client as OR_client
 from ai_handler import client_google as client
@@ -13,7 +14,7 @@ def convert_docx_to_html(docx_path):
         return result.value
     # return pypandoc.convert_file("tmp/" + docx_path, 'html')
 
-#!text docs only, + .doc, .docx, .pdf
+#!text docs only
 def extract_doc(url:str, message, file_path):
     file_path = file_path.split("/")[-1]
     os.makedirs("tmp", exist_ok=True)
@@ -22,14 +23,10 @@ def extract_doc(url:str, message, file_path):
         'role': 'system',
         'content': prefs.system_msg
     }
-    if ".doc" in file_path or ".docx" in file_path:
-        print("Converting from doc")
-        file = convert_docx_to_html(file_path)
-    elif is_readable_text(file_path="tmp/" + file_path):
+    if is_readable_text(file_path="tmp/" + file_path):
         with open("tmp/" + file_path, 'r') as f:
             file = f.read()
     if file:
-        # myfile = client.files.upload(file="tmp/" + file_path)
         response = client.models.generate_content(
             model='gemini-2.0-flash',
             contents=[
@@ -51,7 +48,7 @@ def extract_doc(url:str, message, file_path):
                     "username": message.from_user.username
                 },
                 "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-                "message": response.text.encode().decode('unicode_escape', errors='ignore')
+                "message": response.text
             }, indent=4, ensure_ascii=False)
         }
         msgs.append(msg)
@@ -87,7 +84,7 @@ def extract_img(url:str, message, file_path):
                 json.dumps(sys_m),
                 'Make a detailed description of the image. Describe what is inside the file. Extract every label on the photo. Use russian',
                 file,
-                "\nsender subscription: " + message_text.encode().decode("utf-8"),
+                "\nsender subscription: " + tools.normalize_string(message_text),
             ]
         )
     #update context of conversation
@@ -103,7 +100,7 @@ def extract_img(url:str, message, file_path):
                 "username": message.from_user.username
             },
             "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-            "message(assistant analysys)": response.text.encode().decode('unicode_escape', errors='ignore')
+            "message(assistant analysys)": tools.normalize_string(response.text)
         }, indent=4, ensure_ascii=False)
     }
     
@@ -121,7 +118,7 @@ def extract_img(url:str, message, file_path):
                     "username": message.from_user.username
                 },
                 "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-                "message": message_text
+                "message": tools.normalize_string(message_text)
             }, indent=4, ensure_ascii=False)
         }
 
@@ -179,7 +176,7 @@ def extract_voice(url: str, message, file_path):
             },
             "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
             "extra" : "voice message from user (user sent a voice message), so description provided not a real text",
-            "message": response.text.encode().decode('unicode_escape', errors='ignore')
+            "message": tools.normalize_string(response.text)
         }, indent=4, ensure_ascii=False)
     }
     print(BACKGROUND_RED + BLACK + "context updated" + RESET)
