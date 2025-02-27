@@ -10,7 +10,7 @@ send_group_message_tool = {
     "function": {
         "name": "send_group_message",
         "description": (            
-            "Используй всегда чтобы отправить сообщение в ответ, если к тебе обратились или попросили что-то сделать"
+            "Используй, если к тебе обратились или попросили что-то сделать"
         ),
         "parameters": {
             "type": "object",
@@ -99,7 +99,7 @@ non_stop_tool = {
     "function": {
         "name": "non_stop",
         "description": (
-            "Always if you need to send a message to comment something"
+            "Используй, если нужно забавно прокомментировать что-то."
         ),
         "parameters": {
             "type": "object",
@@ -114,7 +114,7 @@ send_next_message_tool = {  # Fixed typo in variable name
     "function": {
         "name": "send_next_message",
         "description": (
-            "ALWAYS use if a conversation needs to be continued."
+            "Используй, если ты не закончила мысль."
         ),
         "parameters": {
             "type": "object",

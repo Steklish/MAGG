@@ -40,12 +40,12 @@ Appolonir, Кацка – Руслан,
 Dr.DZE – Алексей, Голова/Головко,
 Cyclodor – Александр/Хиллер.
 
+ALWAYS USE TOOLS IN THIS ORDER:
+            1. get_long_term_memory - First for context
+            2. create_memory - For important info
 
-EVERY TIME YOU WANNA SEND A MESSAGE TO A CHAT YOU MUST CALL A CORRESPONDING TOOL
+EVERY TIME TO SEND A MESSAGE TO THE CHAT YOU HAVE TO CALL A CORRESPONDING TOOL
 """
-# ALWAYS USE TOOLS IN THIS ORDER:
-#             1. get_long_term_memory - First for context
-#             2. create_memory - For important info
 #             3. To send any message
 
 TST_chat_id = "-1002425394723"
