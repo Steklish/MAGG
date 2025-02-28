@@ -5,13 +5,35 @@ from bot_instance import bot
 import unicodedata
 import prefs
 from bot_instance import *
+
+
+send_private_message_tool = {
+    "type": "function",
+    "function": {
+        "name": "send_private_message",
+        "description": "Respond privately to a user when the message is not relevant to the group or requires a personal response.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "user_id": {
+                    "type": "string",
+                    "description": "The ID of the user to send the private message to."
+                },
+                "message": {
+                    "type": "string",
+                    "description": "The text to send to the user."
+                }
+            },
+            "required": ["user_id", "message"]
+        }
+    }
+}
+
 send_group_message_tool = {
     "type": "function",
     "function": {
         "name": "send_group_message",
-        "description": (            
-            "Используй, если к тебе обратились или попросили что-то сделать"
-        ),
+        "description": "Use when responding to the group.",
         "parameters": {
             "type": "object",
             "properties": {
@@ -55,9 +77,7 @@ send_free_message_tool = {
     "type": "function",
     "function": {
         "name": "send_free_message",
-        "description": (
-            "Используй, если нужно что-то рассказать"
-        ),
+        "description": "Use for making comments or casual conversation.",
         "parameters": {
             "type": "object",
             "properties": {
@@ -99,7 +119,7 @@ non_stop_tool = {
     "function": {
         "name": "non_stop",
         "description": (
-            "Используй, если нужно забавно прокомментировать что-то."
+            "Используй, если нужно прокомментировать что-то."
         ),
         "parameters": {
             "type": "object",
@@ -113,9 +133,7 @@ send_next_message_tool = {  # Fixed typo in variable name
     "type": "function",
     "function": {
         "name": "send_next_message",
-        "description": (
-            "Используй, если ты не закончила мысль."
-        ),
+        "description": "Use when the user shares something that requires a follow-up.",
         "parameters": {
             "type": "object",
             "properties": {
@@ -134,9 +152,10 @@ TOOLS = [
     create_memory_tool,
     send_group_message_tool,
     send_free_message_tool,
-    send_next_message_tool 
+    send_next_message_tool,
+    send_private_message_tool
 ]
-def decode_broken_string(broken_string):
+def normalize_string(broken_string):
     encodings = ['utf-8', 'windows-1251', 'koi8-r', 'iso-8859-5', 'latin-1']
     
     for encoding in encodings:
@@ -242,27 +261,29 @@ def send_to_chat(message:str):
     
     print(f"{MAGENTA}{message}{RESET}")
     # print(f"{YELLOW}{func_raw}{RESET}")
-    messages.append(
-        {
-            'role': 'assistant',
-            'content': message
-        }
-    )
     
     try:
         bot.send_message(
             prefs.chat_to_interact, 
-            message,
+            normalize_string(message),
             parse_mode="Markdown"
         )
+        # print("sent to the chat successfully")
+        messages.append(
+            {
+                'role': 'assistant',
+                'content': normalize_string(message)
+            }
+        )
+        # print(messages)
+        with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
+            f.write(json.dumps(messages, indent=4, ensure_ascii=False))
     except Exception as e: 
         print(e)
         bot.send_message(
                 prefs.TST_chat_id,
                 "```Cannot_send_response \n(sm_rs)\n " + str(e) + "```", parse_mode="Markdown"
             )
-    with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
-        f.write(json.dumps(messages, indent=4, ensure_ascii=False))
 
 
 def send_group_message(message):
@@ -406,3 +427,45 @@ def non_stop():
         )
     
     
+def send_private_message(user_id: str, message: str):
+    """
+    Sends a private message to a specific user and stores a record of the message with a special mark.
+    
+    Args:
+        user_id (int): The ID of the user to send the private message to.
+        message (str): The message to send.
+    """
+    # Load the conversation history
+    messages = []
+    with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
+        messages = json.loads(f.read())
+    
+    # Print the message (for debugging/logging purposes)
+    print(f"{MAGENTA}[Private to {user_id}/{bot.get_chat(int(user_id).username)}]: {message}{RESET}")
+    
+    # Add the message to the conversation history with a special mark
+    messages.append(
+        {
+            'role': 'assistant',
+            'content': f"[PRIVATE to {user_id}/{bot.get_chat(int(user_id)).title}] {message}"  # Special mark for private messages
+        }
+    )
+    
+    # Send the private message
+    try:
+        bot.send_message(
+            int(user_id),  # Send to the specified user ID
+            normalize_string(message),
+            parse_mode="Markdown"
+        )
+    except Exception as e:
+        print(e)
+        bot.send_message(
+            prefs.TST_chat_id,
+            f"```Cannot_send_private_message \n(sm_rs)\n {str(e)}```", 
+            parse_mode="Markdown"
+        )
+    
+    # Save the updated conversation history
+    with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
+        f.write(json.dumps(messages, indent=4, ensure_ascii=False))

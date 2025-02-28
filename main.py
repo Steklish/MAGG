@@ -75,7 +75,8 @@ def send_file(message:telebot.types.Message):
 
 
 # ! general message
-@bot.message_handler(func=lambda message: str(message.chat.id) == prefs.chat_to_interact)
+@bot.message_handler(func=lambda message: str(message.chat.id) == prefs.chat_to_interact or 
+                     bot.get_chat(message.chat.id).type == "private")
 def process_any_msg(message:telebot.types.Message):
     
     
@@ -83,15 +84,22 @@ def process_any_msg(message:telebot.types.Message):
     msgs = []
     with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
         msgs = json.loads(f.read())        
+        
+    if bot.get_chat(message.chat.id).type == "private":
+        origin = "direct message"
+    else:
+        origin = "group"
     msg = {
         'role' : 'user',
         'content' : json.dumps({
             "sender" : {
                 'name' : message.from_user.full_name,
-                'username' : message.from_user.username
+                'username' : message.from_user.username,
+                "user id" : message.from_user.id,
                 },
             "date" : datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-            'message' : message.text
+            'message' : message.text,
+            "from" : origin,
         }, indent=4, ensure_ascii=False)
     }
     msgs.append(msg)
@@ -103,7 +111,9 @@ def process_any_msg(message:telebot.types.Message):
     
     ai_handler.smart_response()
     
-@bot.message_handler(content_types=['document', 'photo', 'video', 'audio', 'voice'], func=lambda message: str(message.chat.id) == prefs.chat_to_interact)
+@bot.message_handler(content_types=['document', 'photo', 'video', 'audio', 'voice'],
+                     func=lambda message: str(message.chat.id) == prefs.chat_to_interact or 
+                     bot.get_chat(message.chat.id).type == "private")
 def handle_files(message:telebot.types.Message):
     file_url = None
     try:

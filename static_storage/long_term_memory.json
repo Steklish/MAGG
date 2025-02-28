@@ -78,5 +78,15 @@
         "reminder": false,
         "date": "25-02-25-10-32",
         "content": "Леху заебало ждать"
+    },
+    {
+        "reminder": false,
+        "date": "28-02-25-14-20",
+        "content": "Steklish слишком много пишет"
+    },
+    {
+        "reminder": false,
+        "date": "28-02-25-14-36",
+        "content": "Steklish постоянно спрашивает время"
     }
 ]

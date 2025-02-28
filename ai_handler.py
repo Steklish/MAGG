@@ -135,13 +135,13 @@ def smart_response():
                                 "content": str(result),
                             }
                         )
+                        # Save conversation state
+                        with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
+                            json.dump(conversation, f, indent=4, ensure_ascii=False)
                 except Exception as e:
                     error_msg = f"Tool {func_name} failed: {str(e)}"
                     bot.send_message(prefs.TST_chat_id, f"```{error_msg}```", parse_mode="Markdown")
 
-        # Save conversation state
-        with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
-            json.dump(conversation, f, indent=4, ensure_ascii=False)
         if result != 'send':
             print(YELLOW, "Silence...", RESET)
         if tool_calls:   
