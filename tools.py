@@ -2,7 +2,6 @@ import datetime
 from stuff import *
 import json
 from bot_instance import bot
-import unicodedata
 import prefs
 from bot_instance import *
 
@@ -11,7 +10,7 @@ send_private_message_tool = {
     "type": "function",
     "function": {
         "name": "send_private_message",
-        "description": "Respond privately to a user when the message is not relevant to the group or requires a personal response.",
+        "description": "Send a private message to a user for personal or off-topic discussions.",
         "parameters": {
             "type": "object",
             "properties": {
@@ -33,7 +32,7 @@ send_group_message_tool = {
     "type": "function",
     "function": {
         "name": "send_group_message",
-        "description": "Use when responding to the group.",
+        "description": "Use this tool OFTEN to send messages to the group chat. Use when refered or when you've started the conversation.",
         "parameters": {
             "type": "object",
             "properties": {
@@ -73,23 +72,23 @@ create_memory_tool = {
     }
 }
 
-send_free_message_tool = {
-    "type": "function",
-    "function": {
-        "name": "send_free_message",
-        "description": "Use for making comments or casual conversation.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "message": {
-                "type": "string",
-                "description": "The text to send to the chat (may include references, urls, formatting expressions,  etc)"
-                },    
-            }   
-        },
-        "required": ["message"],
-    }
-}
+# send_free_message_tool = {
+#     "type": "function",
+#     "function": {
+#         "name": "send_free_message",
+#         "description": "Use for making comments or casual conversation.",
+#         "parameters": {
+#             "type": "object",
+#             "properties": {
+#                 "message": {
+#                 "type": "string",
+#                 "description": "The text to send to the chat (may include references, urls, formatting expressions,  etc)"
+#                 },    
+#             }   
+#         },
+#         "required": ["message"],
+#     }
+# }
 
 long_term_memory_tool = {
     "type": "function",
@@ -114,38 +113,38 @@ long_term_memory_tool = {
     }
 }
 
-non_stop_tool = {
-    "type": "function",
-    "function": {
-        "name": "non_stop",
-        "description": (
-            "Используй, если нужно прокомментировать что-то."
-        ),
-        "parameters": {
-            "type": "object",
-            "properties": {},  # Empty object indicates no parameters needed
-            "required": []
-        }
-    }
-}
+# non_stop_tool = {
+#     "type": "function",
+#     "function": {
+#         "name": "non_stop",
+#         "description": (
+#             "Используй, если нужно прокомментировать что-то."
+#         ),
+#         "parameters": {
+#             "type": "object",
+#             "properties": {},  # Empty object indicates no parameters needed
+#             "required": []
+#         }
+#     }
+# }
 
-send_next_message_tool = {  # Fixed typo in variable name
-    "type": "function",
-    "function": {
-        "name": "send_next_message",
-        "description": "Use when the user shares something that requires a follow-up.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "message": {
-                "type": "string",
-                "description": "The text to send to the chat. Format the message as a Markdown (especially src code)"
-                },    
-            }   
-        },
-        "required": ["message"],
-    }
-}
+# send_next_message_tool = {  # Fixed typo in variable name
+#     "type": "function",
+#     "function": {
+#         "name": "send_next_message",
+#         "description": "Use when the user shares something that requires a follow-up.",
+#         "parameters": {
+#             "type": "object",
+#             "properties": {
+#                 "message": {
+#                 "type": "string",
+#                 "description": "The text to send to the chat. Format the message as a Markdown (especially src code)"
+#                 },    
+#             }   
+#         },
+#         "required": ["message"],
+#     }
+# }
 
 TOOLS = [
     long_term_memory_tool,
@@ -225,7 +224,7 @@ def create_memory(memory: str, is_reminder : bool):
     memories.append(new_memory)
     bot.send_message(
                 prefs.TST_chat_id,
-                "```MEMORY_CREATED" + str(new_memory) + "```", parse_mode="Markdown"
+                "```MEMORY_CREATED \n" + str(new_memory) + "```", parse_mode="Markdown"
             )
     # Write the updated memories back to the file
     with open('static_storage/long_term_memory.json', 'w', encoding="utf-8") as f:

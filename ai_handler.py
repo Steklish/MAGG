@@ -81,8 +81,8 @@ def smart_response():
             messages=[system_message, *conversation],
             tools=tools.TOOLS,
             tool_choice="auto",
-            # temperature=0.7,
-            # top_p=0.95
+            temperature=1.1
+            # top_p=0.9
         )
         print(response)
         
@@ -144,8 +144,8 @@ def smart_response():
 
         if result != 'send':
             print(YELLOW, "Silence...", RESET)
-        if tool_calls:   
-            smart_response()
+        # if tool_calls:   
+        #     smart_response()
         reminder_check()
 
     except Exception as e:

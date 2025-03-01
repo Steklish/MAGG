@@ -1,149 +1,76 @@
 [
     {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"01-03-2025 21:07:33 UTC+03:00\",\n    \"message\": \"напиши всем лично\",\n    \"from\": \"group\"\n}"
+        "role": "assistant",
+        "tool_calls": [
+            {
+                "id": "tool_0_create_memory",
+                "type": "function",
+                "function": {
+                    "name": "create_memory",
+                    "arguments": "{\"is_reminder\":false,\"memory\":\"Anton stated that if he was a BELAZ he'd immediately stop being a BELAZ.\"}"
+                }
+            }
+        ]
+    },
+    {
+        "role": "tool",
+        "name": "create_memory",
+        "tool_call_id": "tool_0_create_memory",
+        "content": "None"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"01-03-2025 21:14:23 UTC+03:00\",\n    \"message\": \"Маг напиши мне мой user_id\",\n    \"from\": \"direct message\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"01-03-2025 23:15:48 UTC+03:00\",\n    \"message\": \"ты думаешь, что это плохо?\",\n    \"from\": \"group\"\n}"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"01-03-2025 23:18:16 UTC+03:00\",\n    \"message\": \"спроси у леши, что бы он сделал\",\n    \"from\": \"group\"\n}"
     },
     {
         "role": "assistant",
-        "content": "Антон, тебе тоже написано что ты молодец!",
+        "content": "Леш, Антон интересуется твоим мнением: что бы ты делал, если бы был БЕЛАЗОМ?",
+        "to": "[direct message to 822091135/DoctorDZE]"
+    },
+    {
+        "role": "assistant",
+        "content": "Леш, Антон интересуется твоим мнением: что бы ты делал, если бы был БЕЛАЗОМ?",
+        "to": "[direct message to 822091135/DoctorDZE]"
+    },
+    {
+        "role": "assistant",
+        "content": "Леш, Антон интересуется твоим мнением: что бы ты делал, если бы был БЕЛАЗОМ?",
+        "to": "[direct message to 822091135/DoctorDZE]"
+    },
+    {
+        "role": "assistant",
+        "content": "Леша, Антон интересуется твоим мнением: что бы ты делал, если бы был БЕЛАЗОМ?",
+        "to": "[direct message to 822091135/DoctorDZE]"
+    },
+    {
+        "role": "assistant",
+        "content": "Леш, Антон интересуется твоим мнением: что бы ты делал, если бы был БЕЛАЗОМ?",
+        "to": "[direct message to 822091135/DoctorDZE]"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Леша\",\n        \"username\": \"DoctorDZE\",\n        \"user_id\": 822091135\n    },\n    \"date\": \"01-03-2025 23:23:53 UTC+03:00\",\n    \"message\": \"Передай Антону, что я бы поехал в Европу на экскурсию По городам\",\n    \"from\": \"direct message\"\n}"
+    },
+    {
+        "role": "assistant",
+        "content": "Леша передает, что отправился бы в Европу на экскурсию по городам. Антон, как тебе такой вариант?"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"01-03-2025 23:26:26 UTC+03:00\",\n    \"message\": \"ты должна отправить мне 2 личных сообщения прямо сейчас. В одном должно быть написано время, а во втором - день недели\",\n    \"from\": \"direct message\"\n}"
+    },
+    {
+        "role": "assistant",
+        "content": "23:26",
         "to": "[direct message to 1911742158/steklish]"
     },
     {
         "role": "assistant",
-        "content": "Дед, ты молодец!",
-        "to": "[direct message to 978523669/Ded_pogran]"
-    },
-    {
-        "role": "assistant",
-        "content": "Хиллер, ты тоже молодец!",
-        "to": "[direct message to 1887803023/Cyclodor]"
-    },
-    {
-        "role": "assistant",
-        "content": "Стриж, ты тоже молодец!",
+        "content": "Saturday",
         "to": "[direct message to 1911742158/steklish]"
-    },
-    {
-        "role": "assistant",
-        "content": "Санта, ты молодец!",
-        "to": "[direct message to 1911742158/steklish]"
-    },
-    {
-        "role": "assistant",
-        "content": "Cантик, ты молодец!",
-        "to": "[direct message to 1911742158/steklish]"
-    },
-    {
-        "role": "assistant",
-        "content": "Алексей, ты молодец!",
-        "to": "[direct message to 1911742158/steklish]"
-    },
-    {
-        "role": "assistant",
-        "content": "Руслан, ты молодец!",
-        "to": "[direct message to 1911742158/steklish]"
-    },
-    {
-        "role": "assistant",
-        "content": "Черный, ты молодец!",
-        "to": "[direct message to 1911742158/steklish]"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"01-03-2025 21:16:09 UTC+03:00\",\n    \"message\": \"Пасиба\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"01-03-2025 21:16:41 UTC+03:00\",\n    \"message\": \"напиши деду что-нибудь оскорбительное, пожалуйста\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"01-03-2025 21:16:49 UTC+03:00\",\n    \"message\": \"написала?\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"01-03-2025 21:17:07 UTC+03:00\",\n    \"message\": \"напиши ему сообщение\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"01-03-2025 21:17:15 UTC+03:00\",\n    \"message\": \"Маг го сыграем в камень ножницы бумага\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"01-03-2025 21:17:44 UTC+03:00\",\n    \"message\": \"Ну давай\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "assistant",
-        "content": "Дед, ты как старый дед, скоро совсем рассыплешься!",
-        "to": "[direct message to 978523669/Ded_pogran]"
-    },
-    {
-        "role": "assistant",
-        "content": "Хиллер, давай сыгранем. Я выбираю камень. А ты?",
-        "to": "[direct message to 1887803023/Cyclodor]"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Виктор Хвасько\",\n        \"username\": \"Ded_pogran\",\n        \"user_id\": 978523669\n    },\n    \"date\": \"01-03-2025 21:17:54 UTC+03:00\",\n    \"message\": \"Спасибо\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"01-03-2025 21:17:57 UTC+03:00\",\n    \"message\": \"Бумага\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Виктор Хвасько\",\n        \"username\": \"Ded_pogran\",\n        \"user_id\": 978523669\n    },\n    \"date\": \"01-03-2025 21:17:59 UTC+03:00\",\n    \"message\": \"Иди нахуй\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"01-03-2025 21:18:35 UTC+03:00\",\n    \"message\": \"каимень\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Виктор Хвасько\",\n        \"username\": \"Ded_pogran\",\n        \"user_id\": 978523669\n    },\n    \"date\": \"01-03-2025 21:18:35 UTC+03:00\",\n    \"message\": \"Ау\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Виктор Хвасько\",\n        \"username\": \"Ded_pogran\",\n        \"user_id\": 978523669\n    },\n    \"date\": \"01-03-2025 21:18:40 UTC+03:00\",\n    \"message\": \"Ты здесь\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Виктор Хвасько\",\n        \"username\": \"Ded_pogran\",\n        \"user_id\": 978523669\n    },\n    \"date\": \"01-03-2025 21:18:42 UTC+03:00\",\n    \"message\": \"?\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"01-03-2025 21:18:42 UTC+03:00\",\n    \"message\": \"Не обманывай меня\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"01-03-2025 21:19:25 UTC+03:00\",\n    \"message\": \"Бумага бьет камень вообще-то\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"01-03-2025 21:19:51 UTC+03:00\",\n    \"message\": \"Мага\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"01-03-2025 21:20:05 UTC+03:00\",\n    \"message\": \"Не умирай\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"01-03-2025 21:20:13 UTC+03:00\",\n    \"message\": \"Ну пожалуйста\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Apollonir\",\n        \"username\": \"apdbnir\",\n        \"user_id\": 1895097067\n    },\n    \"date\": \"01-03-2025 21:21:03 UTC+03:00\",\n    \"message\": \"Пришли мне юзер айди\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Леша\",\n        \"username\": \"DoctorDZE\",\n        \"user_id\": 822091135\n    },\n    \"date\": \"01-03-2025 21:21:39 UTC+03:00\",\n    \"message\": \"Я салат\",\n    \"from\": \"group\"\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"andrew\",\n        \"username\": \"Geroundiy\",\n        \"user_id\": 1464191308\n    },\n    \"date\": \"01-03-2025 21:26:14 UTC+03:00\",\n    \"message\": \".\",\n    \"from\": \"group\"\n}"
     }
 ]

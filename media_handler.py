@@ -6,7 +6,6 @@ from stuff import *
 import prefs
 import datetime
 import json
-import time
 
 def convert_docx_to_html(docx_path):
     with open("tmp/" + docx_path, "rb") as docx_file:
