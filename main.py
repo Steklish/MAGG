@@ -40,7 +40,7 @@ def send_file(message:telebot.types.Message):
         
         bot.send_message(
             message.chat.id,
-            "`REDIRECTIND TO NFS`", parse_mode="Markdown"
+            "`REDIRECTING TO NFS`", parse_mode="Markdown"
         )
 
 
@@ -63,7 +63,7 @@ def send_file(message:telebot.types.Message):
         
         bot.send_message(
             message.chat.id,
-            "`REDIRECTIND TO TST`", parse_mode="Markdown"
+            "`REDIRECTING TO TST`", parse_mode="Markdown"
         )
 
 
@@ -95,7 +95,7 @@ def process_any_msg(message:telebot.types.Message):
             "sender" : {
                 'name' : message.from_user.full_name,
                 'username' : message.from_user.username,
-                "user id" : message.from_user.id,
+                "user_id" : message.from_user.id,
                 },
             "date" : datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
             'message' : message.text,

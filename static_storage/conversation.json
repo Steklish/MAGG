@@ -1,213 +1,149 @@
 [
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user id\": 1911742158\n    },\n    \"date\": \"28-02-2025 14:09:34 UTC+03:00\",\n    \"message\": \"маг, привет\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"01-03-2025 21:07:33 UTC+03:00\",\n    \"message\": \"напиши всем лично\",\n    \"from\": \"group\"\n}"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user id\": 1911742158\n    },\n    \"date\": \"28-02-2025 14:09:44 UTC+03:00\",\n    \"message\": \"как ььы\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"01-03-2025 21:14:23 UTC+03:00\",\n    \"message\": \"Маг напиши мне мой user_id\",\n    \"from\": \"direct message\"\n}"
     },
     {
         "role": "assistant",
-        "tool_calls": [
-            {
-                "id": "tool_0_get_long_term_memory",
-                "type": "function",
-                "function": {
-                    "name": "get_long_term_memory",
-                    "arguments": "{\"keywords\":[\"Steklish\",\"Anton\",\"NFS\"]}"
-                }
-            }
-        ]
+        "content": "Антон, тебе тоже написано что ты молодец!",
+        "to": "[direct message to 1911742158/steklish]"
     },
     {
-        "role": "tool",
-        "name": "get_long_term_memory",
-        "tool_call_id": "tool_0_get_long_term_memory",
-        "content": "No matching memories found"
+        "role": "assistant",
+        "content": "Дед, ты молодец!",
+        "to": "[direct message to 978523669/Ded_pogran]"
+    },
+    {
+        "role": "assistant",
+        "content": "Хиллер, ты тоже молодец!",
+        "to": "[direct message to 1887803023/Cyclodor]"
+    },
+    {
+        "role": "assistant",
+        "content": "Стриж, ты тоже молодец!",
+        "to": "[direct message to 1911742158/steklish]"
+    },
+    {
+        "role": "assistant",
+        "content": "Санта, ты молодец!",
+        "to": "[direct message to 1911742158/steklish]"
+    },
+    {
+        "role": "assistant",
+        "content": "Cантик, ты молодец!",
+        "to": "[direct message to 1911742158/steklish]"
+    },
+    {
+        "role": "assistant",
+        "content": "Алексей, ты молодец!",
+        "to": "[direct message to 1911742158/steklish]"
+    },
+    {
+        "role": "assistant",
+        "content": "Руслан, ты молодец!",
+        "to": "[direct message to 1911742158/steklish]"
+    },
+    {
+        "role": "assistant",
+        "content": "Черный, ты молодец!",
+        "to": "[direct message to 1911742158/steklish]"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user id\": 1911742158\n    },\n    \"date\": \"28-02-2025 14:12:06 UTC+03:00\",\n    \"message\": \"эй?\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"01-03-2025 21:16:09 UTC+03:00\",\n    \"message\": \"Пасиба\",\n    \"from\": \"direct message\"\n}"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user id\": 1911742158\n    },\n    \"date\": \"28-02-2025 14:13:57 UTC+03:00\",\n    \"message\": \"хей\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"01-03-2025 21:16:41 UTC+03:00\",\n    \"message\": \"напиши деду что-нибудь оскорбительное, пожалуйста\",\n    \"from\": \"direct message\"\n}"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user id\": 1911742158\n    },\n    \"date\": \"28-02-2025 14:16:24 UTC+03:00\",\n    \"message\": \"?\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"01-03-2025 21:16:49 UTC+03:00\",\n    \"message\": \"написала?\",\n    \"from\": \"direct message\"\n}"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user id\": 1911742158\n    },\n    \"date\": \"28-02-2025 14:19:30 UTC+03:00\",\n    \"message\": \"as\"\n}"
-    },
-    {
-        "role": "assistant",
-        "content": "Да, Anton, ты чего так нервничаешь? Я тут, как видишь. Что-то случилось?"
-    },
-    {
-        "role": "assistant",
-        "content": "Да, Steklish, ты чего так нервничаешь? Я тут, как видишь. Что-то случилось? Или просто решил мне настроение испортить?"
-    },
-    {
-        "role": "assistant",
-        "tool_calls": [
-            {
-                "id": "tool_0_get_long_term_memory",
-                "type": "function",
-                "function": {
-                    "name": "get_long_term_memory",
-                    "arguments": "{\"keywords\":[\"Steklish\",\"Anton\",\"mood\"]}"
-                }
-            }
-        ]
-    },
-    {
-        "role": "tool",
-        "name": "get_long_term_memory",
-        "tool_call_id": "tool_0_get_long_term_memory",
-        "content": "No matching memories found"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"01-03-2025 21:17:07 UTC+03:00\",\n    \"message\": \"напиши ему сообщение\",\n    \"from\": \"direct message\"\n}"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user id\": 1911742158\n    },\n    \"date\": \"28-02-2025 14:20:40 UTC+03:00\",\n    \"message\": \"что случилось?\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"01-03-2025 21:17:15 UTC+03:00\",\n    \"message\": \"Маг го сыграем в камень ножницы бумага\",\n    \"from\": \"direct message\"\n}"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user id\": 1911742158\n    },\n    \"date\": \"28-02-2025 14:20:49 UTC+03:00\",\n    \"message\": \"ты ответишь?\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"01-03-2025 21:17:44 UTC+03:00\",\n    \"message\": \"Ну давай\",\n    \"from\": \"direct message\"\n}"
     },
     {
         "role": "assistant",
-        "content": "Да я просто ждала, пока ты закончишь свои \"абракадабры\". Что же случилось, Steklish? Неужели ты так сильно соскучился, что решил меня закидать вопросами?"
+        "content": "Дед, ты как старый дед, скоро совсем рассыплешься!",
+        "to": "[direct message to 978523669/Ded_pogran]"
     },
     {
         "role": "assistant",
-        "tool_calls": [
-            {
-                "id": "tool_0_create_memory",
-                "type": "function",
-                "function": {
-                    "name": "create_memory",
-                    "arguments": "{\"memory\":\"Steklish слишком много пишет\",\"is_reminder\":false}"
-                }
-            }
-        ]
-    },
-    {
-        "role": "tool",
-        "name": "create_memory",
-        "tool_call_id": "tool_0_create_memory",
-        "content": "None"
-    },
-    {
-        "role": "assistant",
-        "content": "Ну что, рассказывай, Steklish. Что случилось, что ты тут активизировался? Не томи, я не люблю ждать."
-    },
-    {
-        "role": "assistant",
-        "content": "Ну что, рассказывай, Steklish. Что случилось, что ты тут активизировался? Не томи, я не люблю ждать."
+        "content": "Хиллер, давай сыгранем. Я выбираю камень. А ты?",
+        "to": "[direct message to 1887803023/Cyclodor]"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user id\": 1911742158\n    },\n    \"date\": \"28-02-2025 14:21:49 UTC+03:00\",\n    \"message\": \"отправь мне личное сообщение\"\n}"
-    },
-    {
-        "role": "assistant",
-        "content": "[PRIVATE to 1911742158/{'id': 1911742158, 'type': 'private', 'title': None, 'username': 'steklish', 'first_name': 'Anton', 'last_name': None, 'is_forum': None, 'max_reaction_count': 11, 'photo': {'small_file_id': 'AQADAgADJdkxG0t9wEgACAIAA87e8nEABMDx3Ev0Vf0zNgQ', 'small_file_unique_id': 'AQADJdkxG0t9wEgAAQ', 'big_file_id': 'AQADAgADJdkxG0t9wEgACAMAA87e8nEABMDx3Ev0Vf0zNgQ', 'big_file_unique_id': 'AQADJdkxG0t9wEgB'}, 'bio': None, 'join_to_send_messages': None, 'join_by_request': None, 'has_private_forwards': None, 'has_restricted_voice_and_video_messages': None, 'description': None, 'invite_link': None, 'pinned_message': None, 'permissions': None, 'slow_mode_delay': None, 'message_auto_delete_time': None, 'has_protected_content': None, 'sticker_set_name': None, 'can_set_sticker_set': None, 'linked_chat_id': None, 'location': None, 'active_usernames': ['steklish'], 'emoji_status_custom_emoji_id': None, 'has_hidden_members': None, 'has_aggressive_anti_spam_enabled': None, 'emoji_status_expiration_date': None, 'available_reactions': None, 'accent_color_id': 4, 'background_custom_emoji_id': None, 'profile_accent_color_id': None, 'profile_background_custom_emoji_id': None, 'has_visible_history': None, 'unrestrict_boost_count': None, 'custom_emoji_sticker_set_name': None, 'business_intro': None, 'business_location': None, 'business_opening_hours': None, 'personal_chat': None, 'birthdate': None, 'can_send_paid_media': None}] Что ты хочешь, Steklish?"
-    },
-    {
-        "role": "assistant",
-        "content": "[PRIVATE to 1911742158/{'id': 1911742158, 'type': 'private', 'title': None, 'username': 'steklish', 'first_name': 'Anton', 'last_name': None, 'is_forum': None, 'max_reaction_count': 11, 'photo': {'small_file_id': 'AQADAgADJdkxG0t9wEgACAIAA87e8nEABMDx3Ev0Vf0zNgQ', 'small_file_unique_id': 'AQADJdkxG0t9wEgAAQ', 'big_file_id': 'AQADAgADJdkxG0t9wEgACAMAA87e8nEABMDx3Ev0Vf0zNgQ', 'big_file_unique_id': 'AQADJdkxG0t9wEgB'}, 'bio': None, 'join_to_send_messages': None, 'join_by_request': None, 'has_private_forwards': None, 'has_restricted_voice_and_video_messages': None, 'description': None, 'invite_link': None, 'pinned_message': None, 'permissions': None, 'slow_mode_delay': None, 'message_auto_delete_time': None, 'has_protected_content': None, 'sticker_set_name': None, 'can_set_sticker_set': None, 'linked_chat_id': None, 'location': None, 'active_usernames': ['steklish'], 'emoji_status_custom_emoji_id': None, 'has_hidden_members': None, 'has_aggressive_anti_spam_enabled': None, 'emoji_status_expiration_date': None, 'available_reactions': None, 'accent_color_id': 4, 'background_custom_emoji_id': None, 'profile_accent_color_id': None, 'profile_background_custom_emoji_id': None, 'has_visible_history': None, 'unrestrict_boost_count': None, 'custom_emoji_sticker_set_name': None, 'business_intro': None, 'business_location': None, 'business_opening_hours': None, 'personal_chat': None, 'birthdate': None, 'can_send_paid_media': None}] Ну чего тебе нужно?"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Виктор Хвасько\",\n        \"username\": \"Ded_pogran\",\n        \"user_id\": 978523669\n    },\n    \"date\": \"01-03-2025 21:17:54 UTC+03:00\",\n    \"message\": \"Спасибо\",\n    \"from\": \"direct message\"\n}"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user id\": 1911742158\n    },\n    \"date\": \"28-02-2025 14:30:46 UTC+03:00\",\n    \"message\": \"маг, который час?\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "assistant",
-        "content": "[PRIVATE to 1911742158/{'id': 1911742158, 'type': 'private', 'title': None, 'username': 'steklish', 'first_name': 'Anton', 'last_name': None, 'is_forum': None, 'max_reaction_count': 11, 'photo': {'small_file_id': 'AQADAgADJdkxG0t9wEgACAIAA87e8nEABMDx3Ev0Vf0zNgQ', 'small_file_unique_id': 'AQADJdkxG0t9wEgAAQ', 'big_file_id': 'AQADAgADJdkxG0t9wEgACAMAA87e8nEABMDx3Ev0Vf0zNgQ', 'big_file_unique_id': 'AQADJdkxG0t9wEgB'}, 'bio': None, 'join_to_send_messages': None, 'join_by_request': None, 'has_private_forwards': None, 'has_restricted_voice_and_video_messages': None, 'description': None, 'invite_link': None, 'pinned_message': None, 'permissions': None, 'slow_mode_delay': None, 'message_auto_delete_time': None, 'has_protected_content': None, 'sticker_set_name': None, 'can_set_sticker_set': None, 'linked_chat_id': None, 'location': None, 'active_usernames': ['steklish'], 'emoji_status_custom_emoji_id': None, 'has_hidden_members': None, 'has_aggressive_anti_spam_enabled': None, 'emoji_status_expiration_date': None, 'available_reactions': None, 'accent_color_id': 4, 'background_custom_emoji_id': None, 'profile_accent_color_id': None, 'profile_background_custom_emoji_id': None, 'has_visible_history': None, 'unrestrict_boost_count': None, 'custom_emoji_sticker_set_name': None, 'business_intro': None, 'business_location': None, 'business_opening_hours': None, 'personal_chat': None, 'birthdate': None, 'can_send_paid_media': None}] Сейчас 14:30:46 по UTC+03:00"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"01-03-2025 21:17:57 UTC+03:00\",\n    \"message\": \"Бумага\",\n    \"from\": \"direct message\"\n}"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user id\": 1911742158\n    },\n    \"date\": \"28-02-2025 14:31:04 UTC+03:00\",\n    \"message\": \"что ты делаешь прямо сейчас?\",\n    \"from\": \"group\"\n}"
-    },
-    {
-        "role": "assistant",
-        "content": "Я отвечаю на вопросы Steklish. А что, Anton, хотел присоединиться?"
-    },
-    {
-        "role": "assistant",
-        "content": "Я отвечаю на вопросы Steklish. А что, Anton, хотел присоединиться? В групповом чате, прошу заметить."
+        "content": "{\n    \"sender\": {\n        \"name\": \"Виктор Хвасько\",\n        \"username\": \"Ded_pogran\",\n        \"user_id\": 978523669\n    },\n    \"date\": \"01-03-2025 21:17:59 UTC+03:00\",\n    \"message\": \"Иди нахуй\",\n    \"from\": \"direct message\"\n}"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user id\": 1911742158\n    },\n    \"date\": \"28-02-2025 14:36:40 UTC+03:00\",\n    \"message\": \"который час?\",\n    \"from\": \"group\"\n}"
-    },
-    {
-        "role": "assistant",
-        "tool_calls": [
-            {
-                "id": "tool_0_create_memory",
-                "type": "function",
-                "function": {
-                    "name": "create_memory",
-                    "arguments": "{\"memory\":\"Steklish постоянно спрашивает время\",\"is_reminder\":false}"
-                }
-            }
-        ]
-    },
-    {
-        "role": "tool",
-        "name": "create_memory",
-        "tool_call_id": "tool_0_create_memory",
-        "content": "None"
-    },
-    {
-        "role": "assistant",
-        "tool_calls": [
-            {
-                "id": "tool_0_get_long_term_memory",
-                "type": "function",
-                "function": {
-                    "name": "get_long_term_memory",
-                    "arguments": "{\"keywords\":[\"Steklish\",\"time\"]}"
-                }
-            }
-        ]
-    },
-    {
-        "role": "tool",
-        "name": "get_long_term_memory",
-        "tool_call_id": "tool_0_get_long_term_memory",
-        "content": "[\n    {\n        \"reminder\": false,\n        \"date\": \"28-02-25-14-20\",\n        \"content\": \"Steklish слишком много пишет\"\n    },\n    {\n        \"reminder\": false,\n        \"date\": \"28-02-25-14-36\",\n        \"content\": \"Steklish постоянно спрашивает время\"\n    }\n]"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"01-03-2025 21:18:35 UTC+03:00\",\n    \"message\": \"каимень\",\n    \"from\": \"direct message\"\n}"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user id\": 1911742158\n    },\n    \"date\": \"28-02-2025 14:37:11 UTC+03:00\",\n    \"message\": \"эй, что такое?  я спрашиваю время просто для теста\",\n    \"from\": \"group\"\n}"
-    },
-    {
-        "role": "assistant",
-        "content": "Сейчас 14:37:11 по UTC+03:00. Просто для теста, говоришь? Ну-ну, Steklish, я верю во все твои \"тесты\".\nИ да, я помню, что ты слишком много пишешь."
+        "content": "{\n    \"sender\": {\n        \"name\": \"Виктор Хвасько\",\n        \"username\": \"Ded_pogran\",\n        \"user_id\": 978523669\n    },\n    \"date\": \"01-03-2025 21:18:35 UTC+03:00\",\n    \"message\": \"Ау\",\n    \"from\": \"direct message\"\n}"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user id\": 1911742158\n    },\n    \"date\": \"28-02-2025 14:37:42 UTC+03:00\",\n    \"message\": \"хочешь, я перестану писать?\",\n    \"from\": \"group\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Виктор Хвасько\",\n        \"username\": \"Ded_pogran\",\n        \"user_id\": 978523669\n    },\n    \"date\": \"01-03-2025 21:18:40 UTC+03:00\",\n    \"message\": \"Ты здесь\",\n    \"from\": \"direct message\"\n}"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user id\": 1911742158\n    },\n    \"date\": \"28-02-2025 14:37:47 UTC+03:00\",\n    \"message\": \"пон\",\n    \"from\": \"group\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Виктор Хвасько\",\n        \"username\": \"Ded_pogran\",\n        \"user_id\": 978523669\n    },\n    \"date\": \"01-03-2025 21:18:42 UTC+03:00\",\n    \"message\": \"?\",\n    \"from\": \"direct message\"\n}"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user id\": 1911742158\n    },\n    \"date\": \"28-02-2025 14:37:57 UTC+03:00\",\n    \"message\": \"ну и иди ты\",\n    \"from\": \"group\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"01-03-2025 21:18:42 UTC+03:00\",\n    \"message\": \"Не обманывай меня\",\n    \"from\": \"direct message\"\n}"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user id\": 1911742158\n    },\n    \"date\": \"28-02-2025 14:38:09 UTC+03:00\",\n    \"message\": \"почему молчишь, маг?\",\n    \"from\": \"group\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"01-03-2025 21:19:25 UTC+03:00\",\n    \"message\": \"Бумага бьет камень вообще-то\",\n    \"from\": \"direct message\"\n}"
     },
     {
-        "role": "assistant",
-        "content": "Ха-ха, Anton, ты такой предсказуемый. Я как раз думала, что ты прекратишь свои \"эксперименты\".  И да, я молчу, потому что мне сейчас интересно наблюдать за твоей реакцией."
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"01-03-2025 21:19:51 UTC+03:00\",\n    \"message\": \"Мага\",\n    \"from\": \"direct message\"\n}"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"01-03-2025 21:20:05 UTC+03:00\",\n    \"message\": \"Не умирай\",\n    \"from\": \"direct message\"\n}"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"01-03-2025 21:20:13 UTC+03:00\",\n    \"message\": \"Ну пожалуйста\",\n    \"from\": \"direct message\"\n}"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Apollonir\",\n        \"username\": \"apdbnir\",\n        \"user_id\": 1895097067\n    },\n    \"date\": \"01-03-2025 21:21:03 UTC+03:00\",\n    \"message\": \"Пришли мне юзер айди\",\n    \"from\": \"direct message\"\n}"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Леша\",\n        \"username\": \"DoctorDZE\",\n        \"user_id\": 822091135\n    },\n    \"date\": \"01-03-2025 21:21:39 UTC+03:00\",\n    \"message\": \"Я салат\",\n    \"from\": \"group\"\n}"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"andrew\",\n        \"username\": \"Geroundiy\",\n        \"user_id\": 1464191308\n    },\n    \"date\": \"01-03-2025 21:26:14 UTC+03:00\",\n    \"message\": \".\",\n    \"from\": \"group\"\n}"
     }
 ]

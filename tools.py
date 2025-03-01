@@ -139,7 +139,7 @@ send_next_message_tool = {  # Fixed typo in variable name
             "properties": {
                 "message": {
                 "type": "string",
-                "description": "The text to send to the chat. Format the message as a markdonw (especially src code)"
+                "description": "The text to send to the chat. Format the message as a Markdown (especially src code)"
                 },    
             }   
         },
@@ -151,8 +151,8 @@ TOOLS = [
     long_term_memory_tool,
     create_memory_tool,
     send_group_message_tool,
-    send_free_message_tool,
-    send_next_message_tool,
+    # send_free_message_tool,
+    # send_next_message_tool,
     send_private_message_tool
 ]
 def normalize_string(broken_string):
@@ -331,7 +331,7 @@ def non_stop():
             tool_choice='auto',
             tools=TOOLS,
             parallel_tool_calls=True,
-            stream=False
+            stream=False,
         )
         print(resp)
         plain_text = ''
@@ -397,8 +397,6 @@ def non_stop():
 
                         res = execute_tool(func_name, func_params)
                         if res is None: res = 'no return'
-                        shoul_call_once_more = True
-                        #success log    
                         
                     
                         msgs.append(
@@ -441,13 +439,14 @@ def send_private_message(user_id: str, message: str):
         messages = json.loads(f.read())
     
     # Print the message (for debugging/logging purposes)
-    print(f"{MAGENTA}[Private to {user_id}/{bot.get_chat(int(user_id).username)}]: {message}{RESET}")
+    print(f"{MAGENTA}[Private to {user_id}/{bot.get_chat(int(user_id)).username}]: {message}{RESET}")
     
     # Add the message to the conversation history with a special mark
     messages.append(
         {
             'role': 'assistant',
-            'content': f"[PRIVATE to {user_id}/{bot.get_chat(int(user_id)).title}] {message}"  # Special mark for private messages
+            'content': message,
+            'to':f"[direct message to {user_id}/{bot.get_chat(int(user_id)).username}]"
         }
     )
     
@@ -458,6 +457,8 @@ def send_private_message(user_id: str, message: str):
             normalize_string(message),
             parse_mode="Markdown"
         )
+        with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
+            f.write(json.dumps(messages, indent=4, ensure_ascii=False))
     except Exception as e:
         print(e)
         bot.send_message(
@@ -465,7 +466,3 @@ def send_private_message(user_id: str, message: str):
             f"```Cannot_send_private_message \n(sm_rs)\n {str(e)}```", 
             parse_mode="Markdown"
         )
-    
-    # Save the updated conversation history
-    with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
-        f.write(json.dumps(messages, indent=4, ensure_ascii=False))
