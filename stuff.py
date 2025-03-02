@@ -82,6 +82,29 @@ def file_to_bits(filename):
         file_data = file.read()
     return file_data
 
+
+def normalize_string(broken_string):
+    encodings = ['utf-8', 'windows-1251', 'koi8-r', 'iso-8859-5', 'latin-1']
+    
+    for encoding in encodings:
+        try:
+            # Try decoding with different encodings
+            decoded_string = broken_string.encode().decode(encoding)
+            return decoded_string
+        except (UnicodeEncodeError, UnicodeDecodeError):
+            continue
+    
+    try:
+        # If still not properly decoded, try unicode escape
+        return broken_string.encode().decode('unicode_escape')
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        pass
+
+    # If all fails, return original
+    return broken_string
+
+
+
 # Basic Colors
 BLACK = '\033[30m'
 RED = '\033[31m'

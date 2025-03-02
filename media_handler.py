@@ -1,4 +1,3 @@
-import tools
 import mammoth
 from ai_handler import client as OR_client
 from ai_handler import client_google as client
@@ -83,7 +82,7 @@ def extract_img(url:str, message, file_path):
                 json.dumps(sys_m),
                 'Make a detailed description of the image. Describe what is inside the file. Extract every label on the photo. Use russian',
                 file,
-                "\nsender subscription: " + tools.normalize_string(message_text),
+                "\nsender subscription: " + normalize_string(message_text),
             ]
         )
     #update context of conversation
@@ -99,7 +98,7 @@ def extract_img(url:str, message, file_path):
                 "username": message.from_user.username
             },
             "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-            "message(assistant analysys)": tools.normalize_string(response.text)
+            "message(assistant analysys)": normalize_string(response.text)
         }, indent=4, ensure_ascii=False)
     }
     
@@ -117,7 +116,7 @@ def extract_img(url:str, message, file_path):
                     "username": message.from_user.username
                 },
                 "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-                "message": tools.normalize_string(message_text)
+                "message": normalize_string(message_text)
             }, indent=4, ensure_ascii=False)
         }
 
@@ -175,7 +174,7 @@ def extract_voice(url: str, message, file_path):
             },
             "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
             "extra" : "voice message from user (user sent a voice message), so description provided not a real text",
-            "message": tools.normalize_string(response.text)
+            "message": normalize_string(response.text)
         }, indent=4, ensure_ascii=False)
     }
     print(BACKGROUND_RED + BLACK + "context updated" + RESET)

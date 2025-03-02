@@ -42,9 +42,9 @@ formatted_system_info = format_system_info(system_info)
 
 # Send startup message with system info
 startup_message = (
-    "WERE ON AIR\n"
-    f"`{datetime.datetime.now().strftime('%H:%M:%S')}`\n\n"
-    f"```{formatted_system_info}```"
+    "`WE'RE ON AIR`\n"
+    f"`{datetime.datetime.now().strftime('%H:%M:%S')}`\n"
+    f"`{formatted_system_info}` \n listening to: \n`[{bot.get_chat(prefs.chat_to_interact).title}]`"
 )
 
 bot.send_message(prefs.TST_chat_id, startup_message, parse_mode="Markdown")

@@ -7,7 +7,7 @@ import json
 from media_handler import *
 import datetime
 import time
-import tools
+import tools_package.tools as tools
 # Telegram creds
 from bot_instance import bot 
 def start_loop():
@@ -178,7 +178,7 @@ def handle_files(message:telebot.types.Message):
         )
     ai_handler.smart_response()
     if random.randint(1, 3) == 3:    
-        tools.non_stop()
+        tools.tools.non_stop()
 start_loop()
 # bot.polling()
     

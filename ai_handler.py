@@ -2,9 +2,9 @@ import prefs
 import datetime
 from stuff import *
 import json
-import tools
 from bot_instance import *
 import re
+import tools_package.tools as tools
 
 def reminder_check():
     
@@ -84,7 +84,10 @@ def smart_response():
             temperature=1.1
             # top_p=0.9
         )
-        print(response)
+        try:
+            print(CYAN, response.choices[0].message.content, RESET)
+        except Exception as e:
+            pass
         
         if not response.choices:
             bot.send_message(
