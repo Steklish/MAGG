@@ -141,6 +141,8 @@ def smart_response():
                         # Save conversation state
                         with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
                             json.dump(conversation, f, indent=4, ensure_ascii=False)
+                        if "get_long_term_memory" == func_name:
+                            smart_response()
                 except Exception as e:
                     error_msg = f"Tool {func_name} failed: {str(e)}"
                     bot.send_message(prefs.TST_chat_id, f"```{error_msg}```", parse_mode="Markdown")

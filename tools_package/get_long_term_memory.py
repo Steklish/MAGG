@@ -49,7 +49,7 @@ def get_long_term_memory(keywords: list[str]):
                 {
                     'role' : 'user',
                     'extra' : 'reminder time has come',
-                    'content' : json.dumps(filtered_memories, ensure_ascii=False) + 'give a summary, capture important detailes to the current context. format the output as your own memories.',
+                    'content' : json.dumps(filtered_memories, ensure_ascii=False) + '\n\nисходя из истории переписки и данных записей выдели данные, которые имеют отношение к контексту. Отформатируй данные, как те, что ты нашла в своей памяти',
                 }
             ],
             # tools=tools.TOOLS,
