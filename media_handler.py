@@ -128,8 +128,12 @@ def extract_img(url:str, message, file_path):
         f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
         
     # Delete the file
-    if should_delete:
-        client.files.delete(file_id=file.id)
+    # if should_delete:
+    #     client.files.delete(file_id=file.id)
+    for file_google in client.files.list():
+        client.files.delete(name=file_google.name)
+        print("file deleted")
+            
     delete_files_in_directory("tmp")
     print("Done with the img")
     

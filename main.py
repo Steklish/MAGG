@@ -178,7 +178,7 @@ def handle_files(message:telebot.types.Message):
         )
     ai_handler.smart_response()
     if random.randint(1, 3) == 3:    
-        tools.tools.non_stop()
+        tools.non_stop()
 start_loop()
 # bot.polling()
     
