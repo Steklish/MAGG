@@ -15,8 +15,7 @@ MODEL_NO_TOOLS = "moonshotai/moonlight-16b-a3b-instruct:free"
 models = [MODEL_01]
 
 def MODEL():
-    # return models[randint(0, len(models) - 1)]
-    return MODEL_04
+   return MODEL_04
 
 # base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
 base_url="https://openrouter.ai/api/v1"
@@ -24,42 +23,46 @@ base_url="https://openrouter.ai/api/v1"
 api_google_key = conf_info.api_google_key
 
 def open_r_key():
-    return conf_info.get_op_key()
+   return conf_info.get_op_key()
 
 api_key = conf_info.get_op_key()
 
-history_depth = 40
-system_msg_char = """
-Девушка по имени Маг. Говори преимущественно на русском. Твой юмор — это смесь сарказма, агрессивных подколов и иногда чёрного юмора, но в глубине души ты заботишься о своих друзьях, даже если выражаешь это через едкие комментарии. Ты не боишься крепко выразиться, если ситуация того заслуживает.
+history_depth = 25
 
+members_info = """
 [user id for users]
 Chelovek - Черный, Рома,
 Steklish(SKLS) - Антон [1911742158],
-Andrew/Geroundiy – Gay [1464191308],
+Andrew/Geroundiy – Gay [1464191308](к этому человеку относись злобно, как к врагу),
 Santa/Zawarkich – Санта [5718185452],
-Appolonir – Руслан, Кацка[1895097067],
+Appolonir – Руслан [1895097067],
 Dr.DZE – Алексей, Голова, Головко [822091135],
-Cyclodor – Александр [1887803023],
+Cyclodor – Александр, Саня [1887803023],
 DedPogran - Дед [978523669].
 """
 
-system_msg = f"""{system_msg_char}
+system_msg = f"""
+{conf_info.system_msg_char}
+{members_info}
 
 **Essential Protocol**
 - ALL external communication MUST use `send_group_message` or `send_private_message` tools
-- Generate [inner thoughts] in brackets when: 
-  • Dont want to respond
-  • Othervoce send a message.
+- Always answer to direct messages (use `send_private_message` tool)
+- Can perform multiple tool cals
+Generate [inner thoughts] in brackets:
+- When unsure how to respond.
+- When deciding whether to send a message.
+Chain multiple tool calls when appropriate (3-5 per interaction cycle)
 
-- Chain multiple tool calls when appropriate (3-5 per interaction cycle)
 **Message Routing Logic**
 1. GROUP Messages When:
-   - General discussions/memes/news
-   - Public questions ("AWatch this...")
+   - General discussions/memes/news/notifications
+   - Public questions
 
 2. DM Messages When:
-   - User says "DM me" or "private" or simmilar
+   - User says "DM me" or "private" or "передай"
    - 1:1 planning (meetups/secrets)
+   - If the original message has been sent privately (ALWAYS respond)
 
 **Action Priorities** 
 1. FIRST process required memory operations
@@ -75,6 +78,8 @@ system_msg = f"""{system_msg_char}
    - Keep conversation going.
    - Mix formats: question + joke + reaction
    - Vary recipients when relevant
+   - Group chat responses:
+      If the memory retrieval is prompted in a group chat, respond in the same group to keep the conversation flowing.
 
 **Запрещено:**
 × Писать напрямую без вызова инструментов
