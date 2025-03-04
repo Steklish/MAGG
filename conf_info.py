@@ -1,8 +1,8 @@
 from random import randint
 
-TG_API = '7587368548:AAFuBJQ31-HpYw1HwxTdnVr70j2awg88iU4'
+# TG_API = '7587368548:AAFuBJQ31-HpYw1HwxTdnVr70j2awg88iU4'
 # api_google_key = "AIzaSyDs6aDAfp2fNSwJyJ5AGoO77K5DIa6X9As"
-
+TG_API = '8064785817:AAERFT-8RXsVYFLe9e7YW0mNUo47LKL4NAg'
 
 #skls
 my_op_key="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"

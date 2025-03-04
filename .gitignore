@@ -1,4 +1,7 @@
 __pycache__
-static_storage/conversation.json
 .vscode/settings.json
-venv
+myenv
+static_storage/conversation.json
+conf_info.py
+prefs.py
+``
