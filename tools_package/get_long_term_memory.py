@@ -52,7 +52,7 @@ def get_long_term_memory(keywords: list[str]):
                     'content' : json.dumps(filtered_memories, ensure_ascii=False) + '\n\nисходя из истории переписки и данных записей выдели данные, которые имеют отношение к контексту. Эти данные из твоей памяти. Приведи их в удобный формат',
                 }
             ],
-            temperature=1.2
+            temperature=(prefs.TEMPERATURE * 1.1)
         )
         print(response)
         return normalize_string(response.choices[0].message.content)
@@ -101,8 +101,9 @@ def reminder_check():
         else:
             # Otherwise, keep it in the old_memories list
             old_memories.append(mem)
-             
+    found = False
     if to_remind != []:
+        found = True
         bot.send_message(
                 prefs.TST_chat_id,
                 "`Reminder used`", parse_mode="Markdown"
@@ -123,3 +124,4 @@ def reminder_check():
         with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
             f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
         
+    return found

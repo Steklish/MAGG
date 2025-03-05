@@ -5,7 +5,7 @@ import json
 from bot_instance import *
 import tools_package.tools as tools
 
-def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto"):
+def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto", TEMP=prefs.TEMPERATURE):
     try:
         print(f"{GREEN}Smart message launched{RESET}")
         current_datetime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -26,7 +26,7 @@ def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto"):
             messages=[system_message, *conversation],
             tools=tools.TOOLS,
             tool_choice=tool_choice,
-            temperature=1.1
+            temperature=TEMP
         )
         try:
             print(response)

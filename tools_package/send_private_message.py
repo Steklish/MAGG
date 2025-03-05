@@ -4,7 +4,7 @@ send_private_message_tool = {
     "type": "function",
     "function": {
         "name": "send_private_message",
-        "description": "Send a direct message to a specific user. Use this tool when asked to message someone privately or to share sensitive information. Always use if were asked to.",
+        "description": "Send a direct message to a specific user. Use this tool when asked to message someone privately. Always use if were asked to.",
         "parameters": {
             "type": "object",
             "properties": {
@@ -25,14 +25,6 @@ send_private_message_tool = {
 
     
 def send_private_message(user_id: str, message: str):
-    """
-    Sends a private message to a specific user and stores a record of the message with a special mark.
-    
-    Args:
-        user_id (int): The ID of the user to send the private message to.
-        message (str): The message to send.
-    """
-    # Load the conversation history
     messages = []
     with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
         messages = json.loads(f.read())
