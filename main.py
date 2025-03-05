@@ -125,7 +125,7 @@ def process_any_msg(message:telebot.types.Message):
         f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
     
     
-    ai_handler.smart_response()
+    ai_handler.smart_response(tool_choice="auto", TOOLSET=tools.TOOLS)
     
 @bot.message_handler(content_types=['document', 'photo', 'video', 'audio', 'voice'],
                      func=lambda message: str(message.chat.id) == prefs.chat_to_interact or 
