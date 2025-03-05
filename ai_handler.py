@@ -3,64 +3,9 @@ import datetime
 from stuff import *
 import json
 from bot_instance import *
-import re
 import tools_package.tools as tools
 
-def reminder_check():
-    
-    date_pattern = r'\b(\d{2})-(\d{2})\b'
-    
-    # Read the existing memories
-    try:
-        with open('static_storage/long_term_memory.json', 'r', encoding="utf-8") as f:
-            memories = json.load(f)
-    except FileNotFoundError:
-        memories = []
-    to_remind = []
-    old_memories = []
-    for mem in memories:
-        done = False
-        
-        # Get the current datef
-        current_date = datetime.datetime.now()
-        
-        
-        match = re.findall(date_pattern, mem["content"])
-        if match:
-            for day, month in match:
-                matched_date = datetime.datetime(year=current_date.year, month=int(month), day=int(day))
-                if matched_date.date() <= current_date.date():
-                    done = True
-                    break
-        if mem["reminder"] and done:
-            to_remind.append(mem)
-        else:   #else place back
-            old_memories.append(mem)
-             
-    if to_remind != []:
-        bot.send_message(
-                prefs.TST_chat_id,
-                "`REMINER_USED`", parse_mode="Markdown"
-            )
-        # Write the updated memories back to the file
-        with open('static_storage/long_term_memory.json', 'w', encoding="utf-8") as f:
-            # PermissionError(memories)
-            json.dump(old_memories, f, indent=4, ensure_ascii=False)
-        msgs = []
-        with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
-            msgs = json.loads(f.read())        
-        msg = {
-            'role' : 'user',
-            'extra' : 'reminder time has come',
-            'content' : json.dumps(to_remind, indent=4, ensure_ascii=False),
-        }
-        msgs.append(msg)
-        if len(msgs)  > prefs.history_depth:
-            msgs = msgs[10:]
-        with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
-            f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
-        tools.non_stop()
-def smart_response():
+def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto"):
     try:
         print(f"{GREEN}Smart message launched{RESET}")
         current_datetime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -80,12 +25,15 @@ def smart_response():
             model=prefs.MODEL(),
             messages=[system_message, *conversation],
             tools=tools.TOOLS,
-            tool_choice="auto",
+            tool_choice=tool_choice,
             temperature=1.1
-            # top_p=0.9
         )
         try:
-            print(CYAN, response.choices[0].message.content, RESET)
+            print(response)
+            if response.choices[0].finish_reason == 'error':
+                smart_response(TOOLSET)
+                return
+            print(BRIGHT_RED, response.choices[0].message.content, RESET)
         except Exception as e:
             pass
         
@@ -141,17 +89,14 @@ def smart_response():
                         # Save conversation state
                         with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
                             json.dump(conversation, f, indent=4, ensure_ascii=False)
+                        # if result != 'send':
+                        #     print(YELLOW, "Silence...", RESET)
                         if "get_long_term_memory" == func_name:
                             smart_response()
                 except Exception as e:
                     error_msg = f"Tool {func_name} failed: {str(e)}"
                     bot.send_message(prefs.TST_chat_id, f"```{error_msg}```", parse_mode="Markdown")
 
-        if result != 'send':
-            print(YELLOW, "Silence...", RESET)
-        # if tool_calls:   
-        #     smart_response()
-        reminder_check()
 
     except Exception as e:
         error_msg = f"Critical failure: {str(e)}"

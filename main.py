@@ -1,4 +1,5 @@
 import random
+import threading
 import ai_handler
 import telebot
 from stuff import *
@@ -8,8 +9,12 @@ from media_handler import *
 import datetime
 import time
 import tools_package.tools as tools
+import asyncio
 # Telegram creds
 from bot_instance import bot 
+import periodic_check
+
+
 def start_loop():
     try:    
         bot.polling(non_stop=True)
@@ -20,6 +25,18 @@ def start_loop():
         )
         time.sleep(5)
         start_loop()
+    
+async def main():
+    # Create and launch the periodic check task
+    tick = asyncio.create_task(periodic_check.check_state())
+    
+    # Start the non-async loop in a separate thread
+    loop_thread = threading.Thread(target=start_loop)
+    loop_thread.daemon = True
+    loop_thread.start()
+
+    # Keep the async task running
+    await tick
     
 @bot.message_handler(commands=["ok"])
 def is_alive(message):
@@ -78,7 +95,6 @@ def send_file(message:telebot.types.Message):
 @bot.message_handler(func=lambda message: str(message.chat.id) == prefs.chat_to_interact or 
                      bot.get_chat(message.chat.id).type == "private")
 def process_any_msg(message:telebot.types.Message):
-    
     
     #update context of conversation
     msgs = []
@@ -176,9 +192,9 @@ def handle_files(message:telebot.types.Message):
             prefs.TST_chat_id,
             "```GENERAL_Error: General_error_in_handle_files " + str(e) + "```", parse_mode="Markdown"
         )
-    ai_handler.smart_response()
-    if random.randint(1, 3) == 3:    
-        tools.non_stop()
-start_loop()
+    ai_handler.smart_response(TOOLSET=tools.TOOLS)
+# start_loop()
 # bot.polling()
     
+if __name__ == "__main__":
+    asyncio.run(main())

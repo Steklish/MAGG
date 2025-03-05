@@ -1,5 +1,6 @@
+import re
 from .imports_for_tools import *
-
+import conf_info
 
 long_term_memory_tool = {
     "type": "function",
@@ -44,20 +45,81 @@ def get_long_term_memory(keywords: list[str]):
         response = client.chat.completions.create(
             model=prefs.MODEL(),
             messages=[
-                prefs.system_msg_char,
+                conf_info.system_msg_char,
                 *conversation,
                 {
                     'role' : 'user',
-                    'extra' : 'reminder time has come',
-                    'content' : json.dumps(filtered_memories, ensure_ascii=False) + '\n\nисходя из истории переписки и данных записей выдели данные, которые имеют отношение к контексту. Отформатируй данные, как те, что ты нашла в своей памяти',
+                    'content' : json.dumps(filtered_memories, ensure_ascii=False) + '\n\nисходя из истории переписки и данных записей выдели данные, которые имеют отношение к контексту. Эти данные из твоей памяти. Приведи их в удобный формат',
                 }
             ],
-            # tools=tools.TOOLS,
-            # tool_choice="auto",
             temperature=1.2
-            # top_p=0.9
         )
         print(response)
         return normalize_string(response.choices[0].message.content)
 
 
+
+def reminder_check():
+    
+    date_time_pattern = r'\b(\d{2})-(\d{2})-(\d{4})-(\d{2})-(\d{2})\b'
+    
+    # Read the existing memories
+    try:
+        with open('static_storage/long_term_memory.json', 'r', encoding="utf-8") as f:
+            memories = json.load(f)
+    except FileNotFoundError:
+        memories = []
+    to_remind = []
+    old_memories = []
+
+    # Get the current date and time
+    current_datetime = datetime.datetime.now()
+
+    for mem in memories:
+        done = False
+
+        # Search for the date-time pattern in the memory content
+        match = re.findall(date_time_pattern, mem["content"])
+        if match:
+            for day, month, year, hour, minute in match:
+                # Parse the matched date and time
+                matched_datetime = datetime.datetime(
+                    year=int(year),
+                    month=int(month),
+                    day=int(day),
+                    hour=int(hour),
+                    minute=int(minute)
+                )
+                # Check if the matched date and time is in the past
+                if matched_datetime <= current_datetime:
+                    done = True
+                    break
+
+        # If the reminder is due, add it to the to_remind list
+        if mem["reminder"] and done:
+            to_remind.append(mem)
+        else:
+            # Otherwise, keep it in the old_memories list
+            old_memories.append(mem)
+             
+    if to_remind != []:
+        bot.send_message(
+                prefs.TST_chat_id,
+                "`Reminder used`", parse_mode="Markdown"
+            )
+        # Write the updated memories back to the file
+        with open('static_storage/long_term_memory.json', 'w', encoding="utf-8") as f:
+            # PermissionError(memories)
+            json.dump(old_memories, f, indent=4, ensure_ascii=False)
+        msgs = []
+        with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
+            msgs = json.loads(f.read())        
+        msg = {
+            'role' : 'user',
+            'extra' : 'reminder',
+            'content' : json.dumps(to_remind, indent=4, ensure_ascii=False),
+        }
+        msgs.append(msg)
+        with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
+            f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
+        

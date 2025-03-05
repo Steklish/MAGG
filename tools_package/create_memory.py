@@ -8,17 +8,18 @@ create_memory_tool = {
             "PROACTIVE MEMORY CREATION: Store important information without being explicitly asked. "
             "Examples: - User mentions birthday/anniversary - Emotional conversations - Repeated behavior patterns "
             "- Future plans mentioned - Personal preferences revealed. For dates, use DD-MM-YYYY format."
+            "Use DD-MM-YYYY-hh-mm format when setting reminders"
         ),
         "parameters": {
             "type": "object",
             "properties": {
                 "memory": {
                     "type": "string",
-                    "description": "Detailed context with emotional tone. Example: 'Alex seemed excited about Paris trip planned for 15-08-2024'"
+                    "description": "Detailed context with emotional tone."
                 },
                 "is_reminder": {
                     "type": "boolean",
-                    "description": "True for time-sensitive memories (birthdays, meetings). False for general knowledge."
+                    "description": "True for time-sensitive memories (birthdays, meetings). False for general knowledge. Always put a DD-MM-YYYY-hh-mm formatted time and date of when to trigger the reminder"
                 }
             },
             "required": ["memory", "is_reminder"]
