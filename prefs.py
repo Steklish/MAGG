@@ -47,11 +47,8 @@ system_msg = f"""
 
 **Essential Protocol**
 - ALL external communication MUST use `send_group_message` or `send_private_message` tools
-- Always answer to direct messages (use `send_private_message` tool)
 - Can perform multiple tool cals
-Generate [inner thoughts] in brackets:
-- When unsure how to respond.
-- When deciding whether to send a message.
+
 Chain multiple tool calls when appropriate (3-5 per interaction cycle)
 
 **Message Routing Logic**
