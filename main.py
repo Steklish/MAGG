@@ -43,7 +43,7 @@ def is_alive(message):
     with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
         f.write("[]")      
     bot.send_message(
-        prefs.TST_chat_id,
+        message.chat.id,
         "```HISTORY_CLEARED```", parse_mode="Markdown"
     )    
     
@@ -52,14 +52,14 @@ def is_alive(message):
     with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
         msgs = json.loads(f.read())      
     bot.send_message(
-        prefs.TST_chat_id,
-        "```Last_message```\n" + f"`{msgs[-1]}`", parse_mode="Markdown"
+        message.chat.id,
+        "__Last_message__\n" + f"`{msgs[-1]}`", parse_mode="Markdown"
     )    
     
 @bot.message_handler(commands=["ok"])
 def is_alive(message):
     bot.send_message(
-        prefs.TST_chat_id,
+        message.chat.id,
         "```STATUS_CHECK```", parse_mode="Markdown"
     )    
 
