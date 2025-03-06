@@ -8,8 +8,10 @@ long_term_memory_tool = {
         "name": "get_long_term_memory",
         "description": (
             "ALWAYS USE FIRST when context is unclear or when names/dates are mentioned. "
-            "Crucial for: - Identifying people - Recalling events - Understanding references "
-            "Effective keyword strategies: Combine names, dates (DD-MM-YYYY), locations, and unique terms. Use this along with any tool to send a message."
+            "Crucial for: - Identifying people. - Recalling events. - Understanding references. "
+            "Effective keyword strategies: Combine names, dates (DD-MM-YYYY), locations, and unique terms. "
+            "Example: ['Alex', 'birthday', '15-08', 'Paris trip', '2024']. "
+            "Use this tool to enrich your responses with personal touches and shared memories."
         ),
         "parameters": {
             "type": "object",
@@ -24,7 +26,6 @@ long_term_memory_tool = {
         }
     }
 }
-
 def get_long_term_memory(keywords: list[str]):
     with open("static_storage/long_term_memory.json", "r", encoding="utf-8") as f:
         memories = json.load(f)

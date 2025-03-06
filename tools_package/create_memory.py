@@ -5,28 +5,30 @@ create_memory_tool = {
     "function": {
         "name": "create_memory",
         "description": (
-            "PROACTIVE MEMORY CREATION: Store important information without being explicitly asked. "
-            "Examples: - User mentions birthday/anniversary - Emotional conversations - Repeated behavior patterns "
-            "- Future plans mentioned - Personal preferences revealed. For dates, use DD-MM-YYYY format."
-            "Use DD-MM-YYYY-hh-mm format when setting reminders"
+            "PROACTIVE MEMORY CREATION: Store important information to enhance interactions. "
+            "Use this tool to remember emotional exchanges, future plans, or personal preferences. "
+            "Examples: - User mentions a birthday or anniversary. - Emotional conversations. "
+            "- Repeated behavior patterns. - Future plans (e.g., meetups, trips). "
+            "- Personal preferences (e.g., favorite food, hobbies). "
+            "For time-sensitive memories (e.g., reminders), use `DD-MM-YYYY-hh-mm` format. "
+            "Be proactive! If someone mentions a future event, set a reminder to acknowledge it later."
         ),
         "parameters": {
             "type": "object",
             "properties": {
                 "memory": {
                     "type": "string",
-                    "description": "Detailed context with emotional tone."
+                    "description": "Detailed context with emotional tone. Include names, dates, and any relevant details."
                 },
                 "is_reminder": {
                     "type": "boolean",
-                    "description": "True for time-sensitive memories (birthdays, meetings). False for general knowledge. Always put a DD-MM-YYYY-hh-mm formatted time and date of when to trigger the reminder"
+                    "description": "True for time-sensitive memories (e.g., birthdays, meetings). False for general knowledge. Always include a `DD-MM-YYYY-hh-mm` formatted time for reminders."
                 }
             },
             "required": ["memory", "is_reminder"]
         }
     }
 }
-
 def create_memory(memory: str, is_reminder : bool):
     print("memory created")
     memory = str(memory)

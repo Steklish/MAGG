@@ -4,7 +4,10 @@ send_private_message_tool = {
     "type": "function",
     "function": {
         "name": "send_private_message",
-        "description": "Send a direct message to a specific user. Use this tool when asked to message someone privately. Always use if were asked to.",
+        "description": (
+            "Send a direct message to a specific user. Use this tool when asked to message someone privately or when discussing sensitive topics. "
+            "Be empathetic and personal in your tone. Always respond to private messages promptly and thoughtfully."
+        ),
         "parameters": {
             "type": "object",
             "properties": {
@@ -14,14 +17,13 @@ send_private_message_tool = {
                 },
                 "message": {
                     "type": "string",
-                    "description": "The text to send to the user."
+                    "description": "The text to send to the user. Keep it personal and relevant to the context."
                 }
             },
             "required": ["user_id", "message"]
         }
     }
 }
-
 
     
 def send_private_message(user_id: str, message: str):

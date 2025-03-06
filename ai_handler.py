@@ -26,7 +26,8 @@ def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto", TEMP=prefs.TEMPERATU
             messages=[system_message, *conversation],
             tools=tools.TOOLS,
             tool_choice=tool_choice,
-            temperature=TEMP
+            temperature=TEMP,
+            frequency_penalty=-1.0
         )
         try:
             print(response)
