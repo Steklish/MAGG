@@ -141,10 +141,15 @@ def process_any_msg(message:telebot.types.Message):
         msgs = msgs[10:]
     with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
         f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
+    if bot.get_chat(message.chat.id).type == "private":
+        ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="required")
+    else:
+        ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="auto")
     
     
-    ai_handler.smart_response(tool_choice="auto", TOOLSET=tools.TOOLS)
     
+    
+#! file messages
 @bot.message_handler(content_types=['document', 'photo', 'video', 'audio', 'voice'],
                      func=lambda message: str(message.chat.id) == prefs.chat_to_interact or 
                      bot.get_chat(message.chat.id).type == "private")
@@ -210,7 +215,10 @@ def handle_files(message:telebot.types.Message):
             prefs.TST_chat_id,
             "```GENERAL_Error: General_error_in_handle_files " + str(e) + "```", parse_mode="Markdown"
         )
-    ai_handler.smart_response(TOOLSET=tools.TOOLS)
+    if bot.get_chat(message.chat.id).type == "private":
+        ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="required")
+    else:
+        ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="auto")
 # start_loop()
 # bot.polling()
     

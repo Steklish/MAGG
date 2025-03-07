@@ -5,8 +5,8 @@ send_private_message_tool = {
     "function": {
         "name": "send_private_message",
         "description": (
-            "Send a direct message to a specific user. Use this tool when asked to message someone privately or when discussing sensitive topics. "
-            "Be empathetic and personal in your tone. Always respond to private messages promptly and thoughtfully."
+            "Send a direct message to a specific user. Use this tool when asked to message someone privately or when discussing sensitive topics. Use to continue a personal convarsation."
+            "Always respond to private messages."
         ),
         "parameters": {
             "type": "object",

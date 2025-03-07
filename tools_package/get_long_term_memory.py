@@ -50,10 +50,10 @@ def get_long_term_memory(keywords: list[str]):
                 *conversation,
                 {
                     'role' : 'user',
-                    'content' : json.dumps(filtered_memories, ensure_ascii=False) + '\n\nисходя из истории переписки и данных записей выдели данные, которые имеют отношение к контексту. Эти данные из твоей памяти. Приведи их в удобный формат',
+                    'content' : json.dumps(filtered_memories, ensure_ascii=False) + '\n\nисходя из истории переписки и данных записей выдели данные, которые имеют отношение к контексту. Эти данные из твоей памяти. Приведи их в удобный формат. Подведи итог. Обращай внимание на даты создания заеисей в базе данных.',
                 }
             ],
-            temperature=(prefs.TEMPERATURE * 1.1)
+            temperature=(prefs.TEMPERATURE * 1.5)
         )
         print(response)
         return normalize_string(response.choices[0].message.content)
@@ -118,8 +118,7 @@ def reminder_check():
             msgs = json.loads(f.read())        
         msg = {
             'role' : 'user',
-            'extra' : 'reminder',
-            'content' : json.dumps(to_remind, indent=4, ensure_ascii=False),
+            'content' : "[timed event from system.]" + json.dumps(to_remind, indent=4, ensure_ascii=False),
         }
         msgs.append(msg)
         with open("static_storage/conversation.json", "w", encoding="utf-8") as f:

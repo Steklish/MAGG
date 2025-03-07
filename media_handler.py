@@ -5,7 +5,7 @@ from stuff import *
 import prefs
 import datetime
 import json
-
+import conf_info
 def convert_docx_to_html(docx_path):
     with open("tmp/" + docx_path, "rb") as docx_file:
         result = mammoth.convert_to_html(docx_file)
@@ -153,7 +153,7 @@ def extract_voice(url: str, message, file_path):
     
     sys_m = {
         'role': 'system',
-        'content': prefs.system_msg
+        'content': conf_info.system_msg_char
     }
     sys_m = [sys_m, *msgs]
     
@@ -162,12 +162,12 @@ def extract_voice(url: str, message, file_path):
         model='gemini-2.0-flash',
         contents=[
             json.dumps(sys_m),
-            'Extract text from audio. It is likely to be Russian. Also describe emotions and intonations of the speaker in Russsian. Think about the context (it can improve spelling recognition) of the conversation',
+            'Extract text from audio. It is likely to be Russian. Also describe emotions and intonations of the speaker in Russsian. Think about the context (it can improve spelling recognition) of the conversation. Privide etracted text and brief info about intonation if needed.',
             file,
         ]
     )
     
-    print(YELLOW + response.text + RESET)
+    print(YELLOW, response, RESET)
     # Update context of conversation
     msg = {
         "role": "user",
@@ -177,8 +177,7 @@ def extract_voice(url: str, message, file_path):
                 "username": message.from_user.username
             },
             "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-            "extra" : "voice message from user (user sent a voice message), so description provided not a real text",
-            "message": normalize_string(response.text)
+            "message": f"[voice message from {message.from_user.full_name} (user sent a voice message), so description provided] " + normalize_string(response.text)
         }, indent=4, ensure_ascii=False)
     }
     print(BACKGROUND_RED + BLACK + "context updated" + RESET)

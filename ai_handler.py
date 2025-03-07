@@ -27,7 +27,7 @@ def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto", TEMP=prefs.TEMPERATU
             tools=tools.TOOLS,
             tool_choice=tool_choice,
             temperature=TEMP,
-            frequency_penalty=-1.0
+            frequency_penalty=-2.0
         )
         try:
             print(response)
@@ -93,7 +93,7 @@ def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto", TEMP=prefs.TEMPERATU
                         # if result != 'send':
                         #     print(YELLOW, "Silence...", RESET)
                         if "get_long_term_memory" == func_name:
-                            smart_response()
+                            smart_response(TOOLSET=tools.TOOLS_FORCE_SEND, tool_choice="required")
                 except Exception as e:
                     error_msg = f"Tool {func_name} failed: {str(e)}"
                     bot.send_message(prefs.TST_chat_id, f"```{error_msg}```", parse_mode="Markdown")
