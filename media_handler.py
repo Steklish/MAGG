@@ -6,6 +6,8 @@ import prefs
 import datetime
 import json
 import conf_info
+from bot_instance import bot
+
 def convert_docx_to_html(docx_path):
     with open("tmp/" + docx_path, "rb") as docx_file:
         result = mammoth.convert_to_html(docx_file)
@@ -36,6 +38,10 @@ def extract_doc(url:str, message, file_path):
 
         #update context of conversation
         msgs = []
+        if bot.get_chat(message.chat.id).type == "private":
+            origin = "direct message"
+        else:
+            origin = "group"
         with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
             msgs = json.loads(f.read())        
         msg = {
@@ -46,6 +52,7 @@ def extract_doc(url:str, message, file_path):
                     "username": message.from_user.username
                 },
                 "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
+                "from" : origin,
                 "message": response.text
             }, indent=4, ensure_ascii=False)
         }
@@ -87,6 +94,10 @@ def extract_img(url:str, message, file_path):
         )
     #update context of conversation
     msgs = []
+    if bot.get_chat(message.chat.id).type == "private":
+        origin = "direct message"
+    else:
+        origin = "group"
     with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
         msgs = json.loads(f.read())
     
@@ -97,6 +108,7 @@ def extract_img(url:str, message, file_path):
                 "name": message.from_user.full_name,
                 "username": message.from_user.username
             },
+            "from" : origin,
             "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
             "message(assistant analysys)": normalize_string(response.text)
         }, indent=4, ensure_ascii=False)
@@ -116,6 +128,7 @@ def extract_img(url:str, message, file_path):
                     "username": message.from_user.username
                 },
                 "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
+                "from" : origin,
                 "message": normalize_string(message_text)
             }, indent=4, ensure_ascii=False)
         }
@@ -166,6 +179,10 @@ def extract_voice(url: str, message, file_path):
             file,
         ]
     )
+    if bot.get_chat(message.chat.id).type == "private":
+        origin = "direct message"
+    else:
+        origin = "group"
     
     print(YELLOW, response, RESET)
     # Update context of conversation
@@ -177,6 +194,7 @@ def extract_voice(url: str, message, file_path):
                 "username": message.from_user.username
             },
             "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
+            "from" : origin,
             "message": f"[voice message from {message.from_user.full_name} (user sent a voice message), so description provided] " + normalize_string(response.text)
         }, indent=4, ensure_ascii=False)
     }

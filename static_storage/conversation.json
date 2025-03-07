@@ -1,1 +1,57 @@
-[]
+[
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"07-03-2025 19:05:59 +03\",\n    \"message\": \"через 10 минут отправь мне сообщение с текстом \\\"Э\\\"\",\n    \"from\": \"direct message\"\n}"
+    },
+    {
+        "role": "assistant",
+        "tool_calls": [
+            {
+                "id": "tool_0_create_memory",
+                "type": "function",
+                "function": {
+                    "name": "create_memory",
+                    "arguments": "{\"memory\":\"Антон (Steklish) попросил прислать ему сообщение \\\"Э\\\" через 10 минут. 07-03-2025-19-15\",\"is_reminder\":true}"
+                }
+            }
+        ]
+    },
+    {
+        "role": "tool",
+        "name": "create_memory",
+        "tool_call_id": "tool_0_create_memory",
+        "content": "None"
+    },
+    {
+        "role": "user",
+        "content": "[timed event from system.][\n    {\n        \"reminder\": true,\n        \"date\": \"19:06:04\",\n        \"content\": \"Антон (Steklish) попросил прислать ему сообщение \\\"Э\\\" через 10 минут. 07-03-2025-19-05\"\n    }\n]"
+    },
+    {
+        "role": "assistant",
+        "content": "Жди, Антон. Время придет, и ты получишь свое \"Э\". 😈",
+        "to": "[direct message to 1911742158/steklish]"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"07-03-2025 19:07:43 +03\",\n    \"message\": \"Поздравь 8го марта всех парней с праздником\",\n    \"from\": \"direct message\"\n}"
+    },
+    {
+        "role": "assistant",
+        "tool_calls": [
+            {
+                "id": "tool_0_create_memory",
+                "type": "function",
+                "function": {
+                    "name": "create_memory",
+                    "arguments": "{\"is_reminder\":true,\"memory\":\"Напомнить поздравить всех парней с 8 марта. 08-03-2025-00-00\"}"
+                }
+            }
+        ]
+    },
+    {
+        "role": "tool",
+        "name": "create_memory",
+        "tool_call_id": "tool_0_create_memory",
+        "content": "None"
+    }
+]

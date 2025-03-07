@@ -34,7 +34,7 @@ def create_memory(memory: str, is_reminder : bool):
     memory = str(memory)
     new_memory = {
         'reminder' : is_reminder == True,
-        'date': datetime.datetime.now().strftime('%d-%m-%y-%H-%M'),
+        'date': datetime.datetime.now(prefs.timezone).strftime('%H:%M:%S'),
         'content': memory
     }
 

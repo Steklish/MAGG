@@ -58,12 +58,14 @@ def get_long_term_memory(keywords: list[str]):
         print(response)
         return normalize_string(response.choices[0].message.content)
 
-
+import datetime
+import json
+import re
+import pytz
 
 def reminder_check():
-    
     date_time_pattern = r'\b(\d{2})-(\d{2})-(\d{4})-(\d{2})-(\d{2})\b'
-    
+
     # Read the existing memories
     try:
         with open('static_storage/long_term_memory.json', 'r', encoding="utf-8") as f:
@@ -73,8 +75,8 @@ def reminder_check():
     to_remind = []
     old_memories = []
 
-    # Get the current date and time
-    current_datetime = datetime.datetime.now()
+    # Get the current date and time in the specified timezone (prefs.timezone)
+    current_datetime = datetime.datetime.now(prefs.timezone)
 
     for mem in memories:
         done = False
@@ -91,6 +93,9 @@ def reminder_check():
                     hour=int(hour),
                     minute=int(minute)
                 )
+                # Add timezone info to matched_datetime (assuming the timezone is the same as prefs.timezone)
+                matched_datetime = prefs.timezone.localize(matched_datetime)
+
                 # Check if the matched date and time is in the past
                 if matched_datetime <= current_datetime:
                     done = True
@@ -102,23 +107,24 @@ def reminder_check():
         else:
             # Otherwise, keep it in the old_memories list
             old_memories.append(mem)
+
     found = False
-    if to_remind != []:
+    if to_remind:
         found = True
         bot.send_message(
-                prefs.TST_chat_id,
-                "`Reminder used`", parse_mode="Markdown"
-            )
+            prefs.TST_chat_id,
+            "`Reminder used`", parse_mode="Markdown"
+        )
         # Write the updated memories back to the file
         with open('static_storage/long_term_memory.json', 'w', encoding="utf-8") as f:
-            # PermissionError(memories)
             json.dump(old_memories, f, indent=4, ensure_ascii=False)
-        msgs = []
+        
+        # Add reminders to conversation history
         with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
-            msgs = json.loads(f.read())        
+            msgs = json.loads(f.read())
         msg = {
-            'role' : 'user',
-            'content' : "[timed event from system.]" + json.dumps(to_remind, indent=4, ensure_ascii=False),
+            'role': 'user',
+            'content': "[timed event from system.]" + json.dumps(to_remind, indent=4, ensure_ascii=False),
         }
         msgs.append(msg)
         with open("static_storage/conversation.json", "w", encoding="utf-8") as f:

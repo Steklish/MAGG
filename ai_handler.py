@@ -8,7 +8,7 @@ import tools_package.tools as tools
 def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto", TEMP=prefs.TEMPERATURE):
     try:
         print(f"{GREEN}Smart message launched{RESET}")
-        current_datetime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        current_datetime = datetime.datetime.now(prefs.timezone).strftime('%H:%M:%S')
         
         system_message = {
             'role': 'system',

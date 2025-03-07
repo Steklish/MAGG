@@ -2,7 +2,7 @@ import datetime
 import conf_info
 from random import randint
 TG_API = conf_info.TG_API
-
+import pytz
 # pick one randomly to avoid reaching the limits
 MODEL_01 = "google/gemini-2.0-flash-lite-preview-02-05:free"
 MODEL_02 = "google/gemini-2.0-flash-exp:free"
@@ -95,4 +95,4 @@ chat_to_interact = TST_chat_id
 
 # Specify the UTC offset (e.g., UTC+3)
 utc_offset = datetime.timedelta(hours=3)
-timezone = datetime.timezone(utc_offset)
+timezone = pytz.timezone('Etc/GMT-3')
