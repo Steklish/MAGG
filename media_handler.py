@@ -166,7 +166,7 @@ def extract_voice(url: str, message, file_path):
     
     sys_m = {
         'role': 'system',
-        'content': conf_info.system_msg_char
+        'content': prefs.system_msg_char
     }
     sys_m = [sys_m, *msgs]
     

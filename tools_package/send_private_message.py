@@ -50,8 +50,10 @@ def send_private_message(user_id: str, message: str):
             normalize_string(message),
             parse_mode="Markdown"
         )
+        print("Saved presonal message")
         with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
             f.write(json.dumps(messages, indent=4, ensure_ascii=False))
+        return "send"
     except Exception as e:
         print(e)
         bot.send_message(

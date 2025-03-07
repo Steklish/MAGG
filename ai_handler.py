@@ -16,10 +16,8 @@ def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto", TEMP=prefs.TEMPERATU
             {prefs.system_msg}
             """
         }
-
         with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
             conversation = json.load(f)
-
         client.api_key = prefs.open_r_key()
         response = client.chat.completions.create(
             model=prefs.MODEL(),
@@ -45,26 +43,17 @@ def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto", TEMP=prefs.TEMPERATU
                 parse_mode="Markdown"
             )
             return
-
         message = response.choices[0].message
         plain_text = message.content
         tool_calls = message.tool_calls
-
-        
         result = None
-        # Process tool calls
         if tool_calls:
             for call in tool_calls:
                 func_name = call.function.name
                 func_args = call.function.arguments
-                
                 try:
-                    
-                    #! Execute tool
-                    
-                    result = tools.execute_tool(func_name, func_args)
-                    # Store tool result
-                    if not("send" in func_name):
+                    result = tools.execute_tool(func_name, func_args)                   # tool execution
+                    if not("send" in func_name):                                        # function tat interact with chats return "send" string
                         conversation.append(
                             {
                                 "role": "assistant",
@@ -75,7 +64,6 @@ def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto", TEMP=prefs.TEMPERATU
                                         "name" : str(func_name),
                                         "arguments" : str(func_args)
                                     }
-                                    # "index" : str(call_index),
                                 }]
                             }
                         )
@@ -97,8 +85,15 @@ def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto", TEMP=prefs.TEMPERATU
                 except Exception as e:
                     error_msg = f"Tool {func_name} failed: {str(e)}"
                     bot.send_message(prefs.TST_chat_id, f"```{error_msg}```", parse_mode="Markdown")
-
-
+        if conversation[-1]["role"] == "user":
+            conversation.append(
+                {
+                    "role": "assistant",
+                    "content": "[processed previous message]",
+                }
+            )
+            with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
+                json.dump(conversation, f, indent=4, ensure_ascii=False)
     except Exception as e:
         error_msg = f"Critical failure: {str(e)}"
         bot.send_message(prefs.TST_chat_id, f"```{error_msg}```", parse_mode="Markdown")

@@ -46,7 +46,7 @@ def get_long_term_memory(keywords: list[str]):
         response = client.chat.completions.create(
             model=prefs.MODEL(),
             messages=[
-                conf_info.system_msg_char,
+                prefs.system_msg_char,
                 *conversation,
                 {
                     'role' : 'user',
