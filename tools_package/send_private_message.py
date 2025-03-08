@@ -61,3 +61,4 @@ def send_private_message(user_id: str, message: str):
             f"```Cannot_send_private_message \n(sm_rs)\n {str(e)}```", 
             parse_mode="Markdown"
         )
+        return 1

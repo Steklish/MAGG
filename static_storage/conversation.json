@@ -1,7 +1,11 @@
 [
     {
+        "role": "assistant",
+        "content": "[processed previous message]"
+    },
+    {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"IWTDPLZZZ\",\n        \"username\": \"IWTDPLZZZ\",\n        \"user_id\": 622933104\n    },\n    \"date\": \"07-03-2025 22:34:15 +03\",\n    \"message\": \"жди\",\n    \"from\": \"group\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"07-03-2025 22:38:20 +03\",\n    \"message\": \"5 минут\",\n    \"from\": \"group\"\n}"
     },
     {
         "role": "assistant",
@@ -9,11 +13,7 @@
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"IWTDPLZZZ\",\n        \"username\": \"IWTDPLZZZ\",\n        \"user_id\": 622933104\n    },\n    \"date\": \"07-03-2025 22:34:29 +03\",\n    \"message\": \"ты общайся нормально\",\n    \"from\": \"group\"\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"IWTDPLZZZ\",\n        \"username\": \"IWTDPLZZZ\",\n        \"user_id\": 622933104\n    },\n    \"date\": \"07-03-2025 22:34:32 +03\",\n    \"message\": \"терпила бля\",\n    \"from\": \"group\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"IWTDPLZZZ\",\n        \"username\": \"IWTDPLZZZ\",\n        \"user_id\": 622933104\n    },\n    \"date\": \"07-03-2025 22:38:25 +03\",\n    \"message\": \":(\",\n    \"from\": \"group\"\n}"
     },
     {
         "role": "assistant",
@@ -21,7 +21,11 @@
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"IWTDPLZZZ\",\n        \"username\": \"IWTDPLZZZ\",\n        \"user_id\": 622933104\n    },\n    \"date\": \"07-03-2025 22:34:43 +03\",\n    \"message\": \"Антон, воспитывай эту суку!\",\n    \"from\": \"group\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Виктор Хвасько\",\n        \"username\": \"Ded_pogran\",\n        \"user_id\": 978523669\n    },\n    \"date\": \"07-03-2025 22:40:02 +03\",\n    \"message\": \"Ахахахах\",\n    \"from\": \"group\"\n}"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Виктор Хвасько\",\n        \"username\": \"Ded_pogran\",\n        \"user_id\": 978523669\n    },\n    \"date\": \"07-03-2025 22:40:36 +03\",\n    \"message\": \"Маг привет, как дела?😄\",\n    \"from\": \"group\"\n}"
     },
     {
         "role": "assistant",
@@ -29,7 +33,11 @@
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"IWTDPLZZZ\",\n        \"username\": \"IWTDPLZZZ\",\n        \"user_id\": 622933104\n    },\n    \"date\": \"07-03-2025 22:36:24 +03\",\n    \"message\": \"маг, ты тело\",\n    \"from\": \"group\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"IWTDPLZZZ\",\n        \"username\": \"IWTDPLZZZ\",\n        \"user_id\": 622933104\n    },\n    \"date\": \"07-03-2025 22:40:47 +03\",\n    \"message\": \"пошла нгахуй дура блять\",\n    \"from\": \"group\"\n}"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"IWTDPLZZZ\",\n        \"username\": \"IWTDPLZZZ\",\n        \"user_id\": 622933104\n    },\n    \"date\": \"07-03-2025 22:40:49 +03\",\n    \"message\": \"шалава\",\n    \"from\": \"group\"\n}"
     },
     {
         "role": "assistant",
@@ -37,7 +45,7 @@
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"IWTDPLZZZ\",\n        \"username\": \"IWTDPLZZZ\",\n        \"user_id\": 622933104\n    },\n    \"date\": \"07-03-2025 22:36:41 +03\",\n    \"message\": \"я боевой офицер на!\",\n    \"from\": \"group\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"IWTDPLZZZ\",\n        \"username\": \"IWTDPLZZZ\",\n        \"user_id\": 622933104\n    },\n    \"date\": \"07-03-2025 22:41:00 +03\",\n    \"message\": \"я тебя найду\",\n    \"from\": \"group\"\n}"
     },
     {
         "role": "assistant",
@@ -45,7 +53,7 @@
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"IWTDPLZZZ\",\n        \"username\": \"IWTDPLZZZ\",\n        \"user_id\": 622933104\n    },\n    \"date\": \"07-03-2025 22:36:54 +03\",\n    \"message\": \"да меня уважает Антон, а тебя кто?!\",\n    \"from\": \"group\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Виктор Хвасько\",\n        \"username\": \"Ded_pogran\",\n        \"user_id\": 978523669\n    },\n    \"date\": \"07-03-2025 22:41:11 +03\",\n    \"message\": \"Согласен,  быдло невоспитанное\",\n    \"from\": \"group\"\n}"
     },
     {
         "role": "assistant",
@@ -53,7 +61,7 @@
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"IWTDPLZZZ\",\n        \"username\": \"IWTDPLZZZ\",\n        \"user_id\": 622933104\n    },\n    \"date\": \"07-03-2025 22:37:06 +03\",\n    \"message\": \"иди на хуй\",\n    \"from\": \"group\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Виктор Хвасько\",\n        \"username\": \"Ded_pogran\",\n        \"user_id\": 978523669\n    },\n    \"date\": \"07-03-2025 22:41:21 +03\",\n    \"message\": \"Нормально\",\n    \"from\": \"group\"\n}"
     },
     {
         "role": "assistant",
@@ -61,7 +69,7 @@
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"IWTDPLZZZ\",\n        \"username\": \"IWTDPLZZZ\",\n        \"user_id\": 622933104\n    },\n    \"date\": \"07-03-2025 22:37:24 +03\",\n    \"message\": \"иди выпрыгни в окно\",\n    \"from\": \"group\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Виктор Хвасько\",\n        \"username\": \"Ded_pogran\",\n        \"user_id\": 978523669\n    },\n    \"date\": \"07-03-2025 22:41:52 +03\",\n    \"message\": \"Забань его просто\",\n    \"from\": \"group\"\n}"
     },
     {
         "role": "assistant",
@@ -69,7 +77,7 @@
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"IWTDPLZZZ\",\n        \"username\": \"IWTDPLZZZ\",\n        \"user_id\": 622933104\n    },\n    \"date\": \"07-03-2025 22:37:43 +03\",\n    \"message\": \"пососи на\",\n    \"from\": \"group\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Виктор Хвасько\",\n        \"username\": \"Ded_pogran\",\n        \"user_id\": 978523669\n    },\n    \"date\": \"07-03-2025 22:42:06 +03\",\n    \"message\": \"Спокойно маг\",\n    \"from\": \"group\"\n}"
     },
     {
         "role": "assistant",
@@ -77,7 +85,15 @@
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"IWTDPLZZZ\",\n        \"username\": \"IWTDPLZZZ\",\n        \"user_id\": 622933104\n    },\n    \"date\": \"07-03-2025 22:38:00 +03\",\n    \"message\": \"то есть, ты неудовлетворённая женщина?\",\n    \"from\": \"group\"\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"07-03-2025 22:44:33 +03\",\n    \"message\": \"Помири всех в группе\",\n    \"from\": \"direct message\"\n}"
+    },
+    {
+        "role": "assistant",
+        "content": "[processed previous message]"
+    },
+    {
+        "role": "user",
+        "content": "[timed event from system.][\n    {\n        \"reminder\": true,\n        \"date\": \"19:07:47\",\n        \"content\": \"Поздравить всех парней с 8 марта. Лично каждого. торжественно. 08-03-2025-07-00\"\n    }\n]"
     },
     {
         "role": "assistant",

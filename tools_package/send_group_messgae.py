@@ -24,5 +24,7 @@ send_group_message_tool = {
 
 def send_group_message(message):
     print(GREEN, "Decided to answer (send_group_message)", RESET)
-    send_to_chat(message)
-    return "send"
+    if send_to_chat(message) == 0:
+        return "send"
+    else:
+        return 1
