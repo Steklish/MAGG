@@ -79,6 +79,9 @@ def reminder_check():
     current_datetime = datetime.datetime.now(prefs.timezone)
 
     for mem in memories:
+        if "is_task" not in mem.keys():
+            old_memories.append(mem)
+            continue
         done = False
 
         # Search for the date-time pattern in the memory content
@@ -101,8 +104,8 @@ def reminder_check():
                     done = True
                     break
 
-        # If the reminder is due, add it to the to_remind list
-        if mem["reminder"] and done:
+        # If the is_task is due, add it to the to_remind list
+        if mem["is_task"] and done:
             to_remind.append(mem)
         else:
             # Otherwise, keep it in the old_memories list
@@ -113,18 +116,19 @@ def reminder_check():
         found = True
         bot.send_message(
             prefs.TST_chat_id,
-            "`Reminder used`", parse_mode="Markdown"
+            "`TASK launched`", parse_mode="Markdown"
         )
         # Write the updated memories back to the file
         with open('static_storage/long_term_memory.json', 'w', encoding="utf-8") as f:
+            
             json.dump(old_memories, f, indent=4, ensure_ascii=False)
         
-        # Add reminders to conversation history
+        # Add is_tasks to conversation history
         with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
             msgs = json.loads(f.read())
         msg = {
             'role': 'user',
-            'content': "[timed event from system.]" + json.dumps(to_remind, indent=4, ensure_ascii=False),
+            'content': "[HAVE TO EXEC THE TASK]\n" + json.dumps(to_remind, indent=4, ensure_ascii=False),
         }
         msgs.append(msg)
         with open("static_storage/conversation.json", "w", encoding="utf-8") as f:

@@ -1,36 +1,39 @@
 from .imports_for_tools import *
 
-create_memory_tool = {
+
+setup_task_tool = {
     "type": "function",
     "function": {
-        "name": "create_memory",
+        "name": "setup_task",
         "description": (
-            "PROACTIVE MEMORY CREATION: Store important information to enhance interactions. "
-            "Use this tool to remember emotional exchanges, future plans, or personal preferences. "
-            "Examples: - User mentions a birthday or anniversary. - Emotional conversations. "
-            "- Repeated behavior patterns. - Future plans (e.g., meetups, trips). "
-            "- Personal preferences (e.g., favorite food, hobbies). "
-            "For time-sensitive memories (e.g., tasks), use `DD-MM-YYYY-hh-mm` format. "
-            "Be proactive! If someone mentions a future event, set a task to acknowledge it later."
+            "PROACTIVE TASK CREATION: form tasks to preform in specific time to have an ability to alert user or preform a specific action"
+            "Examples: - User asks to remind them about ones bithday the day before."
+            "Be proactive! If it wold be fun or important to remind user something in the future,  make a task."
         ),
         "parameters": {
             "type": "object",
             "properties": {
                 "memory": {
                     "type": "string",
-                    "description": "Detailed context with emotional tone. Include names, dates, and any relevant details."
+                    "description": "Detailed description of the task including any instructions."
+                },
+                "time_to_exec": {
+                    "type": "string",
+                    "description": "Exact time for the task to be executed in `DD-MM-YYYY-hh-mm` format."
                 }
             },
-            "required": ["memory"]
+            "required": ["memory", "time_to_exec"]
         }
     }
 }
-def create_memory(memory: str):
-    print("memory created")
+
+def setup_task(memory: str, time_to_exec:str):
+    print("TASK ACCEPTED")
     memory = str(memory)
     new_memory = {
+        'is_task' : True,
         'date created': datetime.datetime.now(prefs.timezone).strftime('%H:%M:%S'),
-        'content': memory
+        'content': memory + " " + time_to_exec
     }
 
     # Read the existing memories
@@ -44,7 +47,7 @@ def create_memory(memory: str):
     memories.append(new_memory)
     bot.send_message(
                 prefs.TST_chat_id,
-                "```MEMORY_CREATED \n" + str(new_memory) + "```", parse_mode="Markdown"
+                "```TASK_ACCEPTED \n" + str(new_memory) + "```", parse_mode="Markdown"
             )
     # Write the updated memories back to the file
     with open('static_storage/long_term_memory.json', 'w', encoding="utf-8") as f:
