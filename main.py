@@ -53,7 +53,7 @@ def is_alive(message):
         msgs = json.loads(f.read())      
     bot.send_message(
         message.chat.id,
-        "__Last_message__\n" + f"`{msgs[-1]}`", parse_mode="Markdown"
+        "Last_message\n\n" + f"{json.dumps(msgs[-1], indent=4)}", parse_mode="Markdown"
     )    
     
 @bot.message_handler(commands=["ok"])
