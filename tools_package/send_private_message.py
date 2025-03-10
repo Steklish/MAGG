@@ -17,7 +17,7 @@ send_private_message_tool = {
                 },
                 "message": {
                     "type": "string",
-                    "description": "The text to send to the user. Keep it personal and relevant to the context."
+                    "description": "The text to send to the user. Keep it personal and relevant to the context. You may use markdown in text."
                 }
             },
             "required": ["user_id", "message"]

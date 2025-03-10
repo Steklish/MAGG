@@ -81,7 +81,7 @@ def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto", TEMP=prefs.TEMPERATU
                         # if result != 'send':
                         #     print(YELLOW, "Silence...", RESET)
                         if "get_long_term_memory" == func_name:
-                            smart_response(TOOLSET=tools.TOOLS_FORCE_SEND, tool_choice="required")
+                            smart_response(TOOLSET=tools.TOOLS_FORCE_SEND, tool_choice="required", TEMP=TEMP*1.5)
                     else:           #! if "send-like" tool used
                         if result == 1:
                             print(BACKGROUND_RED, BLACK, "resending the messsage", RESET)
@@ -92,13 +92,6 @@ def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto", TEMP=prefs.TEMPERATU
                     error_msg = f"Tool {func_name} failed: {str(e)}"
                     bot.send_message(prefs.TST_chat_id, f"```{error_msg}```", parse_mode="Markdown")
                     return 1
-        # if conversation[-1]["role"] == "user":
-        #     conversation.append(
-        #         {
-        #             "role": "assistant",
-        #             "content": "[processed previous message]",
-        #         }
-        #     )
             with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
                 json.dump(conversation, f, indent=4, ensure_ascii=False)
         return 0

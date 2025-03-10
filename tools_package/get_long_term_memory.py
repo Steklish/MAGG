@@ -1,6 +1,8 @@
 import re
 from .imports_for_tools import *
 import conf_info
+import datetime
+import json
 
 long_term_memory_tool = {
     "type": "function",
@@ -33,8 +35,11 @@ def get_long_term_memory(keywords: list[str]):
     # Filter memories based on keywords (case-insensitive)
     filtered_memories = []
     for memory in memories:
-        if any((keyword.lower() in memory['content'].lower() or keyword.lower() in memory['date'].lower()) for keyword in keywords):
-            filtered_memories.append(memory)
+        try:
+            if any((keyword.lower() in memory['content'].lower() or keyword.lower() in memory['date created'].lower()) for keyword in keywords):
+                filtered_memories.append(memory)
+        except Exception as e:
+            print(str(e))
     if filtered_memories == []:
         return "No matching memories found"
     else:
@@ -58,10 +63,6 @@ def get_long_term_memory(keywords: list[str]):
         print(response)
         return normalize_string(response.choices[0].message.content)
 
-import datetime
-import json
-import re
-import pytz
 
 def reminder_check():
     date_time_pattern = r'\b(\d{2})-(\d{2})-(\d{4})-(\d{2})-(\d{2})\b'

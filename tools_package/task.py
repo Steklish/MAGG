@@ -6,9 +6,7 @@ setup_task_tool = {
     "function": {
         "name": "setup_task",
         "description": (
-            "PROACTIVE TASK CREATION: form tasks to preform in specific time to have an ability to alert user or preform a specific action"
-            "Examples: - User asks to remind them about ones bithday the day before."
-            "Be proactive! If it wold be fun or important to remind user something in the future,  make a task."
+            "PROACTIVE TASK CREATION: form tasks to preform in specific time to have an ability to alert user or preform a specific action. Use often and in combination with other functions."
         ),
         "parameters": {
             "type": "object",
