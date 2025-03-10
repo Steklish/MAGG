@@ -47,7 +47,7 @@ def setup_task(memory: str, time_to_exec:str):
     memories.append(new_memory)
     bot.send_message(
                 prefs.TST_chat_id,
-                "```TASK_ACCEPTED \n" + str(new_memory) + "```", parse_mode="Markdown"
+                "```TASK_ACCEPTED \n" + str(new_memory['content']) + "```", parse_mode="Markdown"
             )
     # Write the updated memories back to the file
     with open('static_storage/long_term_memory.json', 'w', encoding="utf-8") as f:

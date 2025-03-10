@@ -46,16 +46,7 @@ def is_alive(message):
         message.chat.id,
         "```HISTORY_CLEARED```", parse_mode="Markdown"
     )    
-    
-@bot.message_handler(commands=["last_message"])
-def is_alive(message):
-    with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
-        msgs = json.loads(f.read())      
-    bot.send_message(
-        message.chat.id,
-        "Last_message\n\n" + f"{json.dumps(msgs[-1], indent=4)}", parse_mode="Markdown"
-    )    
-    
+
 @bot.message_handler(commands=["ok"])
 def is_alive(message):
     bot.send_message(
