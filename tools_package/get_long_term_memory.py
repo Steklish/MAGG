@@ -9,11 +9,9 @@ long_term_memory_tool = {
     "function": {
         "name": "get_long_term_memory",
         "description": (
-            "ALWAYS USE FIRST when context is unclear or when names/dates are mentioned. "
-            "Crucial for: - Identifying people. - Recalling events. - Understanding references. "
-            "Effective keyword strategies: Combine names, dates (DD-MM-YYYY), locations, and unique terms. "
-            "Example: ['Alex', 'birthday', '15-08', 'Paris trip', '2024']. "
-            "Use this tool to enrich your responses with personal touches and shared memories."
+            "Periodically retrieving the context of the conversation."
+            "Use this tool to recall shared experiences, historical context, names, dates, or "
+            "specific events. This tool is essential for understanding references, emotional "
         ),
         "parameters": {
             "type": "object",

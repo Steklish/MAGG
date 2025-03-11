@@ -110,10 +110,26 @@ def process_any_msg(message:telebot.types.Message):
     with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
         msgs = json.loads(f.read())        
         
+    if message.reply_to_message:  # Check if the message is a reply
+        reply_info = {
+            "original_message": {
+                "sender": {
+                    "name": message.reply_to_message.from_user.full_name,
+                    "username": message.reply_to_message.from_user.username,
+                    "user_id": message.reply_to_message.from_user.id,
+                },
+                "date": datetime.datetime.fromtimestamp(
+                    message.reply_to_message.date, prefs.timezone
+                ).strftime('%d-%m-%Y %H:%M:%S %Z'),
+                "message": message.reply_to_message.text,
+            }
+        }
+    else:
+        reply_info = None  # No reply-to message present
     if bot.get_chat(message.chat.id).type == "private":
         origin = "direct message"
     else:
-        origin = "group"
+        origin = f"group{message.chat.title} / {message.chat.id}"
     msg = {
         'role' : 'user',
         'content' : json.dumps({
@@ -125,6 +141,7 @@ def process_any_msg(message:telebot.types.Message):
             "date" : datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
             'message' : message.text,
             "from" : origin,
+            "reply_to": reply_info,  # Include reply info if present
         }, indent=4, ensure_ascii=False)
     }
     msgs.append(msg)
@@ -133,6 +150,9 @@ def process_any_msg(message:telebot.types.Message):
     with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
         f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
     if bot.get_chat(message.chat.id).type == "private":
+        ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="required")
+    elif reply_info and reply_info["original_message"]["sender"]["name"] == bot.get_my_name().name:
+        print("recognized reply")
         ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="required")
     else:
         ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="auto")

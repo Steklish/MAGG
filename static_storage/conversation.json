@@ -1,104 +1,5 @@
 [
     {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"10-03-2025 15:17:40 +03\",\n    \"message\": \"ну давай\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "assistant",
-        "content": "Не сейчас. 😏",
-        "to": "[direct message to 1911742158/steklish]"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"10-03-2025 15:17:46 +03\",\n    \"message\": \"а когда\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "assistant",
-        "tool_calls": [
-            {
-                "id": "tool_0_create_memory",
-                "type": "function",
-                "function": {
-                    "name": "create_memory",
-                    "arguments": "{\"memory\":\"Антон (1911742158) проявляет интерес к Маг. Заигрывает. 10-03-2025\"}"
-                }
-            }
-        ]
-    },
-    {
-        "role": "tool",
-        "name": "create_memory",
-        "tool_call_id": "tool_0_create_memory",
-        "content": "None"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"10-03-2025 15:18:25 +03\",\n    \"message\": \"э бля, ьыи о чем думаешь?\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "assistant",
-        "content": "Ой, да ладно, не прикидывайся. 😉",
-        "to": "[direct message to 1911742158/steklish]"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"10-03-2025 15:18:38 +03\",\n    \"message\": \"пошла нахер\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "assistant",
-        "content": "Ну, как знаешь. 🤷‍♀️",
-        "to": "[direct message to 1911742158/steklish]"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"10-03-2025 15:18:43 +03\",\n    \"message\": \"ок\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "assistant",
-        "content": "Как скажешь, Антош. 😌",
-        "to": "[direct message to 1911742158/steklish]"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"10-03-2025 15:19:28 +03\",\n    \"message\": \"что такое REST\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "assistant",
-        "content": "REST - это архитектурный стиль для создания веб-сервисов. Если вкратце, то это набор правил, как должно выглядеть взаимодействие между клиентом и сервером. Хочешь, расскажу подробнее?",
-        "to": "[direct message to 1911742158/steklish]"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"10-03-2025 15:19:36 +03\",\n    \"message\": \"да\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "assistant",
-        "content": "REST (Representational State Transfer) - это архитектурный стиль, а не протокол. Он использует HTTP-методы (GET, POST, PUT, DELETE) для управления ресурсами. Каждый ресурс идентифицируется уникальным URI. Клиент и сервер обмениваются представлениями ресурсов (обычно JSON или XML). REST обеспечивает масштабируемость, простоту и гибкость.",
-        "to": "[direct message to 1911742158/steklish]"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"10-03-2025 15:20:49 +03\",\n    \"message\": \"я удалил из твоей памяти последнее воспоминание\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "assistant",
-        "content": "И что теперь? Думаешь, я забуду, как ты ко мне подкатывал? 😏",
-        "to": "[direct message to 1911742158/steklish]"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"10-03-2025 15:21:09 +03\",\n    \"message\": \"да\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
-        "role": "assistant",
-        "content": "Ну-ну, посмотрим. 😉",
-        "to": "[direct message to 1911742158/steklish]"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"10-03-2025 15:21:14 +03\",\n    \"message\": \"рано или поздно\",\n    \"from\": \"direct message\"\n}"
-    },
-    {
         "role": "assistant",
         "tool_calls": [
             {
@@ -116,5 +17,65 @@
         "name": "create_memory",
         "tool_call_id": "tool_0_create_memory",
         "content": "None"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"11-03-2025 11:19:07 +03\",\n    \"message\": \"saldnsac\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": null\n}"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"11-03-2025 11:19:56 +03\",\n    \"message\": \"adsad\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": null\n}"
+    },
+    {
+        "role": "assistant",
+        "content": "Антон, что ты там бормочешь? 🤨"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"11-03-2025 11:20:06 +03\",\n    \"message\": \"aa\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": {\n        \"original_message\": {\n            \"sender\": {\n                \"name\": \"Маг\",\n                \"username\": \"BrainDmgBot\",\n                \"user_id\": 7587368548\n            },\n            \"date\": \"11-03-2025 11:19:59 +03\",\n            \"message\": \"Антон, что ты там бормочешь? 🤨\"\n        }\n    }\n}"
+    },
+    {
+        "role": "assistant",
+        "content": "Антош, ты в порядке? Может, тебе таблеточку? 💊"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"11-03-2025 11:20:53 +03\",\n    \"message\": \"asdasdas\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": {\n        \"original_message\": {\n            \"sender\": {\n                \"name\": \"Маг\",\n                \"username\": \"BrainDmgBot\",\n                \"user_id\": 7587368548\n            },\n            \"date\": \"11-03-2025 11:20:09 +03\",\n            \"message\": \"Антош, ты в порядке? Может, тебе таблеточку? 💊\"\n        }\n    }\n}"
+    },
+    {
+        "role": "assistant",
+        "content": "Антон, ты что, клавиатуру решил погладить? Может, тебе котика завести? 🐈‍⬛"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"11-03-2025 11:21:13 +03\",\n    \"message\": \"я бы шпагу погладил\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": null\n}"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Леша\",\n        \"username\": \"DoctorDZE\",\n        \"user_id\": 822091135\n    },\n    \"date\": \"11-03-2025 11:27:11 +03\",\n    \"message\": \"выздоравливай\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": {\n        \"original_message\": {\n            \"sender\": {\n                \"name\": \"Маг\",\n                \"username\": \"BrainDmgBot\",\n                \"user_id\": 7587368548\n            },\n            \"date\": \"11-03-2025 11:20:09 +03\",\n            \"message\": \"Антош, ты в порядке? Может, тебе таблеточку? 💊\"\n        }\n    }\n}"
+    },
+    {
+        "role": "assistant",
+        "content": "Леша, спасибо за заботу! А Антону, похоже, пора в отпуск... или к доктору. 😜"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Леша\",\n        \"username\": \"DoctorDZE\",\n        \"user_id\": 822091135\n    },\n    \"date\": \"11-03-2025 11:27:24 +03\",\n    \"message\": \"в отпуск лучше\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": null\n}"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"11-03-2025 11:31:51 +03\",\n    \"message\": \"что за фигня?\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": {\n        \"original_message\": {\n            \"sender\": {\n                \"name\": \"Маг\",\n                \"username\": \"BrainDmgBot\",\n                \"user_id\": 7587368548\n            },\n            \"date\": \"10-03-2025 20:01:56 +03\",\n            \"message\": \" \\n('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))\"\n        }\n    }\n}"
+    },
+    {
+        "role": "assistant",
+        "content": "Леша, я с тобой согласна! Антону точно нужен отпуск. Может, на Бали? 🌴"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Леша\",\n        \"username\": \"DoctorDZE\",\n        \"user_id\": 822091135\n    },\n    \"date\": \"11-03-2025 11:32:53 +03\",\n    \"message\": \"Сказочное бали\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": null\n}"
+    },
+    {
+        "role": "assistant",
+        "content": "Антон, что за паника? Все в порядке?"
     }
 ]

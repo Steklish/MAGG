@@ -18,6 +18,7 @@ client = OpenAI(base_url=prefs.base_url, api_key=prefs.open_r_key())
 # Send startup message with system info
 startup_message = (
     "WE'RE ON AIR\n"
+    f"<{bot.get_my_name().name}>\n"
     f"OS: {platform.system()}"
     f"{datetime.datetime.now(prefs.timezone).strftime('%H:%M:%S')}\n"
     f"Monitoring: \n<{bot.get_chat(prefs.chat_to_interact).title}>"
