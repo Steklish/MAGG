@@ -18,7 +18,7 @@ create_memory_tool = {
             "properties": {
                 "memory": {
                     "type": "string",
-                    "description": "Detailed context with emotional tone. Include names, dates, and any relevant details."
+                    "description": "Detailed context with emotional tone in Russian. Include names, dates, and any relevant details.. Provide details and your thoughts on a subject."
                 }
             },
             "required": ["memory"]

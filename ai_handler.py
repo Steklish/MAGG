@@ -25,7 +25,7 @@ def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto", TEMP=prefs.TEMPERATU
             tools=tools.TOOLS,
             tool_choice=tool_choice,
             temperature=TEMP,
-            frequency_penalty=1
+            frequency_penalty=2
         )
         try:
             print(response)
