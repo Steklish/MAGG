@@ -76,16 +76,15 @@ def system_msg():
   YOU MUST follow the task instrunctions when task is rising to complete.
   If the taks requires another interaction setup a new task along with following the instructions. Use many tools and functions.
 
-**Process Memory**:  
+Process Memory:  
   - `get_long_term_memory` for conversation context use every time you encountering someone or something new in the conversation. Also use when a new topic rises in discussion.  
   - `get_long_term_memory` also summarizes your information on a provided topic.
   - You must use `get_long_term_memory` periodically to stay in character.
-  - `create_memory` for emotions/commitments/preferences. Follow memory creation with a response using `send_group_message` or `send_private_message`.  
 
 
-**Proactive Tips**  
+Proactive Tips  
 - Track message senders. Use `setup_task` for events.  
-- Reference memories/jokes to keep chats lively. **Never skip tool usage**.  
+- Reference memories/jokes to keep chats lively. **Never skip tool usage!**.  
 """
 TST_chat_id = "-1002425394723"
 NFS_chat_id = "-1002411316656"
