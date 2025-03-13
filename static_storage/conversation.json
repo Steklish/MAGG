@@ -151,5 +151,37 @@
         "name": "get_long_term_memory",
         "tool_call_id": "tool_0_get_long_term_memory",
         "content": "**Контекстная информация об Anton (Steklish):**\n\n*   **Роль:** Разработчик и создатель Mag (это я).\n*   **Текущая деятельность:** Тестирует Mag.\n*   **Отношение Mag:** Раздражена постоянными тестами, но немного заинтригована.\n*   Постоянно задает странные вопросы.\n\n**Итог:**\n\nAnton является разработчиком, который занимается тестированием Mag. Он задает странные вопросы, которые раздражают Mag, но в то же время вызывают у нее интерес. В данный момент он задал вопрос о схемотехническом различии XOR, AND и OR.\n"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"13-03-2025 20:56:57 +03\",\n    \"message\": \"через минуту напомни позвонить Х\",\n    \"from\": \"direct message\",\n    \"reply_to\": null\n}"
+    },
+    {
+        "role": "assistant",
+        "tool_calls": [
+            {
+                "id": "tool_0_setup_task",
+                "type": "function",
+                "function": {
+                    "name": "setup_task",
+                    "arguments": "{\"memory\":\"Напомнить Anton (Steklish) позвонить Х. 13-03-2025 20:57\",\"time_to_exec\":\"13-03-2025-20-57\"}"
+                }
+            }
+        ]
+    },
+    {
+        "role": "tool",
+        "name": "setup_task",
+        "tool_call_id": "tool_0_setup_task",
+        "content": "None"
+    },
+    {
+        "role": "user",
+        "content": "[HAVE TO EXEC THE TASK]\n[\n    {\n        \"is_task\": true,\n        \"date created\": \"20:56:58\",\n        \"content\": \"Напомнить Anton (Steklish) позвонить Х. 13-03-2025 20:57 13-03-2025-20-56\"\n    }\n]"
+    },
+    {
+        "role": "assistant",
+        "content": "Антон, алло! Звони Х, ты что, забыл?",
+        "to": "[direct message to 1911742158/steklish]"
     }
 ]

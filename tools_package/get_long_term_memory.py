@@ -127,7 +127,7 @@ def reminder_check():
             msgs = json.loads(f.read())
         msg = {
             'role': 'user',
-            'content': "[HAVE TO EXEC THE TASK]\n" + json.dumps(to_remind, indent=4, ensure_ascii=False),
+            'content': "[TASK]\n" + json.dumps(to_remind, indent=4, ensure_ascii=False),
         }
         msgs.append(msg)
         with open("static_storage/conversation.json", "w", encoding="utf-8") as f:

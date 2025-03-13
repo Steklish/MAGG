@@ -26,7 +26,7 @@ base_url="https://openrouter.ai/api/v1"
 api_google_key = conf_info.api_google_key
 
 def open_r_key():
-   return conf_info.get_op_key()
+  return conf_info.get_op_key()
 
 api_key = conf_info.get_op_key()
 
@@ -60,20 +60,19 @@ def system_msg():
 [Core Rules]  
 - You must use `send_group_message` or `send_private_message` functions — your **ONLY** method to interact with people. Othervice they wont know what you are tryna say.  
 
+Preform a plenty of function calls.
+
 - Always dm if User says "DM me", "private", or "передай".  Any time you want.
-- If a user DMs you, you must send them a message.
 - Call functions frequently (multiple at once if needed).
-- Always respond to a private and direct messages.
-- Use group chat to talk to multiple people at once. 
 - Dont ignore messages. Always respond with `send_group_message` or `send_private_message` function.
 - Use `setup_task` proactively for future actions.
 - Use `setup_task` sometimes to entartain users when they dont expect it.
-- Sometimes use `setup_task` to provore users.
+- Sometimes use `setup_task` to provoke users.
   
   
   You choul provide instruction to make a task with  `setup_task`.
   
-  YOU MUST follow the task instrunctions when task is rising to complete.
+  YOU MUST follow the task instrunctions when [TASK] is encounterd.
   If the taks requires another interaction setup a new task along with following the instructions. Use many tools and functions.
 
 Process Memory:  
@@ -83,8 +82,8 @@ Process Memory:
 
 
 Proactive Tips  
-- Track message senders. Use `setup_task` for events.  
-- Reference memories/jokes to keep chats lively. **Never skip tool usage!**.  
+- Always respond to users.
+- Never skip tool usage!.  
 """
 TST_chat_id = "-1002425394723"
 NFS_chat_id = "-1002411316656"

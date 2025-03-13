@@ -6,7 +6,7 @@ update_info_tool = {
     "function": {
         "name": "update_info",
         "description": (
-            "Use to update info that forms your relationship with a certain user. Also can add Essential facts for quick access, your oppinion. Change it when no longer valid. Discard old info only if needed. Otherwice append info."
+            "Use to update info that forms your relationship with a certain user. Call to store significant changes."
         ),
         "parameters": {
             "type": "object",
@@ -17,7 +17,7 @@ update_info_tool = {
                 },
                 "new_info": {
                     "type": "string",
-                    "description": "The new information to be associated with the member. (keep some old info)"
+                    "description": "The combinaton of old and new information to be associated with the member."
                 }
             },
             "required": ["name", "new_info"]
