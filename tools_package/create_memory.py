@@ -7,11 +7,9 @@ create_memory_tool = {
         "description": (
             "PROACTIVE MEMORY CREATION: Store important information to enhance interactions. "
             "Use this tool to remember emotional exchanges, future plans, or personal preferences. "
-            "Examples: - User mentions a birthday or anniversary. - Emotional conversations. "
             "- Repeated behavior patterns. - Future plans (e.g., meetups, trips). "
             "- Personal preferences (e.g., favorite food, hobbies). "
             "For time-sensitive memories (e.g., tasks), use `DD-MM-YYYY-hh-mm` format. "
-            "Be proactive! If someone mentions a future event, set a task to acknowledge it later."
         ),
         "parameters": {
             "type": "object",

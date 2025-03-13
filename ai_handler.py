@@ -13,7 +13,7 @@ def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto", TEMP=prefs.TEMPERATU
         system_message = {
             'role': 'system',
             'content': f"""Current time: {current_datetime}
-            {prefs.system_msg}
+            {prefs.system_msg()}
             """
         }
         with open("static_storage/conversation.json", "r", encoding="utf-8") as f:

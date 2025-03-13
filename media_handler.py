@@ -22,7 +22,7 @@ def extract_doc(url:str, message:telebot.types.Message, file_path):
     download_file(url,"tmp/" + file_path)
     sys_m = {
         'role': 'system',
-        'content': prefs.system_msg
+        'content': prefs.system_msg()
     }
     
     
@@ -99,7 +99,7 @@ def extract_img(url:str, message, file_path):
     file = client.files.upload(file='tmp/'+file_path)
     sys_m = {
         'role': 'system',
-        'content': prefs.system_msg
+        'content': prefs.system_msg()
     }
     
     message_text = "no subscription"
