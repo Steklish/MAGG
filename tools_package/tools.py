@@ -8,6 +8,7 @@ from .send_group_messgae import *
 from .send_private_message import *
 from .task import *
 from .user_status import *
+from .web_search import *
 
 TOOLS = [
     long_term_memory_tool,
@@ -15,7 +16,8 @@ TOOLS = [
     send_group_message_tool,
     send_private_message_tool,
     setup_task_tool,
-    update_info_tool
+    update_info_tool,
+    web_search_tool
 ]
 
 TOOLS_FORCE_SEND = [
@@ -26,7 +28,8 @@ TOOLS_NO_RESPONSE = [
     long_term_memory_tool,
     create_memory_tool,
     setup_task_tool,
-    update_info_tool
+    update_info_tool,
+    web_search_tool
 ]
 
 def execute_tool(tool_name, args):

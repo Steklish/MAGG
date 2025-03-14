@@ -82,6 +82,8 @@ def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto", TEMP=prefs.TEMPERATU
                         #     print(YELLOW, "Silence...", RESET)
                         if "get_long_term_memory" == func_name:
                             smart_response(TOOLSET=tools.TOOLS_FORCE_SEND, tool_choice="required", TEMP=TEMP*1.5)
+                        if "web_search" == func_name:
+                            smart_response(TOOLSET=tools.TOOLS_FORCE_SEND, tool_choice="required", TEMP=TEMP*1.5)
                     else:           #! if "send-like" tool used
                         if result == 1:
                             print(BACKGROUND_RED, BLACK, "resending the messsage", RESET)
