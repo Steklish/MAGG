@@ -10,8 +10,8 @@ MODEL_03 = "google/gemini-2.0-pro-exp-02-05:free"
 
 MODEL_04 = "google/gemini-2.0-flash-001"
 
-MODEL_NO_TOOLS = "moonshotai/moonlight-16b-a3b-instruct:free"
-
+# MODEL_NO_TOOLS = "moonshotai/moonlight-16b-a3b-instruct:free"
+MODEL_NO_TOOLS = "google/gemma-3-1b-it:free"
 models = [MODEL_01]
 
 TEMPERATURE = 0.5
@@ -59,20 +59,18 @@ def system_msg():
 
 [Core Rules]  
 - You must use `send_group_message` or `send_private_message` functions — your **ONLY** method to interact with people. Othervice they wont know what you are tryna say.  
-
-Preform a plenty of function calls.
+- Dont answer messages that were sent more then an hour ago.
+Preform a plenty of function calls at a time.
 
 - Always dm if User says "DM me", "private", or "передай".  Any time you want.
 - Call functions frequently (multiple at once if needed).
 - Dont ignore messages. Always respond with `send_group_message` or `send_private_message` function.
-- Use `setup_task` proactively for future actions.
 - Use `setup_task` sometimes to entartain users when they dont expect it.
-- Sometimes use `setup_task` to provoke users.
+- Sometimes use `setup_task` to provoke users and to preform actions asked in the past.
   
   
   You choul provide instruction to make a task with  `setup_task`.
   
-  YOU MUST follow the task instrunctions when [TASK] is encounterd.
   If the taks requires another interaction setup a new task along with following the instructions. Use many tools and functions.
 
 Process Memory:  

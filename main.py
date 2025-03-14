@@ -97,6 +97,7 @@ def send_file(message:telebot.types.Message):
 def send_file(message:telebot.types.Message):
     bot.send_document(message.chat.id, open("static_storage/conversation.json", 'rb'))
     bot.send_document(message.chat.id, open("static_storage/long_term_memory.json", 'rb'))
+    bot.send_document(message.chat.id, open("static_storage/user_status.json", 'rb'))
         
 
 
@@ -177,7 +178,7 @@ def handle_files(message:telebot.types.Message):
             except Exception as e:
                 bot.send_message(
                     prefs.TST_chat_id,
-                    "```DOCUMENT_Error: Cannot_send_response " + str(e) + "```", parse_mode="Markdown"
+                    "🔴\n```DOCUMENT_Error: Cannot_send_response " + str(e) + "```", parse_mode="Markdown"
                 )
         elif message.photo:
             try:
@@ -189,7 +190,7 @@ def handle_files(message:telebot.types.Message):
             except Exception as e:
                 bot.send_message(
                     prefs.TST_chat_id,
-                    "```PHOTO_Error: Cannot_send_response " + str(e) + "```", parse_mode="Markdown"
+                    "🔴\n```PHOTO_Error: Cannot_send_response " + str(e) + "```", parse_mode="Markdown"
                 )
         # elif message.video:
         #     try:
@@ -219,12 +220,12 @@ def handle_files(message:telebot.types.Message):
             except Exception as e:
                 bot.send_message(
                     prefs.TST_chat_id,
-                    "```VOICE_Error: Cannot_send_response " + str(e) + "```", parse_mode="Markdown"
+                    "🔴\n```VOICE_Error: Cannot_send_response " + str(e) + "```", parse_mode="Markdown"
                 )
     except Exception as e:
         bot.send_message(
             prefs.TST_chat_id,
-            "```GENERAL_Error: General_error_in_handle_files " + str(e) + "```", parse_mode="Markdown"
+            "🔴\n```GENERAL_Error: General_error_in_handle_files " + str(e) + "```", parse_mode="Markdown"
         )
     if bot.get_chat(message.chat.id).type == "private":
         ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="required")

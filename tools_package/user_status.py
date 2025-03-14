@@ -6,7 +6,7 @@ update_info_tool = {
     "function": {
         "name": "update_info",
         "description": (
-            "Use to update info that forms your relationship with a certain user. Call to store significant changes."
+            "Use to update your relationship with a certain user. Call only to store significant changes."
         ),
         "parameters": {
             "type": "object",
@@ -38,7 +38,7 @@ def update_info(name, new_info):
                 f.write(json.dumps(data, ensure_ascii=False, indent=4))
             bot.send_message(
                 prefs.TST_chat_id,
-                "```STATUS_UPD \n status update for <" + name + ">\n [" + new_info + "] ```", parse_mode="Markdown"
+                "🟡\n```STATUS_UPD \n status update for <" + name + ">\n [" + new_info + "] ```", parse_mode="Markdown"
             )
             return "Update complete"
     

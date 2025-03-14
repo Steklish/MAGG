@@ -5,23 +5,26 @@ import json
 from bot_instance import *
 import tools_package.tools as tools
 
-def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto", TEMP=prefs.TEMPERATURE):
+def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto", 
+                   TEMP=prefs.TEMPERATURE, messages=None, system_message=None):
     try:
         print(f"{GREEN}Smart message launched{RESET}")
         current_datetime = datetime.datetime.now(prefs.timezone).strftime('%H:%M:%S')
-        
-        system_message = {
-            'role': 'system',
-            'content': f"""Current time: {current_datetime}
-            {prefs.system_msg()}
-            """
-        }
         with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
             conversation = json.load(f)
+        if not system_message:
+            system_message = {
+                'role': 'system',
+                'content': f"""Current time: {current_datetime}
+                {prefs.system_msg()}
+                """
+            }
+        if not messages:
+            messages = [system_message, *conversation]
         client.api_key = prefs.open_r_key()
         response = client.chat.completions.create(
             model=prefs.MODEL(),
-            messages=[system_message, *conversation],
+            messages=messages,
             tools=tools.TOOLS,
             tool_choice=tool_choice,
             temperature=TEMP,
@@ -91,13 +94,13 @@ def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto", TEMP=prefs.TEMPERATU
                         else:
                             return 0
                 except Exception as e:
-                    error_msg = f"Tool {func_name} failed: {str(e)}"
+                    error_msg = f"🟠\nTool {func_name} failed: {str(e)}"
                     bot.send_message(prefs.TST_chat_id, f"```{error_msg}```", parse_mode="Markdown")
                     return 1
             with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
                 json.dump(conversation, f, indent=4, ensure_ascii=False)
         return 0
     except Exception as e:
-        error_msg = f"Critical failure: {str(e)}"
+        error_msg = f"🔴\nCritical failure: {str(e)}"
         bot.send_message(prefs.TST_chat_id, f"```{error_msg}```", parse_mode="Markdown")
         return 1
