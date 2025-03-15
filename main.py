@@ -13,7 +13,27 @@ import asyncio
 # Telegram creds
 from bot_instance import bot 
 import periodic_check
+import atexit
+import signal
+import sys
 
+def cleanup():
+    bot.send_document(prefs.TST_chat_id, open("static_storage/conversation.json", 'rb'), disable_notification=True)
+    bot.send_document(prefs.TST_chat_id, open("static_storage/long_term_memory.json", 'rb'), disable_notification=True)
+    bot.send_document(prefs.TST_chat_id, open("static_storage/user_status.json", 'rb'), disable_notification=True)
+    bot.send_message(
+            prefs.TST_chat_id,
+            "`STOPPED`", parse_mode="Markdown"
+            , disable_notification=True
+        )
+
+def handle_signal(signum, frame):
+    cleanup()
+    sys.exit(0)
+
+atexit.register(cleanup)
+# signal.signal(signal.SIGINT, handle_signal)
+signal.signal(signal.SIGTERM, handle_signal)
 
 def start_loop():
     try:    
@@ -21,7 +41,7 @@ def start_loop():
     except Exception as e:
         bot.send_message(
             prefs.TST_chat_id,
-            "```TELEGRAM_ERROR \n" + str(e) + "```", parse_mode="Markdown"
+            "🔴\n```TELEGRAM_ERROR \n" + str(e.with_traceback()) + "```", parse_mode="Markdown"
         )
         time.sleep(5)
         start_loop()
@@ -55,7 +75,7 @@ def is_alive(message):
     )    
 
 @bot.message_handler(commands=['nfs'])
-def send_file(message:telebot.types.Message):
+def toggle_nfs(message:telebot.types.Message):
     if prefs.chat_to_interact == prefs.NFS_chat_id:
         bot.send_message(
             message.chat.id,
@@ -71,14 +91,14 @@ def send_file(message:telebot.types.Message):
 
 
 @bot.message_handler(commands=['chat'])
-def send_file(message:telebot.types.Message):
+def check_chat(message:telebot.types.Message):
     bot.send_message(
             message.chat.id,
             f"`{bot.get_chat(prefs.chat_to_interact).title}`", parse_mode="Markdown"
         )
 
 @bot.message_handler(commands=['tst'])
-def send_file(message:telebot.types.Message):
+def toggle_tst(message:telebot.types.Message):
     if prefs.chat_to_interact == prefs.TST_chat_id:
         bot.send_message(
             message.chat.id,
@@ -94,7 +114,7 @@ def send_file(message:telebot.types.Message):
 
 
 @bot.message_handler(commands=['bio'])
-def send_file(message:telebot.types.Message):
+def bio(message:telebot.types.Message):
     bot.send_document(message.chat.id, open("static_storage/conversation.json", 'rb'))
     bot.send_document(message.chat.id, open("static_storage/long_term_memory.json", 'rb'))
     bot.send_document(message.chat.id, open("static_storage/user_status.json", 'rb'))
@@ -150,13 +170,26 @@ def process_any_msg(message:telebot.types.Message):
         msgs = msgs[10:]
     with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
         f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
+        
+        
+        
     if bot.get_chat(message.chat.id).type == "private":
-        ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="required")
+        while 1: 
+            calls = ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="required")
+            for call in calls:
+                if "send" in call:
+                    break
     elif reply_info and reply_info["original_message"]["sender"]["name"] == bot.get_my_name().name:
         print("recognized reply")
-        ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="required")
+        while 1: 
+            calls = ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="required")
+            print(YELLOW, calls ,RESET)
+            for call in calls:
+                if "send" in call:
+                    break
     else:
-        ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="auto")
+        calls = ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="auto")
+        print(YELLOW, calls ,RESET)
     
     
     

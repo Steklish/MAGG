@@ -17,7 +17,7 @@ models = [MODEL_01]
 TEMPERATURE = 0.5
 
 def MODEL():
-   return MODEL_04
+   return MODEL_01
    # return "google/gemma-3-27b-it:free"
 
 # base_url="https://generativelanguage.googleapis.com/v1beta/openai/"

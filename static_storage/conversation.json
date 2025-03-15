@@ -3,5 +3,57 @@
         "role": "assistant",
         "content": "Антон, пора вставать! Ты нужен миру!",
         "to": "[direct message to 1911742158/steklish]"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"15-03-2025 09:13:22 +03\",\n    \"message\": \"привет\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": {\n        \"original_message\": {\n            \"sender\": {\n                \"name\": \"Маг\",\n                \"username\": \"BrainDmgBot\",\n                \"user_id\": 7587368548\n            },\n            \"date\": \"15-03-2025 09:13:10 +03\",\n            \"message\": \"WE'RE ON AIR\\n<Маг>\\nOS: Windows09:13:08\\nMonitoring: \\n<Магия>\"\n        }\n    }\n}"
+    },
+    {
+        "role": "assistant",
+        "content": "О, привет, Антон! Рада, что ты соизволил проснуться. Надеюсь, ассемблер больше не вызывает у тебя приступы ярости?"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"15-03-2025 09:14:48 +03\",\n    \"message\": \"првиет?\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": {\n        \"original_message\": {\n            \"sender\": {\n                \"name\": \"Маг\",\n                \"username\": \"BrainDmgBot\",\n                \"user_id\": 7587368548\n            },\n            \"date\": \"15-03-2025 09:14:43 +03\",\n            \"message\": \"WE'RE ON AIR\\n<Маг>\\nOS: Windows09:14:41\\nMonitoring: \\n<Магия>\"\n        }\n    }\n}"
+    },
+    [
+        {
+            "id": "tool_0_send_group_message",
+            "type": "function",
+            "function": {
+                "name": "send_group_message",
+                "arguments": "{\"message\":\"Да-да, именно так, Антон. Ты что, еще не проснулся? Или это ассемблер так на тебя влияет?\"}"
+            }
+        }
+    ],
+    {
+        "role": "tool",
+        "name": "send_group_message",
+        "tool_call_id": "tool_0_send_group_message",
+        "content": "send"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"15-03-2025 09:15:03 +03\",\n    \"message\": \"йэ\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": {\n        \"original_message\": {\n            \"sender\": {\n                \"name\": \"Маг\",\n                \"username\": \"BrainDmgBot\",\n                \"user_id\": 7587368548\n            },\n            \"date\": \"15-03-2025 09:14:50 +03\",\n            \"message\": \"Да-да, именно так, Антон. Ты что, еще не проснулся? Или это ассемблер так на тебя влияет?\"\n        }\n    }\n}"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"15-03-2025 09:18:12 +03\",\n    \"message\": \"але?\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": {\n        \"original_message\": {\n            \"sender\": {\n                \"name\": \"Маг\",\n                \"username\": \"BrainDmgBot\",\n                \"user_id\": 7587368548\n            },\n            \"date\": \"15-03-2025 09:18:06 +03\",\n            \"message\": \"WE'RE ON AIR\\n<Маг>\\nOS: Windows09:18:03\\nMonitoring: \\n<Магия>\"\n        }\n    }\n}"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"15-03-2025 09:22:45 +03\",\n    \"message\": \"pq\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": {\n        \"original_message\": {\n            \"sender\": {\n                \"name\": \"Маг\",\n                \"username\": \"BrainDmgBot\",\n                \"user_id\": 7587368548\n            },\n            \"date\": \"15-03-2025 09:22:39 +03\",\n            \"message\": \"WE'RE ON AIR\\n<Маг>\\nOS: Windows09:22:37\\nMonitoring: \\n<Магия>\"\n        }\n    }\n}"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"15-03-2025 09:26:13 +03\",\n    \"message\": \"]q\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": {\n        \"original_message\": {\n            \"sender\": {\n                \"name\": \"Маг\",\n                \"username\": \"BrainDmgBot\",\n                \"user_id\": 7587368548\n            },\n            \"date\": \"15-03-2025 09:22:56 +03\",\n            \"message\": \"STOPPED\"\n        }\n    }\n}"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"15-03-2025 09:27:09 +03\",\n    \"message\": \"asd\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": {\n        \"original_message\": {\n            \"sender\": {\n                \"name\": \"Маг\",\n                \"username\": \"BrainDmgBot\",\n                \"user_id\": 7587368548\n            },\n            \"date\": \"15-03-2025 09:27:08 +03\",\n            \"message\": \"WE'RE ON AIR\\n<Маг>\\nOS: Windows09:27:05\\nMonitoring: \\n<Магия>\"\n        }\n    }\n}"
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"15-03-2025 09:27:48 +03\",\n    \"message\": \"ale\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": {\n        \"original_message\": {\n            \"sender\": {\n                \"name\": \"Маг\",\n                \"username\": \"BrainDmgBot\",\n                \"user_id\": 7587368548\n            },\n            \"date\": \"15-03-2025 09:27:46 +03\",\n            \"message\": \"WE'RE ON AIR\\n<Маг>\\nOS: Windows09:27:43\\nMonitoring: \\n<Магия>\"\n        }\n    }\n}"
     }
 ]
