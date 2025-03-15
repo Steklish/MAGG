@@ -75,21 +75,21 @@ def reminder_check():
         found = True
         msg = {
             'role': 'user',
-            'content': f"Выполни задачу от {task['date created']} [{task['content']}]",
+            'content': f"{task['content'][:-16]}",
         }
         
         while 1:
-            ai_handler.smart_response(tool_choice="required", messages=[prefs.system_msg(), msg])
-            with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
-                conversation = json.load(f)
-                
-            if conversation != [] and 'tool_call_id' not in conversation[-1].keys() and conversation[-1]["role"] == "assistant":
-                bot.send_message(
-                    prefs.TST_chat_id,
-                    "`TASK complete`", parse_mode="Markdown"
-                )   
-                break            
-            else:
-                print(RED, "did not send a message", RESET)    
+            
+            print("recognized reply")
+            calls = ai_handler.smart_response(tool_choice="required", messages=[prefs.system_msg(), msg])
+            if 'send_private_message' in calls or 'send_group_message' in calls:
+                break
+              
+            
+            print(RED, "did not send a message", RESET)    
         
+        bot.send_message(
+            prefs.TST_chat_id,
+            "`TASK complete`", parse_mode="Markdown"
+        )   
     return found

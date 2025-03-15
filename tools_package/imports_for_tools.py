@@ -19,7 +19,7 @@ def send_to_chat(message:str):
     try:
         bot.send_message(
             prefs.chat_to_interact, 
-            normalize_string(message),
+            fix_markdown_v2(message),
             parse_mode="Markdown"
         )
 
@@ -31,3 +31,20 @@ def send_to_chat(message:str):
                 "🔴\n```Cannot_send_response \n(send_to_chat)\n " + str(e) + "```", parse_mode="Markdown"
             )
         return 1
+
+def fix_odd_tags(message):
+    # Fix unclosed bold tags
+    if message.count("*") % 2 != 0:
+        message += "*"
+    # Fix unclosed italic tags
+    if message.count("_") % 2 != 0:
+        message += "_"
+    # Fix unclosed code tags
+    if message.count("`") % 2 != 0:
+        message += "`"
+    return message
+
+def fix_markdown_v2(message):
+    # Fix unclosed tags
+    message = fix_odd_tags(message)
+    return message

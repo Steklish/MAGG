@@ -48,7 +48,7 @@ def send_private_message(user_id: str, message: str):
     try:
         bot.send_message(
             int(user_id),  # Send to the specified user ID
-            normalize_string(message),
+            fix_markdown_v2(message),
             parse_mode="Markdown"
         )
     
@@ -60,4 +60,4 @@ def send_private_message(user_id: str, message: str):
             f"🔴\n```Cannot_send_private_message \n(sm_rs)\n {str(e)}```", 
             parse_mode="Markdown"
         )
-        return 1
+        return "Error sending message"

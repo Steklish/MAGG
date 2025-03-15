@@ -31,7 +31,6 @@ def cleanup():
 
 def handle_signal(signum, frame):
     cleanup()
-    sys.exit(0)
 
 atexit.register(cleanup)
 # signal.signal(signal.SIGINT, handle_signal)

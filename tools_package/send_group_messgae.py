@@ -23,4 +23,4 @@ def send_group_message(message):
     if send_to_chat(message) == 0:
         return "send"
     else:
-        return 1
+        return "Error sending message"
