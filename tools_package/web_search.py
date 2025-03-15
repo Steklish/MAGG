@@ -27,7 +27,7 @@ web_search_tool = {
 
 
 def web_search(query:str):
-    results = google_custom_search(google_search_api, search_engine_id, query, num_results=5)
+    results = google_custom_search(google_search_api, search_engine_id, query, num_results=7)
     return json.dumps(results, ensure_ascii=False)
     
 
