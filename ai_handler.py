@@ -24,23 +24,29 @@ def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto",
         client.api_key = prefs.open_r_key()
         
         print(f"{GREEN}Ready to send response{RESET}")
+        # print(prefs.MODEL())
+        # print(messages)
         response = client.chat.completions.create(
             model=prefs.MODEL(),
             messages=messages,
-            # tools=tools.TOOLS,
-            # tool_choice=tool_choice,
-            # temperature=TEMP,
-            # frequency_penalty=2
+            tools=tools.TOOLS,
+            tool_choice=tool_choice,
+            temperature=TEMP,
+            frequency_penalty=2
         )
         print(response)
         if response.choices[0].finish_reason == 'error':
-            
+            bot.send_message(
+                prefs.TST_chat_id,
+                f"🔇\n```API Error: {response}```",
+                parse_mode="Markdown"
+            )
             return "error"
         
         if not response.choices:
             bot.send_message(
                 prefs.TST_chat_id,
-                f"🔴\n```API Error: {response}```",
+                f"🔇\n```API Error: {response}```",
                 parse_mode="Markdown"
             )
             return
@@ -52,12 +58,10 @@ def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto",
             
             #  vars to return into a conversation
             call_request = []
-            call_response = []
-                
-                
+            call_response = []    
+              
             for call in tool_calls:
                 func_name = call.function.name
-                tools_called.append(func_name)
                 func_args = call.function.arguments
 
                 this_call = {
@@ -79,8 +83,8 @@ def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto",
                     # save a function call only on success
                     tools_called.append(func_name)
                 except Exception as e:
-                    print(RED, e.with_traceback(), RESET)
-                    error_msg = f"Tool {func_name} failed: {str(e.with_traceback())}"
+                    print(RED, e , RESET)
+                    error_msg = f"Tool {func_name} failed: {str(e )}"
                     bot.send_message(prefs.TST_chat_id, f"🟠\n```{error_msg}```", parse_mode="Markdown")
                     result = e
                 
@@ -92,21 +96,27 @@ def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto",
                         "content": str(result),
                     }
                 )
+            conversation.append(
+                                    {
+                                        "role": "assistant",
+                                        "tool_calls": call_request
+                                    }
+                                )
                 
-            conversation.append(call_request)
-            conversation.append(*call_response)
+            for r in call_response:
+                conversation.append(r)
             
-            
-                    
             with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
                 json.dump(conversation, f, indent=4, ensure_ascii=False)
         
         #!a list with every tool name called in this turn
+        print(YELLOW, tools_called, RESET)
+        print(RED, plain_text, RESET)
         return tools_called
     
     # error handling per whole response
     except Exception as e:
-        print(RED, e.with_traceback(), RESET)
-        error_msg = f"Critical failure: {str(e.with_traceback())}"
+        print(RED, e , RESET)
+        error_msg = f"Critical {str(e )}"
         bot.send_message(prefs.TST_chat_id, f"🔴\n```{error_msg}```", parse_mode="Markdown")
         return 1

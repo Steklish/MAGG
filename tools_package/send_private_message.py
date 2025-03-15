@@ -43,34 +43,21 @@ def send_private_message(user_id: str, message: str):
     with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
         messages = json.loads(f.read())
     
-    # Print the message (for debugging/logging purposes)
     print(f"{MAGENTA}[Private to {user_id}/{bot.get_chat(int(user_id)).username}]: {message}{RESET}")
     
-    # Add the message to the conversation history with a special mark
-    messages.append(
-        {
-            'role': 'assistant',
-            'content': message,
-            'to':f"[direct message to {user_id}/{bot.get_chat(int(user_id)).username}]"
-        }
-    )
-    
-    # Send the private message
     try:
         bot.send_message(
             int(user_id),  # Send to the specified user ID
             normalize_string(message),
             parse_mode="Markdown"
         )
-        print("Saved presonal message")
-        with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
-            f.write(json.dumps(messages, indent=4, ensure_ascii=False))
+    
         return "send"
     except Exception as e:
         print(e)
         bot.send_message(
             prefs.TST_chat_id,
-            f"```Cannot_send_private_message \n(sm_rs)\n {str(e)}```", 
+            f"🔴\n```Cannot_send_private_message \n(sm_rs)\n {str(e)}```", 
             parse_mode="Markdown"
         )
         return 1

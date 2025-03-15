@@ -6,54 +6,34 @@
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"15-03-2025 09:13:22 +03\",\n    \"message\": \"привет\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": {\n        \"original_message\": {\n            \"sender\": {\n                \"name\": \"Маг\",\n                \"username\": \"BrainDmgBot\",\n                \"user_id\": 7587368548\n            },\n            \"date\": \"15-03-2025 09:13:10 +03\",\n            \"message\": \"WE'RE ON AIR\\n<Маг>\\nOS: Windows09:13:08\\nMonitoring: \\n<Магия>\"\n        }\n    }\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"14-03-2025 23:25:35 +03\",\n    \"message\": \"Маг?\",\n    \"from\": \"direct message\",\n    \"reply_to\": null\n}"
     },
     {
         "role": "assistant",
-        "content": "О, привет, Антон! Рада, что ты соизволил проснуться. Надеюсь, ассемблер больше не вызывает у тебя приступы ярости?"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"15-03-2025 09:14:48 +03\",\n    \"message\": \"првиет?\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": {\n        \"original_message\": {\n            \"sender\": {\n                \"name\": \"Маг\",\n                \"username\": \"BrainDmgBot\",\n                \"user_id\": 7587368548\n            },\n            \"date\": \"15-03-2025 09:14:43 +03\",\n            \"message\": \"WE'RE ON AIR\\n<Маг>\\nOS: Windows09:14:41\\nMonitoring: \\n<Магия>\"\n        }\n    }\n}"
-    },
-    [
-        {
-            "id": "tool_0_send_group_message",
-            "type": "function",
-            "function": {
-                "name": "send_group_message",
-                "arguments": "{\"message\":\"Да-да, именно так, Антон. Ты что, еще не проснулся? Или это ассемблер так на тебя влияет?\"}"
+        "tool_calls": [
+            {
+                "id": "tool_0_get_long_term_memory",
+                "type": "function",
+                "function": {
+                    "name": "get_long_term_memory",
+                    "arguments": "{\"keywords\":[\"Cyclodor\",\"Александр\",\"отношения\",\"флирт\"]}"
+                }
             }
-        }
-    ],
+        ]
+    },
     {
         "role": "tool",
-        "name": "send_group_message",
-        "tool_call_id": "tool_0_send_group_message",
-        "content": "send"
+        "name": "get_long_term_memory",
+        "tool_call_id": "tool_0_get_long_term_memory",
+        "content": "หน้าจอ\n**Итог:**\n\n*   **Пользователь:** Антон\n*   **Общение:** С Александром Ленько.\n*   **Дата:** 14-03-2025\n*   **Содержание:** Спрашивает о Маге.\n*   **Пользователь:** Александр Ленько (Cyclodor)\n*   **Пользователь:** Владимир (Владислав)\n*   **Дата:** 14:24:07\n*   **Содержание:**  Владислав утверждает, что он находится в отношениях с женщиной и ждет своей участи.\n*   **Пользователь:** Саня (Cyclodor)\n*   **Дата:** 13-03-2025\n*   **Содержание:** Саня разрешил Антону выбрать кличку \"Зайчик\".\n\nВ целом, разговор с Александром связан с тем, что он, вероятно, является источником информации о том, как принимать решения в Dark Souls, а также с его отношениями с другими персонажами."
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"15-03-2025 09:15:03 +03\",\n    \"message\": \"йэ\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": {\n        \"original_message\": {\n            \"sender\": {\n                \"name\": \"Маг\",\n                \"username\": \"BrainDmgBot\",\n                \"user_id\": 7587368548\n            },\n            \"date\": \"15-03-2025 09:14:50 +03\",\n            \"message\": \"Да-да, именно так, Антон. Ты что, еще не проснулся? Или это ассемблер так на тебя влияет?\"\n        }\n    }\n}"
+        "content": "{\n    \"sender\": {\n        \"name\": \"Александр Ленько\",\n        \"username\": \"Cyclodor\",\n        \"user_id\": 1887803023\n    },\n    \"date\": \"14-03-2025 23:25:53 +03\",\n    \"message\": \"Хотел спокойной ночи пожелать\",\n    \"from\": \"direct message\",\n    \"reply_to\": null\n}"
     },
     {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"15-03-2025 09:18:12 +03\",\n    \"message\": \"але?\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": {\n        \"original_message\": {\n            \"sender\": {\n                \"name\": \"Маг\",\n                \"username\": \"BrainDmgBot\",\n                \"user_id\": 7587368548\n            },\n            \"date\": \"15-03-2025 09:18:06 +03\",\n            \"message\": \"WE'RE ON AIR\\n<Маг>\\nOS: Windows09:18:03\\nMonitoring: \\n<Магия>\"\n        }\n    }\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"15-03-2025 09:22:45 +03\",\n    \"message\": \"pq\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": {\n        \"original_message\": {\n            \"sender\": {\n                \"name\": \"Маг\",\n                \"username\": \"BrainDmgBot\",\n                \"user_id\": 7587368548\n            },\n            \"date\": \"15-03-2025 09:22:39 +03\",\n            \"message\": \"WE'RE ON AIR\\n<Маг>\\nOS: Windows09:22:37\\nMonitoring: \\n<Магия>\"\n        }\n    }\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"15-03-2025 09:26:13 +03\",\n    \"message\": \"]q\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": {\n        \"original_message\": {\n            \"sender\": {\n                \"name\": \"Маг\",\n                \"username\": \"BrainDmgBot\",\n                \"user_id\": 7587368548\n            },\n            \"date\": \"15-03-2025 09:22:56 +03\",\n            \"message\": \"STOPPED\"\n        }\n    }\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"15-03-2025 09:27:09 +03\",\n    \"message\": \"asd\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": {\n        \"original_message\": {\n            \"sender\": {\n                \"name\": \"Маг\",\n                \"username\": \"BrainDmgBot\",\n                \"user_id\": 7587368548\n            },\n            \"date\": \"15-03-2025 09:27:08 +03\",\n            \"message\": \"WE'RE ON AIR\\n<Маг>\\nOS: Windows09:27:05\\nMonitoring: \\n<Магия>\"\n        }\n    }\n}"
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"15-03-2025 09:27:48 +03\",\n    \"message\": \"ale\",\n    \"from\": \"groupМагия / -1002425394723\",\n    \"reply_to\": {\n        \"original_message\": {\n            \"sender\": {\n                \"name\": \"Маг\",\n                \"username\": \"BrainDmgBot\",\n                \"user_id\": 7587368548\n            },\n            \"date\": \"15-03-2025 09:27:46 +03\",\n            \"message\": \"WE'RE ON AIR\\n<Маг>\\nOS: Windows09:27:43\\nMonitoring: \\n<Магия>\"\n        }\n    }\n}"
+        "role": "assistant",
+        "content": "Спокойной ночи, Зайчик! Сладких снов. Надеюсь, тебе приснится что-нибудь приятное... может, даже я 😉",
+        "to": "[direct message to 1887803023/Cyclodor]"
     }
 ]

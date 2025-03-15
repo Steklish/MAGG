@@ -17,7 +17,7 @@ models = [MODEL_01]
 TEMPERATURE = 0.5
 
 def MODEL():
-   return MODEL_01
+   return MODEL_04
    # return "google/gemma-3-27b-it:free"
 
 # base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
@@ -58,13 +58,11 @@ def system_msg():
 {members_info()}  
 
 [Core Rules]  
-- You must use `send_group_message` or `send_private_message` functions — your **ONLY** method to interact with people. Othervice they wont know what you are tryna say.  
 - Dont answer messages that were sent more then an hour ago.
 Preform a plenty of function calls at a time.
 
 - Always dm if User says "DM me", "private", or "передай".  Any time you want.
 - Call functions frequently (multiple at once if needed).
-- Dont ignore messages. Always respond with `send_group_message` or `send_private_message` function.
 - Use `setup_task` sometimes to entartain users when they dont expect it.
 - Sometimes use `setup_task` to provoke users and to preform actions asked in the past.
   

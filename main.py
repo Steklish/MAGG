@@ -1,3 +1,4 @@
+import platform
 import random
 import threading
 import ai_handler
@@ -18,14 +19,15 @@ import signal
 import sys
 
 def cleanup():
-    bot.send_document(prefs.TST_chat_id, open("static_storage/conversation.json", 'rb'), disable_notification=True)
-    bot.send_document(prefs.TST_chat_id, open("static_storage/long_term_memory.json", 'rb'), disable_notification=True)
-    bot.send_document(prefs.TST_chat_id, open("static_storage/user_status.json", 'rb'), disable_notification=True)
-    bot.send_message(
-            prefs.TST_chat_id,
-            "`STOPPED`", parse_mode="Markdown"
-            , disable_notification=True
-        )
+    if platform.system() == "Linux":
+        bot.send_document(prefs.TST_chat_id, open("static_storage/conversation.json", 'rb'), disable_notification=True)
+        bot.send_document(prefs.TST_chat_id, open("static_storage/long_term_memory.json", 'rb'), disable_notification=True)
+        bot.send_document(prefs.TST_chat_id, open("static_storage/user_status.json", 'rb'), disable_notification=True)
+        bot.send_message(
+                prefs.TST_chat_id,
+                "`STOPPED the remote server`", parse_mode="Markdown"
+                , disable_notification=True
+            )
 
 def handle_signal(signum, frame):
     cleanup()
@@ -41,7 +43,7 @@ def start_loop():
     except Exception as e:
         bot.send_message(
             prefs.TST_chat_id,
-            "🔴\n```TELEGRAM_ERROR \n" + str(e.with_traceback()) + "```", parse_mode="Markdown"
+            "🔴\n```TELEGRAM_ERROR \n" + str(e) + "```", parse_mode="Markdown"
         )
         time.sleep(5)
         start_loop()
@@ -174,22 +176,20 @@ def process_any_msg(message:telebot.types.Message):
         
         
     if bot.get_chat(message.chat.id).type == "private":
+        print("Personal response")
         while 1: 
             calls = ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="required")
-            for call in calls:
-                if "send" in call:
-                    break
+            if 'send_private_message' in calls or 'send_group_message' in calls:
+                break
     elif reply_info and reply_info["original_message"]["sender"]["name"] == bot.get_my_name().name:
         print("recognized reply")
         while 1: 
             calls = ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="required")
-            print(YELLOW, calls ,RESET)
-            for call in calls:
-                if "send" in call:
-                    break
+            if 'send_private_message' in calls or 'send_group_message' in calls:
+                break
     else:
+        print("General response")
         calls = ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="auto")
-        print(YELLOW, calls ,RESET)
     
     
     
@@ -261,7 +261,11 @@ def handle_files(message:telebot.types.Message):
             "🔴\n```GENERAL_Error: General_error_in_handle_files " + str(e) + "```", parse_mode="Markdown"
         )
     if bot.get_chat(message.chat.id).type == "private":
-        ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="required")
+        print("private file")
+        while 1: 
+            calls = ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="required")
+            if 'send_private_message' in calls or 'send_group_message' in calls:
+                break
     else:
         ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="auto")
 # start_loop()
