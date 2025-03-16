@@ -1,11 +1,20 @@
-from google.genai import client, types
+from google.genai import client,  types
 from openai import OpenAI
 import telebot
 import prefs
 from stuff import *
 import platform
-import psutil
 import datetime
+import os
+
+def create_directory(directory_path):
+    if not os.path.exists(directory_path):
+        os.makedirs(directory_path)
+        print(f"Directory '{directory_path}' created.")
+    else:
+        print(f"Directory '{directory_path}' already exists.")
+
+create_directory("tmp")
 
 bot = telebot.TeleBot(prefs.TG_API)
 

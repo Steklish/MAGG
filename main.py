@@ -18,6 +18,14 @@ import atexit
 import signal
 import sys
 
+
+def struggle_till_message():
+    while 1: 
+            calls = ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="required")
+            if 'send_private_message' in calls or 'send_group_message' in calls:
+                break
+    
+
 def cleanup():
     if platform.system() == "Linux":
         bot.send_document(prefs.TST_chat_id, open("static_storage/conversation.json", 'rb'), disable_notification=True)
@@ -176,16 +184,10 @@ def process_any_msg(message:telebot.types.Message):
         
     if bot.get_chat(message.chat.id).type == "private":
         print("Personal response")
-        while 1: 
-            calls = ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="required")
-            if 'send_private_message' in calls or 'send_group_message' in calls:
-                break
+        struggle_till_message()
     elif reply_info and reply_info["original_message"]["sender"]["name"] == bot.get_my_name().name:
         print("recognized reply")
-        while 1: 
-            calls = ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="required")
-            if 'send_private_message' in calls or 'send_group_message' in calls:
-                break
+        struggle_till_message()
     else:
         print("General response")
         calls = ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="auto")
@@ -224,24 +226,6 @@ def handle_files(message:telebot.types.Message):
                     prefs.TST_chat_id,
                     "🔴\n```PHOTO_Error: Cannot_send_response " + str(e) + "```", parse_mode="Markdown"
                 )
-        # elif message.video:
-        #     try:
-        #         file_info = bot.get_file(message.video.file_id)
-        #         print("VIDEO")
-        #     except Exception as e:
-        #         bot.send_message(
-        #             prefs.TST_chat_id,
-        #             "```VIDEO_Error: Cannot_send_response " + str(e) + "```", parse_mode="Markdown"
-        #         )
-        # elif message.audio:
-        #     try:
-        #         file_info = bot.get_file(message.audio.file_id)
-        #         print("AUDIO")
-        #     except Exception as e:
-        #         bot.send_message(
-        #             prefs.TST_chat_id,
-        #             "```AUDIO_Error: Cannot_send_response " + str(e) + "```", parse_mode="Markdown"
-        #         )
         elif message.voice:
             try:
                 file_info = bot.get_file(message.voice.file_id)
@@ -261,14 +245,9 @@ def handle_files(message:telebot.types.Message):
         )
     if bot.get_chat(message.chat.id).type == "private":
         print("private file")
-        while 1: 
-            calls = ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="required")
-            if 'send_private_message' in calls or 'send_group_message' in calls:
-                break
+        struggle_till_message()
     else:
         ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="auto")
-# start_loop()
-# bot.polling()
-    
+
 if __name__ == "__main__":
     asyncio.run(main())
