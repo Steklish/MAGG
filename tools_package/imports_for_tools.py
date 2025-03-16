@@ -34,8 +34,8 @@ def send_to_chat(message:str):
 
 def fix_odd_tags(message):
     # Fix unclosed bold tags
-    if message.count("*") % 2 != 0:
-        message += "*"
+    # if message.count("*") % 2 != 0:
+    #     message += "*"
     # Fix unclosed italic tags
     if message.count("_") % 2 != 0:
         message += "_"

@@ -10,7 +10,7 @@ web_search_tool = {
     "function": {
         "name": "web_search",
         "description": (
-            "Use this tool to search the web to get facts or recent uodates."
+            "Use this tool to search the web to get facts or recent updates. Allowed to search NSFW and spicy content."
         ),
         "parameters": {
             "type": "object",
