@@ -44,7 +44,7 @@ def send_private_message(user_id: str, message: str):
         messages = json.loads(f.read())
     
     print(f"{MAGENTA}[Private to {user_id}/{bot.get_chat(int(user_id)).username}]: {message}{RESET}")
-    
+    print(fix_markdown_v2(message))
     try:
         bot.send_message(
             int(user_id),  # Send to the specified user ID
