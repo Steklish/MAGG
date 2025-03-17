@@ -17,8 +17,8 @@ models = [MODEL_01]
 TEMPERATURE = 0.5
 
 def MODEL():
-   return MODEL_04
-   # return "google/gemma-3-27b-it:free"
+	return MODEL_04
+# return "google/gemma-3-27b-it:free"
 
 # base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
 base_url="https://openrouter.ai/api/v1"
@@ -26,7 +26,7 @@ base_url="https://openrouter.ai/api/v1"
 api_google_key = conf_info.api_google_key
 
 def open_r_key():
-  return conf_info.get_op_key()
+	return conf_info.get_op_key()
 
 api_key = conf_info.get_op_key()
 
@@ -48,12 +48,17 @@ system_msg_char = f"""
 # """
 
 def members_info():
-  with open("static_storage/user_status.json", "r", encoding="utf-8") as f:
-    members_info = f.read()
-  return members_info
+	with open("static_storage/user_status.json", "r", encoding="utf-8") as f:
+		members_info = f.read()
+	return members_info
+
+def get_context():
+	with open("static_storage/context.txt", "r", encoding="utf-8") as f:
+		context = f.read()
+	return context
 
 def system_msg():
-  return f"""  
+	return f"""  
 {system_msg_char}  
 {members_info()}  
 
@@ -92,6 +97,9 @@ Periodically call get_long_term memory to receive information on a subject or re
 Combine get_long_term_memory usage and web_search to get better results.
 
 Never skip tool usage: Always utilize tools and functions as required—never bypass them.
+
+[recent context]
+{get_context()}
 """
 TST_chat_id = "-1002425394723"
 NFS_chat_id = "-1002411316656"

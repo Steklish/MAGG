@@ -29,12 +29,12 @@ def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto",
         response = client.chat.completions.create(
             model=prefs.MODEL(),
             messages=messages,
-            tools=tools.TOOLS,
+            tools=TOOLSET,
             tool_choice=tool_choice,
             temperature=TEMP,
             frequency_penalty=2
         )
-        print(response)
+        # print(response)
         if response.choices[0].finish_reason == 'error':
             bot.send_message(
                 prefs.TST_chat_id,
@@ -120,3 +120,75 @@ def smart_response(TOOLSET=tools.TOOLS, tool_choice="auto",
         error_msg = f"Critical {str(e )}"
         bot.send_message(prefs.TST_chat_id, f"🔴\n```{error_msg}```", parse_mode="Markdown")
         return 1
+    
+    
+    
+def update_context():
+    context = prefs.get_context()
+    try:
+        current_datetime = datetime.datetime.now(prefs.timezone).strftime('%H:%M:%S')
+        with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
+            conversation = json.load(f)
+        system_message = {
+            'role': 'system',
+            'content': f"""Current time: {current_datetime}
+            {prefs.system_msg()}
+            """
+        }
+        client.api_key = prefs.open_r_key()
+        
+        
+        query = {
+            'role': 'user',
+            'content': f"""Current time: {current_datetime}
+            Используй контекст.
+            Обнови контекст немного.
+            В обновленном контексте должны быть:
+                состояние текущей беседы и ее история.
+                описание текущих событий, если они есть.
+                примерные предположения о намерениях пользователей.
+                
+            Не изменяй старый контекст  сильно за короткое время, но если прошло долгое время, полностью обновляй его, основываясь на истории действий. Нужно не ответить на сообщение а сделать сводку и обновить с=контескт. Не добавляй ответ в конце. Не оставляй больше одногоостартового сообщения в контексте. Следи за временем
+            
+            [история действий]
+            {conversation[len(conversation) // 5:]}
+            """
+        }
+        
+        response = client.chat.completions.create(
+            model=prefs.MODEL(),
+            messages=[system_message, query],
+            # tools=tools.TOOLS,
+            # tool_choice=tool_choice,
+            temperature=prefs.TEMPERATURE,
+            frequency_penalty=2
+        )
+        if response.choices[0].finish_reason == 'error':
+            bot.send_message(
+                prefs.TST_chat_id,
+                f"🔇\n```API Error: {response}```",
+                parse_mode="Markdown"
+            )
+            return "error"
+        
+        if not response.choices:
+            bot.send_message(
+                prefs.TST_chat_id,
+                f"🔇\n```API Error: {response}```",
+                parse_mode="Markdown"
+            )
+            return "error"
+        print(response)
+        message = response.choices[0].message
+        plain_text = message.content
+        if plain_text:
+            with open("static_storage/context.txt", "w", encoding="utf-8") as f:
+                f.write(plain_text)
+            print(f"{GREEN} Context updated {RESET}")
+            
+    except Exception as e:
+        print(RED, e , RESET)
+        error_msg = f"Context_failure {str(e )}"
+        bot.send_message(prefs.TST_chat_id, f"🔴\n```{error_msg}```", parse_mode="Markdown")
+        return 1
+    

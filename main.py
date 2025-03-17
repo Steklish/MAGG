@@ -191,7 +191,7 @@ def process_any_msg(message:telebot.types.Message):
     else:
         print("General response")
         calls = ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="auto")
-    
+    ai_handler.update_context()
     
     
     
@@ -248,6 +248,6 @@ def handle_files(message:telebot.types.Message):
         struggle_till_message()
     else:
         ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="auto")
-
+    ai_handler.update_context()
 if __name__ == "__main__":
     asyncio.run(main())
