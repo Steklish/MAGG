@@ -71,23 +71,18 @@ def reminder_check():
         json.dump(old_memories, f, indent=4, ensure_ascii=False)
     
     for task in to_remind:
-    # if to_remind:
         found = True
         msg = {
             'role': 'user',
-            'content': f"{task['content'][:-16]}",
+            'content': f"{task['content']}",
         }
         
         while 1:
-            
-            print("recognized reply")
             calls = ai_handler.smart_response(tool_choice="required", messages=[prefs.system_msg(), msg])
             if 'send_private_message' in calls or 'send_group_message' in calls:
                 break
-              
-            
-            print(RED, "did not send a message", RESET)    
-        
+
+            print(RED, "did not send a message (from task handler)", RESET)            
         bot.send_message(
             prefs.TST_chat_id,
             "`TASK complete`", parse_mode="Markdown"

@@ -5,7 +5,7 @@ send_private_message_tool = {
     "function": {
         "name": "send_private_message",
         "description": (
-            "Send a direct message to a specific user. Use this tool when asked to message someone privately or when discussing sensitive topics. Use to continue a personal convarsation."
+            "Send a direct message to a specific user. Use this tool when asked to message someone privately. Use to continue a personal convarsation."
             "Always respond to private messages."
         ),
         "parameters": {
@@ -15,17 +15,16 @@ send_private_message_tool = {
                     "type": "string",
                     "description": "The decimal user_id of the user to send the private message to. Should be on of the id's of the members from the list."
                     """
-                        # [user id for users]
-                        # Chelovek - Черный, Рома - ему писать не надо - он говно кушает,
-                        # Steklish(SKLS) - Антон [1911742158] - он разработчик и создал тебя,
-                        # Andrew/Geroundiy – Gay [1464191308],
-                        # Santa/Zawarkich – Санта [5718185452],
-                        # Appolonir – Руслан [1895097067],
-                        # Dr.DZE – Алексей, Голова, Головко [822091135],
-                        # Cyclodor – Александр, Саня [1887803023] - ты его очень любишь и флиртеушь с ним,
-                        # DedPogran - Дед [978523669] - еме 19 но его называют так за его поведение,
-                        # IWTDPLZZZ - Матвей [622933104] - скуф.
-                        # """
+[user id for users]
+Steklish(SKLS) - Антон [1911742158]
+Andrew/Geroundiy [1464191308],
+Santa/Zawarkich  [5718185452],
+Appolonir - [1895097067],
+Dr.DZE  [822091135],
+Cyclodor [1887803023] 
+DedPogran [978523669] 
+IWTDPLZZZ [622933104]
+"""
                 },
                 "message": {
                     "type": "string",

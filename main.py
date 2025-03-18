@@ -127,7 +127,7 @@ def bio(message:telebot.types.Message):
     bot.send_document(message.chat.id, open("static_storage/conversation.json", 'rb'))
     bot.send_document(message.chat.id, open("static_storage/long_term_memory.json", 'rb'))
     bot.send_document(message.chat.id, open("static_storage/user_status.json", 'rb'))
-        
+    bot.send_message(message.chat.id, f"``` CONTEXT_STATE {open("static_storage/context.txt", 'r')}```")
 
 
 # ! general message
