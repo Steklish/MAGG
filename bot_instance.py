@@ -36,14 +36,10 @@ create_storage_folder()
 bot = telebot.TeleBot(prefs.TG_API)
 
 startup_message = (
-    f"```MAGG started"
-    # f"<{bot.get_my_name().name}>\n"
-    f"OS: {platform.system()}"
-    # f"Python Version: {platform.python_version()}\n"
-    # f"CPU: {psutil.cpu_percent(interval=1)}% usage\n"
-    # f"Memory: {psutil.virtual_memory().percent}% used\n"
+    f"```MAGG_LAUNCHED```"
+    f"`OS: {platform.system()}"
     f"Disk: {psutil.disk_usage('/').percent}% used\n"
-    f"{datetime.datetime.now(prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z')}\n"
+    f"Starting time - {datetime.datetime.now(prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z')}`"
     # f"Monitoring: \n<{bot.get_chat(prefs.chat_to_interact).title}>```"
 )
 
