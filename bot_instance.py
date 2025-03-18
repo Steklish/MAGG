@@ -37,14 +37,14 @@ bot = telebot.TeleBot(prefs.TG_API)
 
 startup_message = (
     f"```MAGG started"
-    f"<{bot.get_my_name().name}>\n"
+    # f"<{bot.get_my_name().name}>\n"
     f"OS: {platform.system()}"
-    f"Python Version: {platform.python_version()}\n"
-    f"CPU: {psutil.cpu_percent(interval=1)}% usage\n"
-    f"Memory: {psutil.virtual_memory().percent}% used\n"
+    # f"Python Version: {platform.python_version()}\n"
+    # f"CPU: {psutil.cpu_percent(interval=1)}% usage\n"
+    # f"Memory: {psutil.virtual_memory().percent}% used\n"
     f"Disk: {psutil.disk_usage('/').percent}% used\n"
-    f"{datetime.datetime.now(prefs.timezone).strftime('%H:%M:%S')}\n"
-    f"Monitoring: \n<{bot.get_chat(prefs.chat_to_interact).title}>```"
+    f"{datetime.datetime.now(prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z')}\n"
+    # f"Monitoring: \n<{bot.get_chat(prefs.chat_to_interact).title}>```"
 )
 
 with open("static_storage/context.txt", "w", encoding="utf-8") as f:

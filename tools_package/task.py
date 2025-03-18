@@ -30,7 +30,7 @@ def setup_task(memory: str, time_to_exec:str):
     memory = str(memory)
     new_memory = {
         'is_task' : True,
-        'date created': datetime.datetime.now(prefs.timezone).strftime('%H:%M:%S'),
+        'date created': datetime.datetime.now(prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
         'content': memory + " " + time_to_exec
     }
 

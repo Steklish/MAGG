@@ -27,7 +27,7 @@ def create_memory(memory: str):
     print("memory created")
     memory = str(memory)
     new_memory = {
-        'date created': datetime.datetime.now(prefs.timezone).strftime('%H:%M:%S'),
+        'date created': datetime.datetime.now(prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
         'content': memory
     }
 
