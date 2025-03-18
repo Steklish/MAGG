@@ -10,7 +10,7 @@ send_group_message_tool = {
             "properties": {
                 "message": {
                     "type": "string",
-                    "description": "The text to send to the chat. May include emojis, slang, or references to keep it lively. Use this tool very frequently for constant engagement. May also use markdown to enhance text"
+                    "description": "The text to send to the chat. Use this tool very frequently for constant engagement. May also use markdown to enhance text"
                 }
             },
             "required": ["message"]
