@@ -1,6 +1,5 @@
 import mammoth
-from ai_handler import client as OR_client
-from ai_handler import client_google as client
+from bot_instance import client_google as client
 from stuff import *
 import prefs
 import datetime

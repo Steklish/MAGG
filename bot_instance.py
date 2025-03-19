@@ -1,6 +1,8 @@
+
+import conf_info
 import json
+from google import genai
 from google.genai import client,  types
-from openai import OpenAI
 import psutil
 import telebot
 import prefs
@@ -49,8 +51,9 @@ with open("static_storage/context.txt", "w", encoding="utf-8") as f:
 # Initialize original GOOGLE client
 client_google = client.Client(api_key=prefs.api_google_key)
 
-# Initialize openrouter client
-client = OpenAI(base_url=prefs.base_url, api_key=prefs.open_r_key())
-
+# Initialize google client
+client = genai.Client(
+            api_key=conf_info.gemini_api_key,
+        )
 bot.send_message(prefs.TST_chat_id, startup_message, parse_mode="Markdown")
 print(GREEN, "STARTED", RESET)

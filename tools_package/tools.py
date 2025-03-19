@@ -10,30 +10,25 @@ from .task import *
 from .user_status import *
 from .web_search import *
 
-TOOLS = [
-    long_term_memory_tool,
-    create_memory_tool,
-    send_group_message_tool,
-    send_private_message_tool,
-    setup_task_tool,
-    update_info_tool,
-    web_search_tool
+
+G_TOOLS = [
+    google_long_term_memory_tool,
+    google_create_memory_tool,
+    google_send_group_message_tool,
+    google_send_private_message_tool,
+    google_setup_task_tool,
+    google_update_info_tool,
+    google_web_search_tool
 ]
 
-TOOLS_FORCE_SEND = [
-    send_group_message_tool,
-    send_private_message_tool
-]
-TOOLS_NO_RESPONSE = [
-    long_term_memory_tool,
-    create_memory_tool,
-    setup_task_tool,
-    update_info_tool,
-    web_search_tool
-]
 
 def execute_tool(tool_name, args):
     print(f"{BACKGROUND_YELLOW} {BLACK} {tool_name}  with args {args}{RESET}")
-    res = eval(tool_name)(**json.loads(args))
-    print(f"{BACKGROUND_GREEN}{BLACK}{res}{RESET}")
-    return res
+    try:
+        res = eval(tool_name)(**args)
+        print(f"{BACKGROUND_GREEN}{BLACK}{res}{RESET}")
+        return res
+    except Exception as e:
+        print (RED, f"Tool exception {tool_name} / {args}")
+        print(BACKGROUND_RED, BLACK, e, RESET)
+    return "ERROR WHILE EXECUTING THE FUNCTION"

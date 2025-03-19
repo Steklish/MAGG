@@ -1,29 +1,30 @@
 from .imports_for_tools import *
 import prefs
 
-update_info_tool = {
-    "type": "function",
-    "function": {
-        "name": "update_info",
-        "description": (
-            "Use to update your relationship with a certain user. Call only to store significant changes."
-        ),
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "The name of the user whose information needs to be updated."
+google_update_info_tool = types.Tool(
+    function_declarations=[
+        types.FunctionDeclaration(
+            name="update_info",
+            description=(
+                "Use to update your relationship with a certain user. Call only to store significant changes."
+            ),
+            parameters=genai.types.Schema(
+                type=genai.types.Type.OBJECT,
+                properties={
+                    "name": genai.types.Schema(
+                        type=genai.types.Type.STRING,
+                        description="The name of the user whose information needs to be updated.",
+                    ),
+                    "new_info": genai.types.Schema(
+                        type=genai.types.Type.STRING,
+                        description="The combination of old and new information to be associated with the member.",
+                    ),
                 },
-                "new_info": {
-                    "type": "string",
-                    "description": "The combinaton of old and new information to be associated with the member."
-                }
-            },
-            "required": ["name", "new_info"]
-        }
-    }
-}
+                required=["name", "new_info"],
+            ),
+        ),
+    ]
+)
 
 def update_info(name, new_info):
     data = prefs.members_info()

@@ -3,27 +3,10 @@ import conf_info
 from random import randint
 TG_API = conf_info.TG_API
 import pytz
-# pick one randomly to avoid reaching the limits
-MODEL_01 = "google/gemini-2.0-flash-lite-preview-02-05:free"
-MODEL_02 = "google/gemini-2.0-flash-exp:free"
-MODEL_03 = "google/gemini-2.0-pro-exp-02-05:free"
-
-MODEL_04 = "google/gemini-2.0-flash-001"
-
-# MODEL_NO_TOOLS = "moonshotai/moonlight-16b-a3b-instruct:free"
-MODEL_NO_TOOLS = "google/gemma-3-1b-it:free"
-models = [MODEL_01]
 
 TEMPERATURE = 0.5
 
-def MODEL():
-	return MODEL_04
-# return "google/gemma-3-27b-it:free"
-
-# base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
-base_url="https://openrouter.ai/api/v1"
-#google
-api_google_key = conf_info.api_google_key
+api_google_key = conf_info.gemini_api_key
 
 def open_r_key():
 	return conf_info.get_op_key()
@@ -110,3 +93,5 @@ chat_to_interact = TST_chat_id
 # Specify the UTC offset (e.g., UTC+3)
 utc_offset = datetime.timedelta(hours=3)
 timezone = pytz.timezone('Etc/GMT-3')
+
+model_gemini = "gemini-2.0-flash-lite"

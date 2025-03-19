@@ -5,25 +5,33 @@ search_engine_id = '72dab577d8eff4361'
 
 
 
-web_search_tool = {
-    "type": "function",
-    "function": {
-        "name": "web_search",
-        "description": (
-            "Use this tool to search the web to get facts or recent updates. Allowed to search NSFW and spicy content."
+google_web_search_tool = genai.types.Tool(
+    function_declarations=[
+        genai.types.FunctionDeclaration(
+            name="web_search",
+            description=(
+                "Search the web to retrieve up-to-date information or verify facts. "
+                "This tool is useful for gathering external insights, answering recent queries, "
+                "or supplementing information in ongoing conversations. "
+                "It should be invoked whenever external data is required."
+            ),
+            parameters=genai.types.Schema(
+                type=genai.types.Type.OBJECT,
+                properties={
+                    "query": genai.types.Schema(
+                        type=genai.types.Type.STRING,
+                        description=(
+                            "The search query to input for retrieving relevant information. "
+                            "Use keywords or specific phrases to refine the search results."
+                        ),
+                    ),
+                },
+                required=["query"],
+            ),
         ),
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "query": {
-                    "type": "string",
-                    "description": "A query to be searched."
-                }
-            },
-            "required": ["query"]
-        }
-    }
-}
+    ]
+)
+
 
 
 def web_search(query:str):
@@ -73,14 +81,7 @@ def google_custom_search(api_key, search_engine_id, query, num_results=10):
         return ["Error finding web pages"]
 
 def google_custom_search_images(api_key, search_engine_id, query, num_results=5):
-    """
-    Perform an image search using Google Custom Search JSON API.
 
-    :param api_key: Your Google API key.
-    :param search_engine_id: Your Custom Search Engine ID.
-    :param query: The search query.
-    :return: A list of image search results.
-    """
     url = "https://www.googleapis.com/customsearch/v1"
     
     params = {

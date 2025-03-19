@@ -2,7 +2,7 @@ from bot_instance import bot
 import datetime
 import json
 import re
-import ai_handler
+import ai_handler_google as ai_handler
 import asyncio
 from stuff import *
 import tools_package.tools as tools
@@ -72,17 +72,17 @@ def reminder_check():
     
     for task in to_remind:
         found = True
-        msg = {
-            'role': 'user',
-            'content': f"{task['content']}",
-        }
-        
         while 1:
-            calls = ai_handler.smart_response(tool_choice="required", messages=[prefs.system_msg(), msg])
+            calls = ai_handler.smart_response(
+                func_mode="ANY", 
+                messages=[
+                            ai_handler.convert_single(f"Вполнить задачу [задача] {task['content']}")
+                        ]
+                )
             if 'send_private_message' in calls or 'send_group_message' in calls:
                 break
 
-            print(RED, "did not send a message (from task handler)", RESET)            
+            print(RED, "did not send a message (from task handler) retrying", RESET)            
         bot.send_message(
             prefs.TST_chat_id,
             "`TASK complete`", parse_mode="Markdown"

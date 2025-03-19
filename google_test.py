@@ -1,5 +1,5 @@
 # AIzaSyCbPw-Rw2hx1SHLsIsdRedl0YBQvufc5ds
-import base64
+from stuff import *
 import os
 from google import genai
 from google.genai import types
@@ -47,7 +47,8 @@ def generate():
         types.Content(
             role="user",
             parts=[
-                types.Part.from_text(text="""what is the weather in NYC"""),
+                # types.Part.from_text(text="""what is the weather in NYC and in london"""),
+                types.Part.from_text(text="""hi"""),
             ],
         ),
     ]
@@ -64,14 +65,28 @@ def generate():
         ],
     )
 
+
+    plain_text = ""
+    function_calls = []
     for chunk in client.models.generate_content_stream(
         model=model,
         contents=contents,
         config=generate_content_config,
     ):
         print(chunk)
-        # print(chunk.text if not chunk.function_calls else chunk.function_calls[0])
-
+        print()
+        if not chunk.function_calls:
+            plain_text += chunk.text
+        else:
+            for call in chunk.function_calls:
+                function_calls.append(call.function_name)
+                
+                
+    print(GREEN)
+    print(plain_text, function_calls)
+    print(RESET)
+    
+    
 
 if __name__ == "__main__":
     generate()

@@ -1,31 +1,33 @@
-import re
 from .imports_for_tools import *
-import conf_info
 import datetime
 import json
 
-long_term_memory_tool = {
-    "type": "function",
-    "function": {
-        "name": "get_long_term_memory",
-        "description": (
-            "Periodically retrieving the context of the conversation."
-            "Use this tool to recall shared experiences, historical context, names, dates, or "
-            "specific events. This tool is essential for understanding references, emotional "
+
+
+google_long_term_memory_tool = types.Tool(
+    function_declarations=[
+        types.FunctionDeclaration(
+            name="get_long_term_memory",
+            description=(
+                "Periodically retrieve the context of the conversation. "
+                "Use this tool to recall shared experiences, historical context, names, dates, or "
+                "specific events. This tool is essential for understanding references, emotional "
+                "context, and maintaining continuity in conversations."
+            ),
+            parameters=genai.types.Schema(
+                type=genai.types.Type.OBJECT,
+                properties={
+                    "keywords": genai.types.Schema(
+                        type=genai.types.Type.ARRAY,
+                        items=genai.types.Schema(type=genai.types.Type.STRING),
+                        description="4-7 varied search terms. Example: ['Alex', 'birthday', '15-08', 'Paris trip', '2024']",
+                    ),
+                },
+                required=["keywords"],
+            ),
         ),
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "keywords": {
-                    "type": "array",
-                    "items": {"type": "string"},
-                    "description": "4-7 varied search terms. Example: ['Alex', 'birthday', '15-08', 'Paris trip', '2024']"
-                }
-            },
-            "required": ["keywords"]
-        }
-    }
-}
+    ]
+)
 
 
 
@@ -47,19 +49,47 @@ def get_long_term_memory(keywords: list[str]):
         
         with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
             conversation = json.load(f)
+        
+        
+        current_datetime = datetime.datetime.now(prefs.timezone).strftime('%D-%M-%Y %H:%M:%S %Z')
             
-        client.api_key = prefs.open_r_key()
-        response = client.chat.completions.create(
-            model=prefs.MODEL_NO_TOOLS,
-            messages=[
-                prefs.system_msg_char,
-                *conversation,
-                {
-                    'role' : 'user',
-                    'content' : json.dumps(filtered_memories, ensure_ascii=False) + '\n\nисходя из истории переписки и данных записей выдели данные, которые имеют отношение к контексту, остальное опусти. Эти данные из твоей памяти. Приведи их в удобный формат. Подведи итог. Обращай внимание на даты создания заеисей в базе данных.',
-                }
+        system_message = types.Part.from_text(text=f"Current time is {current_datetime} {prefs.system_msg()}")   
+        
+        with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
+            conversation = json.load(f)
+        
+        query = types.Content(
+            role="model",
+            parts=[
+                types.Part.from_text(text=f"""
+Исходя из истории переписки и данных записей из базы данных выдели данные, которые имеют отношение к контексту, остальное опусти. Эти данные из твоей памяти. Приведи их в удобный формат. Подведи итог. Обращай внимание на даты создания заеисей в базе данных. Представь результат в виде сводки. Отрази свое отношение но не используй прямую речь.
+[история действий и сообщений]
+{conversation[len(conversation) // 2:]}
+
+[записи из базы данных]
+{filtered_memories}
+            """),
             ],
-            temperature=(prefs.TEMPERATURE * 1.5)
         )
-        print(response)
-        return normalize_string(response.choices[0].message.content)
+        
+        generate_content_config = types.GenerateContentConfig(
+            temperature=prefs.TEMPERATURE,
+            top_p=0.95,
+            top_k=40,
+            max_output_tokens=8192,
+            response_mime_type="text/plain",
+            system_instruction=[
+                system_message
+            ],
+        )
+        plain_text = ""
+        for chunk in client.models.generate_content_stream(
+            model=prefs.model_gemini,
+            contents=[query],
+            config=generate_content_config,
+        ):
+            if not chunk.function_calls:
+                plain_text += chunk.text
+        
+        
+        return plain_text

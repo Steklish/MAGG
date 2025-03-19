@@ -1,29 +1,37 @@
 from .imports_for_tools import *
 
 
-setup_task_tool = {
-    "type": "function",
-    "function": {
-        "name": "setup_task",
-        "description": (
-            "PROACTIVE TASK CREATION: form tasks to preform in specific time to have an ability to alert user or preform a specific action. Use often and in combination with other functions. Provide the instruction that are relevant at he time the tsak needs to be completed."
-        ),
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "memory": {
-                    "type": "string",
-                    "description": "Detailed description of the task including any instructions."
+google_setup_task_tool = types.Tool(
+    function_declarations=[
+        types.FunctionDeclaration(
+            name="setup_task",
+            description=(
+                "Proactively create tasks to be performed at a specific time, enabling the system to alert the user or execute a defined action. "
+                "Use this tool frequently, in combination with other functions, to ensure efficient task management. "
+                "Provide instructions relevant to the time the task needs to be completed."
+            ),
+            parameters=genai.types.Schema(
+                type=genai.types.Type.OBJECT,
+                properties={
+                    "memory": genai.types.Schema(
+                        type=genai.types.Type.STRING,
+                        description=(
+                            "A detailed description of the task, including any relevant instructions for its execution."
+                        ),
+                    ),
+                    "time_to_exec": genai.types.Schema(
+                        type=genai.types.Type.STRING,
+                        description=(
+                            "The exact time when the task should be executed, in `DD-MM-YYYY-hh-mm` format."
+                        ),
+                    ),
                 },
-                "time_to_exec": {
-                    "type": "string",
-                    "description": "Exact time for the task to be executed in `DD-MM-YYYY-hh-mm` format."
-                }
-            },
-            "required": ["memory", "time_to_exec"]
-        }
-    }
-}
+                required=["memory", "time_to_exec"],
+            ),
+        ),
+    ]
+)
+
 
 def setup_task(memory: str, time_to_exec:str):
     print("TASK ACCEPTED")
