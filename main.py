@@ -66,69 +66,69 @@ async def main():
     # Keep the async task running
     await tick
 
-# @bot.message_handler(commands=["amnesia"])
-# def is_alive(message):
-#     with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
-#         f.write("[]")      
-#     bot.send_message(
-#         message.chat.id,
-#         "```HISTORY_CLEARED```", parse_mode="Markdown"
-#     )    
+@bot.message_handler(commands=["amnesia"])
+def is_alive(message):
+    with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
+        f.write("[]")      
+    bot.send_message(
+        message.chat.id,
+        "```HISTORY_CLEARED```", parse_mode="Markdown"
+    )    
 
-# @bot.message_handler(commands=["ok"])
-# def is_alive(message):
-#     bot.send_message(
-#         message.chat.id,
-#         "```STATUS_CHECK```", parse_mode="Markdown"
-#     )    
+@bot.message_handler(commands=["ok"])
+def is_alive(message):
+    bot.send_message(
+        message.chat.id,
+        "```STATUS_CHECK```", parse_mode="Markdown"
+    )    
 
-# @bot.message_handler(commands=['nfs'])
-# def toggle_nfs(message:telebot.types.Message):
-#     if prefs.chat_to_interact == prefs.NFS_chat_id:
-#         bot.send_message(
-#             message.chat.id,
-#             "`CURRENTLY IS SET TO NFS`", parse_mode="Markdown"
-#         )
-#     else:
-#         prefs.chat_to_interact = prefs.NFS_chat_id
+@bot.message_handler(commands=['nfs'])
+def toggle_nfs(message:telebot.types.Message):
+    if prefs.chat_to_interact == prefs.NFS_chat_id:
+        bot.send_message(
+            message.chat.id,
+            "`CURRENTLY IS SET TO NFS`", parse_mode="Markdown"
+        )
+    else:
+        prefs.chat_to_interact = prefs.NFS_chat_id
         
-#         bot.send_message(
-#             message.chat.id,
-#             "`REDIRECTING TO NFS`", parse_mode="Markdown"
-#         )
+        bot.send_message(
+            message.chat.id,
+            "`REDIRECTING TO NFS`", parse_mode="Markdown"
+        )
 
 
-# @bot.message_handler(commands=['chat'])
-# def check_chat(message:telebot.types.Message):
-#     bot.send_message(
-#             message.chat.id,
-#             f"`{bot.get_chat(prefs.chat_to_interact).title}`", parse_mode="Markdown"
-#         )
+@bot.message_handler(commands=['chat'])
+def check_chat(message:telebot.types.Message):
+    bot.send_message(
+            message.chat.id,
+            f"`{bot.get_chat(prefs.chat_to_interact).title}`", parse_mode="Markdown"
+        )
 
-# @bot.message_handler(commands=['tst'])
-# def toggle_tst(message:telebot.types.Message):
-#     if prefs.chat_to_interact == prefs.TST_chat_id:
-#         bot.send_message(
-#             message.chat.id,
-#             "`CURRENTLY IS SET TO TST`", parse_mode="Markdown"
-#         )
-#     else:
-#         prefs.chat_to_interact = prefs.TST_chat_id
+@bot.message_handler(commands=['tst'])
+def toggle_tst(message:telebot.types.Message):
+    if prefs.chat_to_interact == prefs.TST_chat_id:
+        bot.send_message(
+            message.chat.id,
+            "`CURRENTLY IS SET TO TST`", parse_mode="Markdown"
+        )
+    else:
+        prefs.chat_to_interact = prefs.TST_chat_id
         
-#         bot.send_message(
-#             message.chat.id,
-#             "`REDIRECTING TO TST`", parse_mode="Markdown"
-#         )
+        bot.send_message(
+            message.chat.id,
+            "`REDIRECTING TO TST`", parse_mode="Markdown"
+        )
 
 
-# @bot.message_handler(commands=['bio'])
-# def bio(message:telebot.types.Message):
-#     bot.send_document(message.chat.id, open("static_storage/conversation.json", 'rb'))
-#     bot.send_document(message.chat.id, open("static_storage/long_term_memory.json", 'rb'))
-#     bot.send_document(message.chat.id, open("static_storage/user_status.json", 'rb'))
-#     with open("static_storage/context.txt", 'r') as f:
-#         state = f.read()
-#     bot.send_message(message.chat.id, f"``` CONTEXT_STATE {state}```", parse_mode="Markdown")
+@bot.message_handler(commands=['bio'])
+def bio(message:telebot.types.Message):
+    bot.send_document(message.chat.id, open("static_storage/conversation.json", 'rb'))
+    bot.send_document(message.chat.id, open("static_storage/long_term_memory.json", 'rb'))
+    bot.send_document(message.chat.id, open("static_storage/user_status.json", 'rb'))
+    with open("static_storage/context.txt", 'r') as f:
+        state = f.read()
+    bot.send_message(message.chat.id, f"``` CONTEXT_STATE {state}```", parse_mode="Markdown")
 
 
 # ! general message

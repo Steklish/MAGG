@@ -147,10 +147,8 @@ def extract_img(url:str, message, file_path):
         msgs = msgs[10:]
     with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
         f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
-        
-    # Delete the file
-    # if should_delete:
-    #     client.files.delete(file_id=file.id)
+
+    # delete every file stored
     for file_google in client.files.list():
         client.files.delete(name=file_google.name)
         print("file deleted")
