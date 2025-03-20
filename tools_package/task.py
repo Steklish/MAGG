@@ -16,13 +16,13 @@ google_setup_task_tool = types.Tool(
                     "memory": genai.types.Schema(
                         type=genai.types.Type.STRING,
                         description=(
-                            "A detailed description of the task, including any relevant instructions for its execution."
+                            "You need to provide instructions for future self. Describe in details what exactly you will have to do. May also include instructions on setting folloeing tasks. EXAMPLE 'я должна пожелать Саше доброе утро и напоинить сделать то-то...'"
                         ),
                     ),
                     "time_to_exec": genai.types.Schema(
                         type=genai.types.Type.STRING,
                         description=(
-                            "The exact time when the task should be executed, in `DD-MM-YYYY-hh-mm` format."
+                            "The time for the task to be executed, in DD-MM-YYYY-hh-mm format."
                         ),
                     ),
                 },

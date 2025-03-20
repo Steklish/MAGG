@@ -13,6 +13,7 @@ google_long_term_memory_tool = types.Tool(
                 "Use this tool to recall shared experiences, historical context, names, dates, or "
                 "specific events. This tool is essential for understanding references, emotional "
                 "context, and maintaining continuity in conversations."
+                "use dd-mm-YYYY format or parts of it if needed to search by date"
             ),
             parameters=genai.types.Schema(
                 type=genai.types.Type.OBJECT,
@@ -20,7 +21,7 @@ google_long_term_memory_tool = types.Tool(
                     "keywords": genai.types.Schema(
                         type=genai.types.Type.ARRAY,
                         items=genai.types.Schema(type=genai.types.Type.STRING),
-                        description="4-7 varied search terms. Example: ['Alex', 'birthday', '15-08', 'Paris trip', '2024']",
+                        description="2-3 varied search terms. Example: ['Alex', 'birthday', '15-08']",
                     ),
                 },
                 required=["keywords"],

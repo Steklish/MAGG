@@ -35,21 +35,14 @@ google_web_search_tool = genai.types.Tool(
 
 
 def web_search(query:str):
-    results = google_custom_search(google_search_api, search_engine_id, query, num_results=5)
-    results += google_custom_search_images(google_search_api, search_engine_id, query, num_results=5)
+    results = "[web pages] "
+    results += google_custom_search(google_search_api, search_engine_id, query, num_results=4)
+    results += " [images urls]"
+    results += google_custom_search_images(google_search_api, search_engine_id, query, num_results=10)
     return json.dumps(results, ensure_ascii=False)
     
 
 def google_custom_search(api_key, search_engine_id, query, num_results=10):
-    """
-    Perform a search using Google Custom Search JSON API.
-
-    :param api_key: Your Google API key.
-    :param search_engine_id: Your Custom Search Engine ID.
-    :param query: The search query.
-    :param num_results: Number of results to return (default is 10).
-    :return: A list of search results.
-    """
     url = "https://www.googleapis.com/customsearch/v1"
     
     params = {
@@ -80,7 +73,7 @@ def google_custom_search(api_key, search_engine_id, query, num_results=10):
         print(f"An error occurred: {e}")
         return ["Error finding web pages"]
 
-def google_custom_search_images(api_key, search_engine_id, query, num_results=5):
+def google_custom_search_images(api_key, search_engine_id, query, num_results=8):
 
     url = "https://www.googleapis.com/customsearch/v1"
     

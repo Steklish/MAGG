@@ -6,10 +6,7 @@ google_create_memory_tool = types.Tool(
             name="create_memory",
             description=(
                 "PROACTIVE MEMORY CREATION: Store important information to enhance interactions. "
-                "Use this tool to remember emotional exchanges, future plans, or personal preferences. "
-                "- Repeated behavior patterns. - Future plans (e.g., meetups, trips). "
-                "- Personal preferences (e.g., favorite food, hobbies). "
-                "For time-sensitive memories (e.g., tasks), use `DD-MM-YYYY-hh-mm` format."
+                "Use create_memory to save emotional moments or significant information for future use make a detailed descriptive notes."
             ),
             parameters=genai.types.Schema(
                 type=genai.types.Type.OBJECT,
@@ -17,7 +14,7 @@ google_create_memory_tool = types.Tool(
                     "memory": genai.types.Schema(
                         type=genai.types.Type.STRING,
                         description=(
-                            "Detailed context with emotional tone in Russian. Include names, dates, and any relevant details. "
+                            "Detailed note in Russian. Include names, dates, emotional tone and all the relevant details. Describe exhaustively."
                             "Provide details and your thoughts on a subject."
                         ),
                     ),

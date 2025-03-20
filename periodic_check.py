@@ -76,7 +76,8 @@ def reminder_check():
             calls = ai_handler.smart_response(
                 func_mode="ANY", 
                 messages=[
-                            ai_handler.convert_single(f"Вполнить задачу [задача] {task['content']}")
+                            *ai_handler.convert_conversation(),
+                            ai_handler.convert_single_as_function(f"Поступила задача для выполнения: {task['content']}")
                         ]
                 )
             if 'send_private_message' in calls or 'send_group_message' in calls:

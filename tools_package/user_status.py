@@ -6,7 +6,7 @@ google_update_info_tool = types.Tool(
         types.FunctionDeclaration(
             name="update_info",
             description=(
-                "Use to update your relationship with a certain user. Call only to store significant changes."
+                "Use to update your attitude to a certain user. Call only to store essential changes."
             ),
             parameters=genai.types.Schema(
                 type=genai.types.Type.OBJECT,
@@ -17,7 +17,7 @@ google_update_info_tool = types.Tool(
                     ),
                     "new_info": genai.types.Schema(
                         type=genai.types.Type.STRING,
-                        description="The combination of old and new information to be associated with the member.",
+                        description="The updated combination of old and new information to be associated with the user.",
                     ),
                 },
                 required=["name", "new_info"],
@@ -33,7 +33,7 @@ def update_info(name, new_info):
         # Check if the name or any alias matches
         if member["name"] == name or name in member.get("aliases", []):
             # Update the info field
-            member["info"] = new_info
+            member["attitude"] = new_info
             
             with open("static_storage/user_status.json", "w", encoding="utf-8") as f:
                 f.write(json.dumps(data, ensure_ascii=False, indent=4))

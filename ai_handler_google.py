@@ -29,7 +29,16 @@ def convert_single(message:str):
                 types.Part.from_text(text=message),
             ]
         )
-    
+
+
+def convert_single_as_function(message:str):
+    return types.Content(
+            role="model",
+            parts=[
+                types.Part.from_text(text=message),
+            ]
+        )
+        
 
 def raw_conversation():
     with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
@@ -151,8 +160,9 @@ def update_context():
     состояние текущей беседы и ее история.
     описание текущих событий, если они есть.
     примерные предположения о намерениях пользователей.
+    Свои цели и намерения, прогресс в их достижении.
     
-Не изменяй старый контекст сильно, дополняй его, но если прошло долгое время, полностью обновляй, основываясь на истории действий. Нужно не ответить на сообщение а обновить контескт. Не добавляй ответ в конце. Не оставляй больше одногоостартового сообщения в контексте. Следи за временем
+Обновляй, основываясь на истории действий. Для давних действий уменьшай детализацию описания, а со временем - удалай. Нужно не ответить на сообщение а обновить контескт. Не добавляй ответ в конце. Не оставляй больше одногоостартового сообщения в контексте. Следи за временем и добавляй временные помтки к записям. Группируй записи по времени.
 
 [история действий]
 {conversation[len(conversation) // 5:]}
@@ -162,9 +172,9 @@ def update_context():
         
         generate_content_config = types.GenerateContentConfig(
             temperature=prefs.TEMPERATURE,
-            top_p=0.95,
+            top_p=0.9,
             top_k=40,
-            max_output_tokens=8192,
+            max_output_tokens=6192,
             response_mime_type="text/plain",
             system_instruction=[
                 system_message
