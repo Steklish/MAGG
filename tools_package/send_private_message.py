@@ -4,7 +4,7 @@ google_send_private_message_tool = genai.types.Tool(
     function_declarations=[
         genai.types.FunctionDeclaration(
             name="send_private_message",
-            description="Send a direct message to a specific user. Use this tool when asked to message someone privately. Use to continue a personal conversation."
+            description="Send a direct message to a specific user. Always use when need to send a DM."
             """
 [user id for users]
 Steklish(SKLS) - Антон [1911742158]

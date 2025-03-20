@@ -7,12 +7,21 @@ import asyncio
 from stuff import *
 import tools_package.tools as tools
 import prefs
+from random import randint
 
 async def check_state():
     while True:
         print(YELLOW, "tick", RESET)
         reminder_check()
         # repeat every 5 minutes
+        
+        if randint(0, 100) == 50:
+            while 1: 
+                calls = ai_handler.smart_response(func_mode="ANY")
+                if 'send_private_message' in calls or 'send_group_message' in calls:
+                    break
+                if calls == []:
+                    break    
         await asyncio.sleep(5*60)
         
         

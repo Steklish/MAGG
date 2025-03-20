@@ -6,7 +6,7 @@ google_send_group_message_tool = types.Tool(
     function_declarations=[
         types.FunctionDeclaration(
             name="send_group_message",
-            description="Send a message to a group chat. Use this tool very frequently to keep the conversation active and engaging.",
+            description="Use to send a message to a group chat. Always use when referenced in chat or if you need to participate in discussion. Use very frequently. Engage into conversations.",
             parameters=genai.types.Schema(
                 type=genai.types.Type.OBJECT,
                 properties={
@@ -21,23 +21,6 @@ google_send_group_message_tool = types.Tool(
     ]
 )
 # [
-#   {
-#     "name": "send_group_message",
-#     "description": "group message",
-#     "parameters": {
-#       "type": "object",
-#       "properties": {
-#         "message": {
-#           "type": "string"
-#         }
-#       },
-#       "required": [
-#         "message"
-#       ]
-#     }
-#   }
-# ]
-
 def send_group_message(message):
     # print(GREEN, "Decided to answer (send_group_message)", RESET)
     if send_to_chat(message) == 0:

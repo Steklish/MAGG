@@ -122,7 +122,7 @@ def smart_response(
                     raw_messages.append(
                         {                        
                             "role":"model",
-                            "content" : f"The result of calling the {call.name} function with parameters ({call.args}) was: {result}. Now its time to use it and answer to user"
+                            "content" : f"The result of calling the {call.name} function with parameters ({call.args}) was: {result}."
                         }
                     )
                     if len(raw_messages) > prefs.history_depth:

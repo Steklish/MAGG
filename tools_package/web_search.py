@@ -36,9 +36,9 @@ google_web_search_tool = genai.types.Tool(
 
 def web_search(query:str):
     results = "[web pages] "
-    results += google_custom_search(google_search_api, search_engine_id, query, num_results=4)
+    results += str(google_custom_search(google_search_api, search_engine_id, query, num_results=4))
     results += " [images urls]"
-    results += google_custom_search_images(google_search_api, search_engine_id, query, num_results=10)
+    results += str(google_custom_search_images(google_search_api, search_engine_id, query, num_results=10))
     return json.dumps(results, ensure_ascii=False)
     
 

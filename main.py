@@ -14,7 +14,7 @@ from bot_instance import bot
 import periodic_check
 import atexit
 import signal
-
+from tools_package.imports_for_tools import fix_markdown_v2
 
 
 def struggle_till_message():
@@ -24,7 +24,13 @@ def struggle_till_message():
             if 'send_private_message' in calls or 'send_group_message' in calls:
                 break
     
-
+def general_response():
+    while 1: 
+            calls = ai_handler.smart_response(func_mode="ANY")
+            if 'send_private_message' in calls or 'send_group_message' in calls:
+                break
+            if calls == []:
+                break
 def cleanup():
     if platform.system() == "Linux":
         bot.send_document(prefs.TST_chat_id, open("static_storage/conversation.json", 'rb'), disable_notification=True)
@@ -126,9 +132,7 @@ def bio(message:telebot.types.Message):
     bot.send_document(message.chat.id, open("static_storage/conversation.json", 'rb'))
     bot.send_document(message.chat.id, open("static_storage/long_term_memory.json", 'rb'))
     bot.send_document(message.chat.id, open("static_storage/user_status.json", 'rb'))
-    with open("static_storage/context.txt", 'r') as f:
-        state = f.read()
-    bot.send_message(message.chat.id, f"``` CONTEXT_STATE {state}```", parse_mode="Markdown")
+    bot.send_document(message.chat.id, open("static_storage/context.txt", 'rb'))
 
 
 # ! general message
@@ -191,7 +195,7 @@ def process_any_msg(message:telebot.types.Message):
         struggle_till_message()
     else:
         print("General response")
-        ai_handler.smart_response(func_mode="AUTO")
+        general_response()
     ai_handler.update_context()
     
     
@@ -248,7 +252,7 @@ def handle_files(message:telebot.types.Message):
         print("private file")
         struggle_till_message()
     else:
-        ai_handler.smart_response(TOOLSET=tools.TOOLS, tool_choice="auto")
+        general_response()
     ai_handler.update_context()
 
 
