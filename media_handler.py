@@ -15,7 +15,7 @@ def convert_docx_to_html(docx_path):
     # return pypandoc.convert_file("tmp/" + docx_path, 'html')
 
 #!text docs only
-def extract_doc(url:str, message:telebot.types.Message, file_path):
+def extract_doc(url:str, file_path, message:telebot.types.Message=None):
     file_path = file_path.split("/")[-1]
     os.makedirs("tmp", exist_ok=True)
     download_file(url,"tmp/" + file_path)
@@ -28,8 +28,9 @@ def extract_doc(url:str, message:telebot.types.Message, file_path):
     #update context of conversation
     msgs = []
     with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
-        msgs = json.loads(f.read())        
-    if bot.get_chat(message.chat.id).type == "private":
+        msgs = json.loads(f.read())
+                
+    if message and bot.get_chat(message.chat.id).type == "private":
         origin = "direct message"
     else:
         origin = "group"
@@ -37,18 +38,28 @@ def extract_doc(url:str, message:telebot.types.Message, file_path):
         with open("tmp/" + file_path, 'r') as f:
             file = f.read()
     else:
-        msg = {
-            "role": "user",
-            "content": json.dumps({
-                "sender": {
-                    "name": message.from_user.full_name,
-                    "username": message.from_user.username
-                },
-                "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-                "from" : origin,
-                "message": "[file] *Unreadable file format*" + "[file name]" + str(message.document.file_name) + f"{'[caption]' + message.caption if message.caption else "."}"
-            }, indent=4, ensure_ascii=False)
-        }
+        if message is None:
+            msg = {
+                "role": "model",
+                "content": json.dumps({
+                    "from" : origin,
+                    "message": "[file] *Unreadable file format*" + file_path,
+                    "from" : "Magg's request"
+                }, indent=4, ensure_ascii=False)
+            }
+        else:
+            msg = {
+                "role": "user",
+                "content": json.dumps({
+                    "sender": {
+                        "name": message.from_user.full_name,
+                        "username": message.from_user.username
+                    },
+                    "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
+                    "from" : origin,
+                    "message": "[file] *Unreadable file format*" + "[file name]" + str(message.document.file_name) + f"{'[caption]' + message.caption if message.caption else "."}"
+                }, indent=4, ensure_ascii=False)
+            }
         msgs.append(msg)
         if len(msgs)  >prefs.history_depth:
             msgs = msgs[10:]
@@ -56,30 +67,43 @@ def extract_doc(url:str, message:telebot.types.Message, file_path):
             f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
         print("Done with the doc")
         delete_files_in_directory("tmp")
-        return 0
+        return "completed successfully"
     
     if file:
-        response = client.models.generate_content(
-            model='gemini-2.0-flash',
-            contents=[
-                json.dumps(sys_m),
-                'Describe what is inside the file. To do it use language of the document. Provide a detailed summary and dont miss importtant or interesting detailes. Take a message history into account when making conclusion' + "[file name]" + str(message.document.file_name) + f"{'[caption]' + message.caption if message.caption else "."}",
-                file,
-            ]
-        )
-
-        msg = {
-            "role": "user",
-            "content": json.dumps({
-                "sender": {
-                    "name": message.from_user.full_name,
-                    "username": message.from_user.username
-                },
-                "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-                "from" : origin,
-                "message": "[file] " + response.text + "[file name]" + str(message.document.file_name) + f"{'[caption]' + message.caption if message.caption else "."}"
-            }, indent=4, ensure_ascii=False)
-        }
+        if message:
+            response = client.models.generate_content(
+                model='gemini-2.0-flash',
+                contents=[
+                    json.dumps(sys_m),
+                    'Describe what is inside the file. To do it use language of the document. Provide a detailed summary and dont miss importtant or interesting detailes. Take a message history into account when making conclusion' + "[file name]" + str(message.document.file_name) + f"{'[caption]' + message.caption if message.caption else "."}",
+                    file,
+                ]
+            )
+        else:
+            response = client.models.generate_content(
+                model='gemini-2.0-flash',
+                contents=[
+                    json.dumps(sys_m),
+                    "Describe what is inside the file. To do it use language of the document. Provide a detailed summary and dont miss importtant or interesting detailes. Take a message history into account when making conclusion [file name]" + file_path,
+                    file,
+                ]
+            )
+        if message is None:
+            return response.text
+        else:
+            msg = {
+                "role": "user",
+                "content": json.dumps({
+                    "sender": {
+                        "name": message.from_user.full_name,
+                        "username": message.from_user.username
+                    },
+                    "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
+                    "from" : origin,
+                    "message": "[file] " + response.text + "[file name]" + str(message.document.file_name) + f"{'[caption]' + message.caption if message.caption else "."}"
+                }, indent=4, ensure_ascii=False)
+            }
+                
         msgs.append(msg)
         if len(msgs)  >prefs.history_depth:
             msgs = msgs[10:]
@@ -91,7 +115,8 @@ def extract_doc(url:str, message:telebot.types.Message, file_path):
 
 
 #!image
-def extract_img(url:str, message, file_path):
+def extract_img(url:str, file_path, message:telebot.types.Message=None):
+    print(MAGENTA, "starting img processing", RESET)
     file_path = file_path.split("/")[-1]
     os.makedirs("tmp", exist_ok=True)
     download_file(url,"tmp/" + file_path)
@@ -101,9 +126,9 @@ def extract_img(url:str, message, file_path):
         'content': prefs.system_msg()
     }
     
-    message_text = "no subscription"
+    message_text = "no cation"
     
-    if message.caption:
+    if message and message.caption:
         message_text = message.caption
     
     should_delete = False
@@ -115,9 +140,11 @@ def extract_img(url:str, message, file_path):
                 file,
             ]
         )
+    print(MAGENTA, "received responce from llm", RESET)
+    print(YELLOW, response.text, RESET)
     #update context of conversation
     msgs = []
-    if bot.get_chat(message.chat.id).type == "private":
+    if message and bot.get_chat(message.chat.id).type == "private":
         origin = "direct message"
     else:
         origin = "group"
@@ -127,18 +154,21 @@ def extract_img(url:str, message, file_path):
     # if message.caption:
     #     msgs[-1]["content"]["message"] +=  "\n[caption] "
     #     msgs[-1]["content"]["message"] +=  message.caption
-    msg = {
-        "role": "user",
-        "content": json.dumps({
-            "sender": {
-                "name": message.from_user.full_name,
-                "username": message.from_user.username
-            },
-            "from" : origin,
-            "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-            "message": "[photo] " + response.text + f"{'[caption]' + message.caption if message.caption else "."}"
-        }, indent=4, ensure_ascii=False)
-    }
+    if message is None:
+        return response.text
+    else:
+        msg = {
+            "role": "user",
+            "content": json.dumps({
+                "sender": {
+                    "name": message.from_user.full_name,
+                    "username": message.from_user.username
+                },
+                "from" : origin,
+                "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
+                "message": "[photo] " + response.text + f"{'[caption]' + message.caption if message.caption else "."}"
+            }, indent=4, ensure_ascii=False)
+        }
     
     msgs.append(msg)
     
@@ -158,7 +188,7 @@ def extract_img(url:str, message, file_path):
     
     
 #!voice
-def extract_voice(url: str, message, file_path):
+def extract_voice(url:str, file_path, message:telebot.types.Message=None):
     file_path = file_path.split("/")[-1]
     download_file(url, "tmp/" + file_path)
     file = client.files.upload(file='tmp/' + file_path)
@@ -185,27 +215,29 @@ def extract_voice(url: str, message, file_path):
             file,
         ]
     )
-    if bot.get_chat(message.chat.id).type == "private":
+    if message and bot.get_chat(message.chat.id).type == "private":
         origin = "direct message"
     else:
         origin = "group"
     
     print(YELLOW, response, RESET)
     # Update context of conversation
-    msg = {
-        "role": "user",
-        "content": json.dumps({
-            "sender": {
-                "name": message.from_user.full_name,
-                "username": message.from_user.username
-            },
-            "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-            "from" : origin,
-            "message": f"[voice message] " + response.text,
-            "from" : origin
-        }, indent=4, ensure_ascii=False)
-    }
-    print(BACKGROUND_RED + BLACK + "context updated" + RESET)
+    if message is None:
+        return response.text
+    else:
+        msg = {
+            "role": "user",
+            "content": json.dumps({
+                "sender": {
+                    "name": message.from_user.full_name,
+                    "username": message.from_user.username
+                },
+                "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
+                "from" : origin,
+                "message": f"[voice message] " + response.text,
+                "from" : origin
+            }, indent=4, ensure_ascii=False)
+        }
     msgs.append(msg)
     if len(msgs) >prefs.history_depth:
         msgs = msgs[10:]
@@ -221,4 +253,18 @@ def extract_voice(url: str, message, file_path):
     delete_files_in_directory("tmp")
     print("Done with the img")
     
-   
+def media_handler(url: str):
+    # Extract filename from url
+    file_path = url.split('/')[-1]
+    # Get file extension from the URL
+    file_extension = file_path.split('.')[-1].lower()
+
+    # Handle different file types
+    if file_extension in ['txt', 'doc', 'docx']:
+        return extract_doc(url, file_path)
+    elif file_extension in ['jpg', 'jpeg', 'png', 'gif']:
+        return extract_img(url, file_path)
+    elif file_extension in ['ogg', 'mp3', 'wav']:
+        return extract_voice(url, file_path)
+    else:
+        return extract_doc(url, file_path)

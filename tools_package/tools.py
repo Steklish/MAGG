@@ -9,7 +9,7 @@ from .send_private_message import *
 from .task import *
 from .user_status import *
 from .web_search import *
-
+from .analize_url import *
 
 G_TOOLS = [
     google_long_term_memory_tool,
@@ -18,7 +18,8 @@ G_TOOLS = [
     google_send_private_message_tool,
     google_setup_task_tool,
     google_update_info_tool,
-    google_web_search_tool
+    google_web_search_tool,
+    analize_url_tool
 ]
 
 

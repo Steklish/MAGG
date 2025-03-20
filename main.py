@@ -213,7 +213,7 @@ def handle_files(message:telebot.types.Message):
                 file_path = file_info.file_path
                 file_url = f"https://api.telegram.org/file/bot{prefs.TG_API}/{file_path}"
                 print("DOCUMENT")
-                extract_doc(file_url, message, file_path)
+                extract_doc(url=file_url, message=message, file_path=file_path)
             except Exception as e:
                 bot.send_message(
                     prefs.TST_chat_id,
@@ -225,7 +225,7 @@ def handle_files(message:telebot.types.Message):
                 file_path = file_info.file_path
                 file_url = f"https://api.telegram.org/file/bot{prefs.TG_API}/{file_path}"
                 print("PHOTO")
-                extract_img(file_url, message, file_path)
+                extract_img(url=file_url, message=message, file_path=file_path)
             except Exception as e:
                 bot.send_message(
                     prefs.TST_chat_id,
@@ -237,7 +237,7 @@ def handle_files(message:telebot.types.Message):
                 file_path = file_info.file_path
                 file_url = f"https://api.telegram.org/file/bot{prefs.TG_API}/{file_path}"
                 print("VOICE", file_url)
-                extract_voice(file_url, message, file_path)
+                extract_voice(url=file_url, message=message, file_path=file_path)
             except Exception as e:
                 bot.send_message(
                     prefs.TST_chat_id,
