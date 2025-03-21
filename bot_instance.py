@@ -45,7 +45,7 @@ startup_message = (
     # f"Monitoring: \n<{bot.get_chat(prefs.chat_to_interact).title}>```"
 )
 
-with open("static_storage/context.txt", "w", encoding="utf-8") as f:
+with open("static_storage/context.txt", "a", encoding="utf-8") as f:
     f.write(f"{startup_message}")
 
 # Initialize original GOOGLE client

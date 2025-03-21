@@ -37,40 +37,6 @@ def is_readable_text(file_path):
         return False
 
     
-def log_red(func):
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        res = func(*args, **kwargs)
-        print('🔴')
-        return res
-    return wrapper
-
-def log_blue(func):
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        res = func(*args, **kwargs)
-        print('🔵')
-        return res
-    return wrapper
-
-def log_yellow(func):
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        res = func(*args, **kwargs)
-        print('🟡')
-        return res
-    return wrapper
-
-def log_green(func):
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        res = func(*args, **kwargs)
-        print('🟢')
-        return res
-    return wrapper
-
-
-@log_green
 def download_file(url, dest_path):
     response = requests.get(url)
     with open(dest_path, 'wb') as file:

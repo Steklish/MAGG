@@ -21,13 +21,13 @@ def struggle_till_message():
     while 1: 
             calls = ai_handler.smart_response(func_mode="ANY")
             print(YELLOW, calls, RESET)
-            if 'send_private_message' in calls or 'send_group_message' in calls:
+            if 'send_message' in calls or 'send_sticker' in calls:
                 break
     
 def general_response():
     while 1: 
             calls = ai_handler.smart_response(func_mode="ANY")
-            if 'send_private_message' in calls or 'send_group_message' in calls:
+            if 'send_message' in calls or 'send_group_message' in calls:
                 break
             if calls == []:
                 break
@@ -254,6 +254,8 @@ def handle_files(message:telebot.types.Message):
     else:
         general_response()
     ai_handler.update_context()
+
+
 
 
 

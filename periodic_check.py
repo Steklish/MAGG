@@ -18,7 +18,7 @@ async def check_state():
         if randint(0, 100) == 50:
             while 1: 
                 calls = ai_handler.smart_response(func_mode="ANY")
-                if 'send_private_message' in calls or 'send_group_message' in calls:
+                if 'send_message' in calls or 'send_group_message' in calls:
                     break
                 if calls == []:
                     break    
@@ -89,7 +89,7 @@ def reminder_check():
                             ai_handler.convert_single_as_function(f"Поступила задача для выполнения: {task['content']}")
                         ]
                 )
-            if 'send_private_message' in calls or 'send_group_message' in calls:
+            if 'send_message' in calls or 'send_group_message' in calls:
                 break
 
             print(RED, "did not send a message (from task handler) retrying", RESET)            

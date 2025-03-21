@@ -4,22 +4,22 @@ from .imports_for_tools import *
 # each tool import
 from .create_memory import *
 from .get_long_term_memory import *
-from .send_group_messgae import *
-from .send_private_message import *
+from .send_message import *
 from .task import *
 from .user_status import *
 from .web_search import *
 from .analize_url import *
+from .send_sticker import *
 
 G_TOOLS = [
     google_long_term_memory_tool,
     google_create_memory_tool,
-    google_send_group_message_tool,
-    google_send_private_message_tool,
+    google_send_message_tool,
     google_setup_task_tool,
     google_update_info_tool,
     google_web_search_tool,
-    analize_url_tool
+    analize_url_tool,
+    send_sticker_tool,
 ]
 
 
