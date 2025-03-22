@@ -36,6 +36,7 @@ def cleanup():
         bot.send_document(prefs.TST_chat_id, open("static_storage/conversation.json", 'rb'), disable_notification=True)
         bot.send_document(prefs.TST_chat_id, open("static_storage/long_term_memory.json", 'rb'), disable_notification=True)
         bot.send_document(prefs.TST_chat_id, open("static_storage/user_status.json", 'rb'), disable_notification=True)
+        bot.send_document(prefs.TST_chat_id, open("static_storage/context.txt", 'rb'), disable_notification=True)
         bot.send_message(
                 prefs.TST_chat_id,
                 "`STOPPED the remote server`", parse_mode="Markdown"
@@ -72,22 +73,6 @@ async def main():
     # Keep the async task running
     await tick
 
-@bot.message_handler(commands=["amnesia"])
-def is_alive(message):
-    with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
-        f.write("[]")      
-    bot.send_message(
-        message.chat.id,
-        "```HISTORY_CLEARED```", parse_mode="Markdown"
-    )    
-
-@bot.message_handler(commands=["ok"])
-def is_alive(message):
-    bot.send_message(
-        message.chat.id,
-        "```STATUS_CHECK```", parse_mode="Markdown"
-    )    
-
 @bot.message_handler(commands=['nfs'])
 def toggle_nfs(message:telebot.types.Message):
     if prefs.chat_to_interact == prefs.NFS_chat_id:
@@ -103,6 +88,56 @@ def toggle_nfs(message:telebot.types.Message):
             "`REDIRECTING TO NFS`", parse_mode="Markdown"
         )
 
+@bot.message_handler(commands=['context'])
+def toggle_nfs(message:telebot.types.Message):
+    with open("static_storage/context.txt", "r", encoding="utf-8") as f:
+        context = f.read()
+        
+    # Remove markdown tags from text
+    context = context.replace('*', '').replace('_', '').replace('`', '').replace('#', '')
+    # Split context into chunks of 4000 characters (Telegram message limit is 4096)
+    chunk_size = 4000
+    context_chunks = [context[i:i + chunk_size] for i in range(0, len(context), chunk_size)]
+    
+    # Send each chunk as a separate message
+    for chunk in context_chunks:
+        bot.send_message(
+            message.chat.id,
+            text=f"```{chunk}```",
+            parse_mode="Markdown"
+        )
+
+@bot.message_handler(commands=['attitude'])
+def check_attitude(message: telebot.types.Message):
+    try:
+        # Get the mentioned user from the message
+        if len(message.text.split()) < 2:
+            bot.reply_to(message, "`Usage: /attitude <username>`", parse_mode="Markdown")
+            return
+            
+        target_username = message.text.split()[1]
+        
+        # Read user status file
+        with open("static_storage/user_status.json", "r", encoding="utf-8") as f:
+            user_status = json.loads(f.read())
+        
+        # Find user in status data
+        user_found = False
+        for user in user_status:
+            if user.get("name") == target_username or target_username in user.get("aliases"):
+                attitude = user.get("attitude")
+                
+                att_to_send = str(attitude).replace('*', '').replace('_', '').replace('`', '').replace('#', '')
+                
+                bot.reply_to(message, f"`{target_username}'s attitude: {att_to_send}`", parse_mode="Markdown")
+                user_found = True
+                break
+                
+        if not user_found:
+            bot.reply_to(message, f"`No attitude data found for {target_username}`", parse_mode="Markdown")
+            
+    except Exception as e:
+        bot.send_message(prefs.TST_chat_id, f"```Error checking attitude: {str(e)}```", parse_mode="Markdown")
 
 @bot.message_handler(commands=['chat'])
 def check_chat(message:telebot.types.Message):

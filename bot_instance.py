@@ -1,4 +1,5 @@
 
+import socket
 import conf_info
 import json
 from google import genai
@@ -37,10 +38,20 @@ create_storage_folder()
 
 bot = telebot.TeleBot(prefs.TG_API)
 
+def get_ip_address():
+    try:
+        # Get the hostname of the local machine
+        hostname = socket.gethostname()
+        # Get the IP address of the local machine
+        ip_address = socket.gethostbyname(hostname)
+        return ip_address
+    except:
+        return "IP not available"
+
+
 startup_message = (
-    f"```MAGG_LAUNCHED```"
-    f"`OS: {platform.system()}"
-    f"Disk: {psutil.disk_usage('/').percent}% used\n"
+    f"`OS: {platform.system()} \n"
+    f"IP: {get_ip_address()} \n" 
     f"Starting time - {datetime.datetime.now(prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z')}`"
     # f"Monitoring: \n<{bot.get_chat(prefs.chat_to_interact).title}>```"
 )

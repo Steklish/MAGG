@@ -6,7 +6,7 @@ google_update_info_tool = types.Tool(
         types.FunctionDeclaration(
             name="update_info",
             description=(
-                "Use to update your attitude to a certain user. Call only to store essential changes."
+                "Use to update your attitude to a certain user. Call to store essential changes. Dont discard previous notes but update them according to current relationships. Separate long term context and current information."
             ),
             parameters=genai.types.Schema(
                 type=genai.types.Type.OBJECT,
