@@ -201,7 +201,7 @@ def process_any_msg(message:telebot.types.Message):
     
     
 #! file messages
-@bot.message_handler(content_types=['document', 'photo', 'video', 'audio', 'voice'],
+@bot.message_handler(content_types=['document', 'photo', 'audio', 'voice', 'sticker'],
                      func=lambda message: str(message.chat.id) == prefs.chat_to_interact or 
                      bot.get_chat(message.chat.id).type == "private")
 def handle_files(message:telebot.types.Message):
@@ -215,6 +215,18 @@ def handle_files(message:telebot.types.Message):
                 print("DOCUMENT")
                 extract_doc(url=file_url, message=message, file_path=file_path)
             except Exception as e:
+                msgs = []
+                with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
+                    msgs = json.loads(f.read())
+                msgs.append(
+                        {
+                        "role": "model",
+                        "content": json.dumps({
+                            "from" : "error log",
+                            "message": f"error in function  file handler",
+                        }, indent=4, ensure_ascii=False)
+                    }
+                )
                 bot.send_message(
                     prefs.TST_chat_id,
                     "🔴\n```DOCUMENT_Error: Cannot_send_response " + str(e) + "```", parse_mode="Markdown"
@@ -227,6 +239,20 @@ def handle_files(message:telebot.types.Message):
                 print("PHOTO")
                 extract_img(url=file_url, message=message, file_path=file_path)
             except Exception as e:
+                msgs = []
+                with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
+                    msgs = json.loads(f.read())
+
+
+                msgs.append(
+                        {
+                        "role": "model",
+                        "content": json.dumps({
+                            "from" : "error log",
+                            "message": f"error in function  image handler",
+                        }, indent=4, ensure_ascii=False)
+                    }
+                )
                 bot.send_message(
                     prefs.TST_chat_id,
                     "🔴\n```PHOTO_Error: Cannot_send_response " + str(e) + "```", parse_mode="Markdown"
@@ -239,10 +265,47 @@ def handle_files(message:telebot.types.Message):
                 print("VOICE", file_url)
                 extract_voice(url=file_url, message=message, file_path=file_path)
             except Exception as e:
+                msgs = []
+                with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
+                    msgs = json.loads(f.read())
+
+
+                msgs.append(
+                        {
+                        "role": "model",
+                        "content": json.dumps({
+                            "from" : "error log",
+                            "message": f"error in function  voice handler",
+                        }, indent=4, ensure_ascii=False)
+                    }
+                )
                 bot.send_message(
                     prefs.TST_chat_id,
                     "🔴\n```VOICE_Error: Cannot_send_response " + str(e) + "```", parse_mode="Markdown"
                 )
+        elif message.sticker:
+            try:
+                extract_sticker(message=message)
+            except Exception as e:
+                msgs = []
+                msgs.append(
+                        {
+                        "role": "model",
+                        "content": json.dumps({
+                            "from" : "error log",
+                            "message": f"error in function  sticker handler",
+                        }, indent=4, ensure_ascii=False)
+                    }
+                )
+                with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
+                    msgs = json.loads(f.read())
+
+
+                bot.send_message(
+                    prefs.TST_chat_id,
+                    "🔴\n```STICKER_Error: Cannot_send_response " + str(e) + "```", parse_mode="Markdown"
+                )
+            # bot.reply_to(message, "This is a sticker!")
     except Exception as e:
         bot.send_message(
             prefs.TST_chat_id,

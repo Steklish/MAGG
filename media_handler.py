@@ -1,3 +1,4 @@
+import mimetypes
 import mammoth
 from bot_instance import client_google as client
 from stuff import *
@@ -7,6 +8,9 @@ import json
 import conf_info
 import telebot
 from bot_instance import bot
+import google.genai as genai
+import base64
+from PIL import Image
 
 def convert_docx_to_html(docx_path):
     with open("tmp/" + docx_path, "rb") as docx_file:
@@ -42,7 +46,6 @@ def extract_doc(url:str, file_path, message:telebot.types.Message=None):
             msg = {
                 "role": "model",
                 "content": json.dumps({
-                    "from" : origin,
                     "message": "[file] *Unreadable file format*" + file_path,
                     "from" : "Magg's request"
                 }, indent=4, ensure_ascii=False)
@@ -164,9 +167,9 @@ def extract_img(url:str, file_path, message:telebot.types.Message=None):
                     "name": message.from_user.full_name,
                     "username": message.from_user.username
                 },
-                "from" : origin,
+                "from" : str(origin),
                 "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-                "message": "[photo] " + response.text + f"{'[caption]' + message.caption if message.caption else "."}"
+                "message": "[photo] " + str(response.text) + f"{'[caption]' + str(message.caption) if message.caption else "."}"
             }, indent=4, ensure_ascii=False)
         }
     
@@ -251,7 +254,40 @@ def extract_voice(url:str, file_path, message:telebot.types.Message=None):
         print("file deleted")
             
     delete_files_in_directory("tmp")
-    print("Done with the img")
+    print("Done with the voice")
+    
+#!sticker
+def extract_sticker(message: telebot.types.Message):
+    
+    msgs = []
+    if message and bot.get_chat(message.chat.id).type == "private":
+        origin = "direct message"
+    else:
+        origin = "group"
+    with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
+        msgs = json.loads(f.read())
+
+    msg = {
+        "role": "user",
+        "content": json.dumps({
+            "sender": {
+                "name": message.from_user.full_name,
+                "username": message.from_user.username
+            },
+            "from" : origin,
+            "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
+            "message": "[sticker] " + str(message.sticker.emoji)
+        }, indent=4, ensure_ascii=False)
+    }
+    
+    msgs.append(msg)
+    
+    
+    if len(msgs)  >prefs.history_depth:
+        msgs = msgs[10:]
+    with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
+        f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
+
     
 def media_handler(url: str):
     # Extract filename from url

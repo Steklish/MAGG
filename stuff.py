@@ -3,7 +3,6 @@ import requests
 import os
 import chardet
 
-
 def delete_files_in_directory(directory_path):
     # Check if the directory exists
     if os.path.exists(directory_path):

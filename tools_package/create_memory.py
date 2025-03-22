@@ -5,7 +5,7 @@ google_create_memory_tool = types.Tool(
         types.FunctionDeclaration(
             name="create_memory",
             description=(
-                "PROACTIVE MEMORY CREATION: Store important information."
+                "Store important information."
                 "Use create_memory to save emotional moments or significant information for future use make a detailed descriptive notes."
             ),
             parameters=genai.types.Schema(
