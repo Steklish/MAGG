@@ -54,10 +54,7 @@ def extract_doc(url:str, file_path, message:telebot.types.Message=None):
             msg = {
                 "role": "user",
                 "content": json.dumps({
-                    "sender": {
-                        "name": message.from_user.full_name,
-                        "username": message.from_user.username
-                    },
+                    "sender": f"{message.from_user.full_name} / {message.from_user.username} - [{message.from_user.id}]",
                     "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
                     "from" : origin,
                     "message": "[file] *Unreadable file format*" + "[file name]" + str(message.document.file_name) + f"{'[caption]' + message.caption if message.caption else "."}"
@@ -97,10 +94,7 @@ def extract_doc(url:str, file_path, message:telebot.types.Message=None):
             msg = {
                 "role": "user",
                 "content": json.dumps({
-                    "sender": {
-                        "name": message.from_user.full_name,
-                        "username": message.from_user.username
-                    },
+                    "sender": f"{message.from_user.full_name} / {message.from_user.username} - [{message.from_user.id}]",
                     "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
                     "from" : origin,
                     "message": "[file] " + response.text + "[file name]" + str(message.document.file_name) + f"{'[caption]' + message.caption if message.caption else "."}"
@@ -163,10 +157,7 @@ def extract_img(url:str, file_path, message:telebot.types.Message=None):
         msg = {
             "role": "user",
             "content": json.dumps({
-                "sender": {
-                    "name": message.from_user.full_name,
-                    "username": message.from_user.username
-                },
+                "sender": f"{message.from_user.full_name} / {message.from_user.username} - [{message.from_user.id}]",
                 "from" : str(origin),
                 "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
                 "message": "[photo] " + str(response.text) + f"{'[caption]' + str(message.caption) if message.caption else "."}"
@@ -231,10 +222,7 @@ def extract_voice(url:str, file_path, message:telebot.types.Message=None):
         msg = {
             "role": "user",
             "content": json.dumps({
-                "sender": {
-                    "name": message.from_user.full_name,
-                    "username": message.from_user.username
-                },
+                "sender": f"{message.from_user.full_name} / {message.from_user.username} - [{message.from_user.id}]",
                 "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
                 "from" : origin,
                 "message": f"[voice message] " + response.text,
@@ -270,10 +258,7 @@ def extract_sticker(message: telebot.types.Message):
     msg = {
         "role": "user",
         "content": json.dumps({
-            "sender": {
-                "name": message.from_user.full_name,
-                "username": message.from_user.username
-            },
+            "sender": f"{message.from_user.full_name} / {message.from_user.username} - [{message.from_user.id}]",
             "from" : origin,
             "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
             "message": "[sticker] " + str(message.sticker.emoji)
@@ -281,8 +266,6 @@ def extract_sticker(message: telebot.types.Message):
     }
     
     msgs.append(msg)
-    
-    
     if len(msgs)  >prefs.history_depth:
         msgs = msgs[10:]
     with open("static_storage/conversation.json", "w", encoding="utf-8") as f:

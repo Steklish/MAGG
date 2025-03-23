@@ -1,13 +1,13 @@
 from .imports_for_tools import *
 
 
-google_setup_task_tool = types.Tool(
+google_instruct_tool = types.Tool(
     function_declarations=[
         types.FunctionDeclaration(
-            name="setup_task",
+            name="instruct",
             description=(
-                "Proactively create tasks to be performed at a specific time, enabling the system to alert the user or execute a defined action. "
-                "Use this tool frequently, in combination with other functions, to ensure efficient task management. "
+                "Proactively create tasks to be performed in the future to execute a defined action. "
+                "Use this tool in combination with other functions, to ensure efficient task management."
                 "Provide instructions relevant to the time the task needs to be completed."
             ),
             parameters=genai.types.Schema(
@@ -16,7 +16,7 @@ google_setup_task_tool = types.Tool(
                     "memory": genai.types.Schema(
                         type=genai.types.Type.STRING,
                         description=(
-                            "You need to provide instructions for future self. Describe in details what exactly you will have to do. May also include instructions on setting folloeing tasks."
+                            "You need to provide instructions for future self. Describe in details what exactly you will have to do. May also include instructions on setting following tasks."
                         ),
                     ),
                     "time_to_exec": genai.types.Schema(
@@ -33,7 +33,7 @@ google_setup_task_tool = types.Tool(
 )
 
 
-def setup_task(memory: str, time_to_exec:str):
+def instruct(memory: str, time_to_exec:str):
     print("TASK ACCEPTED")
     memory = str(memory)
     new_memory = {

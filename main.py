@@ -21,13 +21,15 @@ def struggle_till_message():
     while 1: 
             calls = ai_handler.smart_response(func_mode="ANY")
             print(YELLOW, calls, RESET)
-            if 'send_message' in calls or 'send_sticker' in calls:
+            if 'send_message' in calls:
+                break
+            if calls == []:
                 break
     
 def general_response():
     while 1: 
-            calls = ai_handler.smart_response(func_mode="ANY")
-            if 'send_message' in calls or 'send_group_message' in calls:
+            calls = ai_handler.smart_response(func_mode="AUTO")
+            if 'send_message' in calls:
                 break
             if calls == []:
                 break
@@ -183,14 +185,7 @@ def process_any_msg(message:telebot.types.Message):
     if message.reply_to_message:  # Check if the message is a reply
         reply_info = {
             "original_message": {
-                "sender": {
-                    "name": message.reply_to_message.from_user.full_name,
-                    "username": message.reply_to_message.from_user.username,
-                    "user_id": message.reply_to_message.from_user.id,
-                },
-                "date": datetime.datetime.fromtimestamp(
-                    message.reply_to_message.date, prefs.timezone
-                ).strftime('%d-%m-%Y %H:%M:%S %Z'),
+                "sender": f"{message.reply_to_message.from_user.full_name} / {message.reply_to_message.from_user.username} - [{message.reply_to_message.from_user.id}] <{datetime.datetime.fromtimestamp(message.reply_to_message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z')}>",
                 "message": message.reply_to_message.text,
             }
         }
@@ -199,24 +194,20 @@ def process_any_msg(message:telebot.types.Message):
     if bot.get_chat(message.chat.id).type == "private":
         origin = "direct message"
     else:
-        origin = f"group{message.chat.title} / {message.chat.id}"
+        origin = f"group {message.chat.title} / {message.chat.id}"
     msg = {
         'role' : 'user',
         'content' : json.dumps({
-            "sender" : {
-                'name' : message.from_user.full_name,
-                'username' : message.from_user.username,
-                "user_id" : message.from_user.id,
-                },
+            "sender": f"{message.from_user.full_name} / {message.from_user.username} - [{message.from_user.id}]",
             "date" : datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
             'message' : message.text,
             "from" : origin,
-            "reply_to": reply_info,  # Include reply info if present
+            "reply_to": str(reply_info),  
         }, indent=4, ensure_ascii=False)
     }
     msgs.append(msg)
     if len(msgs)  > prefs.history_depth:
-        msgs = msgs[10:]
+        msgs = msgs[5:]
     with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
         f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
         
