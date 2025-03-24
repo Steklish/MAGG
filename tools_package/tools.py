@@ -28,6 +28,8 @@ G_TOOLS = [
 def execute_tool(tool_name, args):
     print(f"{BACKGROUND_YELLOW} {BLACK} {tool_name}  with args {args}{RESET}")
     try:
+        if tool_name == 'reques_for_message':
+            return "Message request accepted now launch another interaction cycle"
         res = eval(tool_name)(**args)
         print(f"{BACKGROUND_GREEN}{BLACK}{res}{RESET}")
         return res

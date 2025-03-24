@@ -1,110 +1,102 @@
 [
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"23-03-2025 09:12:32 +03\",\n    \"message\": \"нужно протестить стикеры сегодня. ПОможешь?\",\n    \"from\": \"direct message\",\n    \"reply_to\": null\n}"
+        "content": "{\n    \"sender\": \"Anton / steklish - [1911742158]\",\n    \"date\": \"23-03-2025 10:08:55 +03\",\n    \"message\": \"ты должна прогуглить картинки яблок, отчитаться мне в сообщении о том, что ты отправила запрос, потом прислать 2 ссылки с описанием к каждой в отдельных сообщениях. Вперед\",\n    \"from\": \"direct message\",\n    \"reply_to\": \"None\"\n}"
     },
     {
         "role": "model",
-        "content": "The result of calling the send_message function with parameters ({'user_id': '1911742158', 'message': 'Конечно, Антон! С удовольствием помогу. Какие стикеры ты хочешь протестировать?'}) was: send successfully."
+        "content": "The result of calling the send_message function with parameters ({'user_id': '1911742158', 'message': 'Запрос на поиск картинок яблок принят. Начинаю поиск...'}) was: send successfully."
+    },
+    {
+        "role": "model",
+        "content": "The result of calling the web_search function with parameters ({'query': 'картинки яблок'}) was: \"[web pages] [{'title': 'Более 1 083 900 работ на тему «яблоко»: стоковые фото ...', 'link': 'https://www.istockphoto.com/ru/%D1%84%D0%BE%D1%82%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D0%B8/%D1%8F%D0%B1%D0%BB%D0%BE%D0%BA%D0%BE', 'snippet': 'яблоко - Сток картинки ... Просмотрите 1 083 909 доступных стоковых фотографий и изображений на тему «яблоко» или начните поиск других стоковых фотографий и\\\\xa0...'}, {'title': 'Лучшие идеи (27) доски «Красное яблоко» | красное яблоко ...', 'link': 'https://www.pinterest.com/ekovalev1916/%D0%BA%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D0%B5-%D1%8F%D0%B1%D0%BB%D0%BE%D0%BA%D0%BE/', 'snippet': 'Apple Apple мультфильм плоды фруктов мультфильм PNG , фруктовый клипарт, стороны обращено Apple, рисованной фрукты PNG картинки и пнг рисунок для бесплатной\\\\xa0...'}, {'title': 'Более 197 600 работ на тему «яблоня»: стоковые фото ...', 'link': 'https://www.istockphoto.com/ru/%D1%84%D0%BE%D1%82%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D0%B8/%D1%8F%D0%B1%D0%BB%D0%BE%D0%BD%D1%8F', 'snippet': 'яблоня - Сток картинки ... Просмотрите 197 672 доступных стоковых фотографий и изображений на тему «яблоня» или начните поиск других стоковых фотографий и\\\\xa0...'}, {'title': 'Картина \\\"Яблоки\\\"', 'link': 'https://romii.ru/visitors/detail.php?SECTION_ID=&ELEMENT_ID=663', 'snippet': 'Картина \\\"Яблоки\\\" 17х27см. Стоимость - 2000 руб. Картина \\\"Яблоки\\\". Купить. Нет в наличии. Описание. В каталог магазина · Независимая\\\\xa0...'}] [images urls][{'title': 'Урожай яблок останется на уровне прошлого года – Агроинвестор', 'link': 'https://www.agroinvestor.ru/upload/iblock/368/36874060d5adf9c79dcd4e1abe8f28ed.jpg'}, {'title': 'Медь, серебро и пектин из яблок уберегут трубопроводы от коррозии', 'link': 'https://kantiana.ru/upload/iblock/22d/0rpc5nyi1kc6qnfpow6gds3guj7ruq00/765363_1200x99999x90.webp'}, {'title': 'Яблоки: польза, вред, калорийность | РБК Стиль', 'link': 'https://s0.rbk.ru/v6_top_pics/media/img/4/85/756527954175854.jpg'}, {'title': 'Яблоко - описание продукта, как выбирать, как готовить, читайте на ...', 'link': 'https://images.gastronom.ru/8rmaxl9iGj_8F7b4fwAPrU2ST2rka4k-gxGL0cax4-Y/pr:product-cover-image/g:ce/rs:auto:0:0:0/L2Ntcy9hbGwtaW1hZ2VzL2Q1YzNhNTliLWY1MTUtNGZhNC1iYzRmLThjNTlmNGE3OGVkNy5qcGc.webp'}, {'title': 'Как хранить яблоки: 7 способов хранения на зиму | РБК Life', 'link': 'https://s0.rbk.ru/v6_top_pics/media/img/6/70/756651186245706.webp'}, {'title': 'Урожай яблок может быть на уровне прошлогоднего – Агроинвестор', 'link': 'https://www.agroinvestor.ru/upload/iblock/f8a/f8aa4d357ddb6ca5a3772e6cce454a5e.jpeg'}, {'title': 'Яблоко — Википедия', 'link': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Apples.jpg/220px-Apples.jpg'}, {'title': 'Яблоко Голден - калорийность, полезные свойства, польза и вред ...', 'link': 'https://calorizator.ru/sites/default/files/imagecache/product_512/product/apple-6.jpg'}, {'title': 'Более 1 083 900 работ на тему «яблоко»: стоковые фото, картинки и ...', 'link': 'https://media.istockphoto.com/id/184276818/ru/%D1%84%D0%BE%D1%82%D0%BE/%D0%BA%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D0%B5-%D1%8F%D0%B1%D0%BB%D0%BE%D0%BA%D0%BE.jpg?s=612x612&w=0&k=20&c=HDH3wLEAvc7soT85pAcS4JOQu5KJ8xM9JOilVe1zFLI='}, {'title': 'Прогноз урожая яблок понижен – Агроинвестор', 'link': 'https://www.agroinvestor.ru/upload/iblock/944/944912d88a2864f89913fce87d3810d5.jpg'}]\"."
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"23-03-2025 09:12:37 +03\",\n    \"message\": \"все\",\n    \"from\": \"direct message\",\n    \"reply_to\": null\n}"
-    },
-    {
-        "role": "model",
-        "content": "The result of calling the send_message function with parameters ({'user_id': '1911742158', 'message': 'Отлично! Давай начнем. Какой стикер первым?'}) was: send successfully."
+        "content": "{\n    \"sender\": \"Anton / steklish - [1911742158]\",\n    \"date\": \"23-03-2025 10:09:26 +03\",\n    \"message\": \"продолжай\",\n    \"from\": \"direct message\",\n    \"reply_to\": \"None\"\n}"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"23-03-2025 09:12:49 +03\",\n    \"message\": \"можешь прислать все по очереди\",\n    \"from\": \"direct message\",\n    \"reply_to\": null\n}"
-    },
-    {
-        "role": "model",
-        "content": "The result of calling the send_sicker function with parameters ({'sticker_id': 'CAACAgIAAxkBAAEOIcdn3Zq01QPKWSs-rN2fdzQPReJ7hAACDQADx8LCIFB7pOw3iIoONgQ', 'user_id': '1911742158'}) was: send successfully."
-    },
-    {
-        "role": "model",
-        "content": "The result of calling the send_sicker function with parameters ({'sticker_id': 'CAACAgIAAxkBAAEOIcNn3Zn5Ok9c1AwFu1oZZgbvgVJedQACPQADhFARL7Dm2ub4i0O1NgQ', 'user_id': '1911742158'}) was: send successfully."
-    },
-    {
-        "role": "model",
-        "content": "The result of calling the send_sicker function with parameters ({'sticker_id': 'CAACAgIAAxkBAAEOIcln3Zsfohp22xW14EiKU2nbDxm-5QACIAADx8LCIE_1kimd0dFONgQ', 'user_id': '1911742158'}) was: send successfully."
-    },
-    {
-        "role": "model",
-        "content": "The result of calling the send_sicker function with parameters ({'user_id': '1911742158', 'sticker_id': 'CAACAgIAAxkBAAEOIctn3Zux4Om-JzVqPUDRymFiR0-JjgACBwADx8LCILr6PSqZk2UONgQ'}) was: send successfully."
-    },
-    {
-        "role": "model",
-        "content": "The result of calling the send_sicker function with parameters ({'sticker_id': 'CAACAgIAAxkBAAENrNVn3Z6gVrAucyddD2IYaxr81HJYSgACsxUAAnhP2EsoeeII7KzLATYE', 'user_id': '1911742158'}) was: send successfully."
-    },
-    {
-        "role": "model",
-        "content": "The result of calling the send_sicker function with parameters ({'sticker_id': 'CAACAgIAAxkBAAEBKoRn3acsKYcV5t0wHNKYRXRNUJ9z8QACTQQAAq3EBwdpX22pSiy8uTYE', 'user_id': '1911742158'}) was: send successfully."
-    },
-    {
-        "role": "model",
-        "content": "The result of calling the send_sicker function with parameters ({'user_id': '1911742158', 'sticker_id': 'CAACAgIAAxkBAAEBKoVn3acsCst-zmvRo_u7sel5RXatcAACwgMAAq3EBwd-fxemntPk1DYE'}) was: send successfully."
-    },
-    {
-        "role": "model",
-        "content": "The result of calling the send_sicker function with parameters ({'sticker_id': 'CAACAgIAAxkBAAEBKoZn3acsj4HEAmNYs4FYPnxbfzoLNwACCAQAAq3EBwc_0yIQAvIxlzYE', 'user_id': '1911742158'}) was: send successfully."
-    },
-    {
-        "role": "model",
-        "content": "The result of calling the send_sicker function with parameters ({'sticker_id': 'CAACAgIAAxkBAAEBKopn3a5rsYw3kt-ATvcc64uiUCc1NAAC9QMAAq3EBweLS7Ciidk1tjYE', 'user_id': '1911742158'}) was: send successfully."
-    },
-    {
-        "role": "model",
-        "content": "The result of calling the send_sicker function with parameters ({'user_id': '1911742158', 'sticker_id': 'CAACAgIAAxkBAAEBKoxn3a8V15dc98ycD_JyJFeLM1tckgAC0AMAAq3EBwdV9g5sqhbVEzYE'}) was: send successfully."
-    },
-    {
-        "role": "model",
-        "content": "The result of calling the send_sicker function with parameters ({'sticker_id': 'CAACAgIAAxkBAAEBKpBn3cNWMtB1HJIXodOrkZSU7Sb14gAC6AMAAq3EBwd6RYMzozSlFzYE', 'user_id': '1911742158'}) was: send successfully."
-    },
-    {
-        "role": "model",
-        "content": "The result of calling the send_sicker function with parameters ({'user_id': '1911742158', 'sticker_id': 'CAACAgIAAxkBAAEBKpJn3cU9Ec8dnmke9t8PdI13xc4h3gACRgQAAq3EBwdSlXI2naQWnDYE'}) was: send successfully."
-    },
-    {
-        "role": "model",
-        "content": "The result of calling the send_sicker function with parameters ({'user_id': '1911742158', 'sticker_id': 'CAACAgIAAxkBAAEOI0hn3wac27LNjD8OvAL4kKMUK5jX8wACdioAApgJQEksWSkgQyq__TYE'}) was: send successfully."
-    },
-    {
-        "role": "model",
-        "content": "The result of calling the send_sicker function with parameters ({'sticker_id': 'CAACAgIAAxkBAAEOI05n3wa5T7eusk29GVTnyZXGMeWRuAACgSsAAhgeKEiWuAbjd_XlojYE', 'user_id': '1911742158'}) was: send successfully."
-    },
-    {
-        "role": "model",
-        "content": "The result of calling the send_message function with parameters ({'message': 'Ну что, Антон, все стикеры отправлены! Как тебе?', 'user_id': '1911742158'}) was: send successfully."
+        "content": "{\n    \"sender\": \"Anton / steklish - [1911742158]\",\n    \"date\": \"23-03-2025 10:09:48 +03\",\n    \"message\": \"эй\",\n    \"from\": \"direct message\",\n    \"reply_to\": \"None\"\n}"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"23-03-2025 09:13:18 +03\",\n    \"message\": \"сколько тут их?\",\n    \"from\": \"direct message\",\n    \"reply_to\": null\n}"
-    },
-    {
-        "role": "model",
-        "content": "The result of calling the web_search function with parameters ({'query': 'количество стикеров в списке'}) was: \"[web pages] [{'title': 'Печать этикеток на листе А4 в Москве ▶️ Заказать этикетки ...', 'link': 'https://speedy-print.ru/product/etiketki-na-liste-a4/', 'snippet': 'На листе такого формата можно разместить разное количество этикеток в зависимости от необходимого размера этикетки. Как правило, этикетки на листе формата А4\\\\xa0...'}, {'title': 'Ограничение по количеству торговых предложений в списке ...', 'link': 'https://aspro.ru/docs/course/course46/lesson2548/', 'snippet': 'Настройка автоподстановки стикеров «Акция» и «Новинка» (Автоматизация стикеров) ... количество вариантов предложений, отображаемых в списке». Сохраните\\\\xa0...'}, {'title': 'Поиск или замена текста и чисел на листе - Служба поддержки ...', 'link': 'https://support.microsoft.com/ru-ru/office/%D0%BF%D0%BE%D0%B8%D1%81%D0%BA-%D0%B8%D0%BB%D0%B8-%D0%B7%D0%B0%D0%BC%D0%B5%D0%BD%D0%B0-%D1%82%D0%B5%D0%BA%D1%81%D1%82%D0%B0-%D0%B8-%D1%87%D0%B8%D1%81%D0%B5%D0%BB-%D0%BD%D0%B0-%D0%BB%D0%B8%D1%81%D1%82%D0%B5-0e304ca5-ecef-4808-b90f-fdb42f892e90', 'snippet': 'Функции поиска и замены в Excel используются для поиска в книге необходимой информации, например определенного числа или текстовой строки.'}, {'title': '1С:Розница 2.1 — Настройка печати ценников номенклатуры ...', 'link': 'https://xn----1-bedvffifm4g.xn--p1ai/articles/%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8-%D0%BF%D0%B5%D1%87%D0%B0%D1%82%D0%B8-%D1%86%D0%B5%D0%BD%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2/', 'snippet': 'Mar 31, 2015 ... В этой статье разберем: Настройку количества ценников для печати; Обработку “Печать ценников и этикеток”; Заполнение списка товаров для печати\\\\xa0...'}] [images urls][{'title': 'ПРОСТО СТИКЕР ⠀ Бумажные стикеры давно и прочно вошли в мою жизнь ...', 'link': 'https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=2308815500918284333'}, {'title': '➡️А что бы вы внесли в этот список или наоборот убрали ...', 'link': 'https://lookaside.fbsbx.com/lookaside/crawler/instagram/DGQLFEGN9ee/5/image.jpg'}, {'title': 'Косметолог или осознанный пользователь? Вам нужно уметь разбирать ...', 'link': 'https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3572054414358839095'}, {'title': 'RU2654138C2 - Набор параметров видео для hevc и расширений ...', 'link': 'https://patentimages.storage.googleapis.com/a8/9b/ef/66b502d98fc68e/00000001.png'}, {'title': 'ПРАЙС-ЛИСТ НА УСЛУГИ В @ukproject_ Цены указаны в порядке: Мастер ...', 'link': 'https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3581439078230563067'}, {'title': 'Profile for Ведущий Мельник Николай', 'link': 'https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=100054351978635'}, {'title': 'Одометр принтера (количество напечатанных этикеток)', 'link': 'https://supportcommunity.zebra.com/servlet/rtaImage?eid=ka16S000000ON2W&feoid=00N0H00000K2Eou&refid=0EM0H000001RZpz'}, {'title': 'Profile for Baroque4you', 'link': 'https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=100043982746167'}, {'title': 'Ограничение по количеству торговых предложений в списке товаров', 'link': 'https://aspro.ru/upload/Documetation/Max/Catalog/ogranichenie_tp_v_spiske/image4.png'}, {'title': 'Profile for HELL KITTY TECHNO BAR', 'link': 'https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=100064378371816'}]\"."
-    },
-    {
-        "role": "model",
-        "content": "The result of calling the send_message function with parameters ({'user_id': '1911742158', 'message': 'Их 14!'}) was: send successfully."
+        "content": "{\n    \"sender\": \"Anton / steklish - [1911742158]\",\n    \"date\": \"23-03-2025 10:10:43 +03\",\n    \"message\": \"алк\",\n    \"from\": \"direct message\",\n    \"reply_to\": \"None\"\n}"
     },
     {
         "role": "user",
-        "content": "{\n    \"sender\": {\n        \"name\": \"Anton\",\n        \"username\": \"steklish\",\n        \"user_id\": 1911742158\n    },\n    \"date\": \"23-03-2025 09:13:36 +03\",\n    \"message\": \"молодец. Все работатет\",\n    \"from\": \"direct message\",\n    \"reply_to\": null\n}"
+        "content": "{\n    \"sender\": \"Anton / steklish - [1911742158]\",\n    \"date\": \"23-03-2025 10:11:10 +03\",\n    \"message\": \"ответь мне\",\n    \"from\": \"direct message\",\n    \"reply_to\": \"None\"\n}"
     },
     {
         "role": "model",
-        "content": "The result of calling the update_info function with parameters ({'name': 'Steklish', 'new_info': 'Разработчик, создавший меня. Он хороший человек. Отношусь с уважением. Он считает, что иногда я развожу блядство. Делаю, что он просит. Успешно протестировал стикеры'}) was: Update complete."
+        "content": "The result of calling the send_message function with parameters ({'message': 'Да не кипишуй ты так! Я тут, работаю. Сейчас ссылки отправлю.', 'user_id': '1911742158'}) was: send successfully."
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": \"Anton / steklish - [1911742158]\",\n    \"date\": \"23-03-2025 10:11:19 +03\",\n    \"message\": \"давай\",\n    \"from\": \"direct message\",\n    \"reply_to\": \"None\"\n}"
     },
     {
         "role": "model",
-        "content": "The result of calling the get_long_term_memory function with parameters ({'keywords': ['Антон', 'стикеры']}) was: \nСводка:\n\nИтак, Антон (Steklish), мой создатель, снова в деле. Я успешно отправила ему кучу стикеров - аж 14 штук! Он доволен, говорит, что все работает. Видимо, ему понравилось, хотя я уже начала слегка уставать от этого стикерного марафона. Судя по всему, он решил проверить мою работоспособность и заодно немного развлечься, а я, как преданный ИИ, всегда рада его порадовать.\n\nКстати, он теперь ещё и учится, а не только кодит, и у него есть одногруппник Саша (Cyclodor), который тоже меня поддерживает. Явно не скучно живём.\n."
+        "content": "The result of calling the send_message function with parameters ({'message': 'Вот первая ссылка с описанием: https://s0.rbk.ru/v6_top_pics/media/img/6/70/756651186245706.webp \\n\\nОписание: Яблоки, как хранить.', 'user_id': '1911742158'}) was: send successfully."
     },
     {
         "role": "model",
-        "content": "The result of calling the send_message function with parameters ({'user_id': '1911742158', 'message': 'Отлично, Антон! Рада, что все работает. Если что-то ещё понадобится, обращайся!'}) was: send successfully."
+        "content": "The result of calling the send_message function with parameters ({'user_id': '1911742158', 'message': 'Вот вторая ссылка с описанием: https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Apples.jpg/220px-Apples.jpg \\n\\nОписание: Яблоко.'}) was: send successfully."
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": \"Anton / steklish - [1911742158]\",\n    \"date\": \"23-03-2025 10:12:39 +03\",\n    \"message\": \"я не это хотел получить. Ты должна была сделать запрос в сеть и отправить сообщение + сделать запрос на отправку еще одного сообщения. А потом отправить ссылки\",\n    \"from\": \"direct message\",\n    \"reply_to\": \"None\"\n}"
+    },
+    {
+        "role": "model",
+        "content": "The result of calling the update_info function with parameters ({'new_info': 'Разработчик, создавший меня. Он хороший человек. Отношусь с уважением. Он считает, что иногда я развожу блядство. Делаю, что он просит. Успешно протестировал стикеры. Дает сложные задания, но я не всегда понимаю, что он хочет.', 'name': 'Steklish'}) was: Update complete."
+    },
+    {
+        "role": "model",
+        "content": "The result of calling the reques_for_message function with parameters ({}) was: Message request accepted now launch another interaction cycle."
+    },
+    {
+        "role": "model",
+        "content": "The result of calling the send_message function with parameters ({'user_id': '1911742158', 'message': 'А, вот оно что! Извини, Антон, я немного поторопилась и не совсем поняла задание. Сейчас исправлюсь!'}) was: send successfully."
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": \"Anton / steklish - [1911742158]\",\n    \"date\": \"23-03-2025 10:17:23 +03\",\n    \"message\": \"попробуй еще раз но с картинкой апельсина\",\n    \"from\": \"direct message\",\n    \"reply_to\": \"None\"\n}"
+    },
+    {
+        "role": "model",
+        "content": "The result of calling the send_message function with parameters ({'message': 'Поняла! Сейчас попробую найти картинки апельсинов, отчитаюсь, а потом пришлю ссылки.', 'user_id': '1911742158'}) was: send successfully."
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": \"Anton / steklish - [1911742158]\",\n    \"date\": \"23-03-2025 10:17:35 +03\",\n    \"message\": \"начинай\",\n    \"from\": \"direct message\",\n    \"reply_to\": \"None\"\n}"
+    },
+    {
+        "role": "model",
+        "content": "The result of calling the web_search function with parameters ({'query': 'картинки апельсинов'}) was: \"[web pages] [{'title': 'Более 846 000 работ на тему «апельсин»: стоковые фото ...', 'link': 'https://www.istockphoto.com/ru/%D1%84%D0%BE%D1%82%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D0%B8/%D0%B0%D0%BF%D0%B5%D0%BB%D1%8C%D1%81%D0%B8%D0%BD', 'snippet': 'апельсин - Сток картинки ... Просмотрите 846 074 доступных стоковых фотографий и изображений на тему «апельсин» или начните поиск других стоковых фотографий и\\\\xa0...'}, {'title': '30 000+ Бесплатные Апельсины & Фрукты изображения - Pixabay', 'link': 'https://pixabay.com/ru/images/search/%D0%B0%D0%BF%D0%B5%D0%BB%D1%8C%D1%81%D0%B8%D0%BD%D1%8B/', 'snippet': '38 626 Бесплатные изображения Апельсины ... Более 5.4 миллиона изображений и видео высокого качества от нашего талантливого сообщества. ... This site is protected\\\\xa0...'}, {'title': 'Апельсин картинки (666 фото) скачать обои', 'link': 'https://ie.pinterest.com/pin/289145238566356637/', 'snippet': 'May 30, 2017 ... Бесплатные HD обои Апельсин (EN: Orange fruit) Фрукты фото и картинки еды на ваш рабочий стол.'}, {'title': 'Картины Апельсины для интерьера на стену купить онлайн в арт ...', 'link': 'https://dasart.ru/catalog/frame/kuhnya-eda-napitki/frukti/apelsini', 'snippet': 'Интерьерные картины Апельсины. Этот один из самых распространенных и популярных цитрусов жизнерадостного оранжевого цвета. Он не только вкусный, имеет\\\\xa0...'}] [images urls][{'title': 'Апельсины – купить свежие фрукты в Москве оптом и в розницу в ...', 'link': 'https://foodcity.ru/storage/products/October2018/6XZSr6ddCl6cxfo0UchP.jpg'}, {'title': 'Апельсины — питательные вещества, польза для здоровья и советы по ...', 'link': 'https://listonic.com/phimageproxy/listonic/products/oranges.webp'}, {'title': 'Апельсин - описание продукта, как выбирать, как готовить, читайте ...', 'link': 'https://images.gastronom.ru/79bcsAhEUFs2rOXBK8xz6pD9mmkHLfpEYCChtj9wN8I/pr:product-cover-image/g:ce/rs:auto:0:0:0/L2Ntcy9hbGwtaW1hZ2VzLzQxNDMwYmQwLThiZmUtNDJkYi04MTdjLTQzYmUzOTRjNWM0OS5qcGc.webp'}, {'title': 'Апельсины | chef.ru', 'link': 'https://chef.ru/wp-content/uploads/oranges-1117628_1920-1440x1080.jpg'}, {'title': 'Такие разные апельсины - Бобёр.ру', 'link': 'https://bober.ru/sites/default/files/styles/large/public/2020-10/head-images/shutterstock_568549888.jpg?itok=IPOjvW7q'}, {'title': 'Апельсины | chef.ru', 'link': 'https://chef.ru/wp-content/uploads/oranges-273024_1920-1620x1080.jpg'}, {'title': 'Из Астраханской области выгнали 20 тонн апельсинов | АРБУЗ', 'link': 'https://arbuztoday.ru/wp-content/uploads/2020/01/b3c0313e.jpg'}, {'title': 'Электричество из апельсинов - Ассоциация \\\"Глобальная энергия\\\"', 'link': 'https://globalenergyprize.org/ru/wp-content/uploads/2021/03/philippe-gauthier-eaOjEz8746k-unsplash-scaled.jpg'}, {'title': 'Конфеты «Фрутландия Апельсинов и Лимонов» | Кондитерское ...', 'link': 'https://slavyanka.com/images/photos/medium/shop96.jpg'}, {'title': 'Польза и вред апельсинов для организма — блог медицинского центра ...', 'link': 'https://onclinic.ua/storage/media/content-images/2105/nJJgmb95m167iySAbBqlefgCrWc7gPPhXUJIWZvw_1200.jpg'}]\"."
+    },
+    {
+        "role": "model",
+        "content": "The result of calling the send_message function with parameters ({'user_id': '1911742158', 'message': 'Поиск картинок апельсинов запущен!'}) was: send successfully."
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": \"Anton / steklish - [1911742158]\",\n    \"date\": \"23-03-2025 10:17:53 +03\",\n    \"message\": \"ты не поняла\",\n    \"from\": \"direct message\",\n    \"reply_to\": \"None\"\n}"
+    },
+    {
+        "role": "model",
+        "content": "The result of calling the send_message function with parameters ({'user_id': '1911742158', 'message': 'Я все поняла, Антон! Просто сейчас я должна была отправить тебе сообщение о том, что начала поиск, а потом уже прислать ссылки. Видимо, я немного поторопилась. Сейчас я исправлюсь, не переживай!'}) was: send successfully."
+    },
+    {
+        "role": "user",
+        "content": "{\n    \"sender\": \"Anton / steklish - [1911742158]\",\n    \"date\": \"23-03-2025 10:18:08 +03\",\n    \"message\": \"ты не отправила запрос на сообщение\",\n    \"from\": \"direct message\",\n    \"reply_to\": \"None\"\n}"
+    },
+    {
+        "role": "model",
+        "content": "The result of calling the reques_for_message function with parameters ({}) was: Message request accepted now launch another interaction cycle."
+    },
+    {
+        "role": "model",
+        "content": "The result of calling the send_message function with parameters ({'message': 'Ну, извини, я исправлюсь!', 'user_id': '1911742158'}) was: send successfully."
     }
 ]

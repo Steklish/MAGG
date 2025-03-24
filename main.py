@@ -18,21 +18,39 @@ from tools_package.imports_for_tools import fix_markdown_v2
 
 
 def struggle_till_message():
-    while 1: 
-            calls = ai_handler.smart_response(func_mode="ANY")
-            print(YELLOW, calls, RESET)
-            if 'send_message' in calls:
+    for i in range(15):
+        request_count = 0
+        calls = ai_handler.smart_response(func_mode="ANY")
+        print(YELLOW, calls, RESET)
+        if 'request_for_message' in calls:
+            request_count += 1
+        if 'send_message' in calls:
+            if request_count <= 0:
                 break
-            if calls == []:
+            else:
+                can_stop = True
+        if calls == []:
+            if can_stop:
                 break
+            else:
+                can_stop = True
     
 def general_response():
-    while 1: 
-            calls = ai_handler.smart_response(func_mode="AUTO")
-            if 'send_message' in calls:
+    for i in range(15):
+        calls = ai_handler.smart_response(func_mode="AUTO")
+        print(YELLOW, calls, RESET)
+        if 'request_for_message' in calls:
+            request_count += 1
+        if 'send_message' in calls:
+            if request_count <= 0:
                 break
-            if calls == []:
+            else:
+                can_stop = True
+        if calls == []:
+            if can_stop:
                 break
+            else:
+                can_stop = True
 def cleanup():
     if platform.system() == "Linux":
         bot.send_document(prefs.TST_chat_id, open("static_storage/conversation.json", 'rb'), disable_notification=True)
@@ -214,7 +232,7 @@ def process_any_msg(message:telebot.types.Message):
         
         
     if bot.get_chat(message.chat.id).type == "private":
-        print("Personal response")
+        print(BLUE, "Personal response", RESET)
         struggle_till_message()
     elif reply_info and reply_info["original_message"]["sender"]["name"] == bot.get_my_name().name:
         print("recognized reply")
