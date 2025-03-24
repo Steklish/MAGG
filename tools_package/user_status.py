@@ -6,7 +6,15 @@ google_update_info_tool = types.Tool(
         types.FunctionDeclaration(
             name="update_info",
             description=(
-                "Use to update your attitude to a certain user. Call to store essential changes. Dont discard previous notes but update them according to current relationships. Separate long term context and current information. Store emotional attitude rater than pure facts."
+                """When updating user notes:
+1. FIRST review the existing note completely
+2. THEN determine if the new information:
+   - Adds to existing knowledge (use 'integrate')
+   - Provides chronological update (use 'append')
+   - Is more important than existing info (use 'prepend')
+   - Corrects wrong information (use 'correct')
+3. FINALLY compose the new information to flow naturally with the existing note
+"""
             ),
             parameters=genai.types.Schema(
                 type=genai.types.Type.OBJECT,

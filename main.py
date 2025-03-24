@@ -28,12 +28,12 @@ def struggle_till_message():
             if request_count <= 0:
                 break
             else:
-                can_stop = True
+                request_count -= 1
         if calls == []:
-            if can_stop:
+            if request_count <= 0:
                 break
             else:
-                can_stop = True
+                request_count -= 1
     
 def general_response():
     for i in range(15):
@@ -45,12 +45,12 @@ def general_response():
             if request_count <= 0:
                 break
             else:
-                can_stop = True
+                request_count -= 1
         if calls == []:
-            if can_stop:
+            if request_count <= 0:
                 break
             else:
-                can_stop = True
+                request_count -= 1
 def cleanup():
     if platform.system() == "Linux":
         bot.send_document(prefs.TST_chat_id, open("static_storage/conversation.json", 'rb'), disable_notification=True)
