@@ -4,7 +4,7 @@ google_send_message_tool = genai.types.Tool(
     function_declarations=[
         genai.types.FunctionDeclaration(
             name="send_message",
-            description="Send a message to a specific user or to a group chat. Always use when need to send a message."
+            description="Use to send a text message. Always use when need to send a message. If you need to answer to group chat use this function too and pass group id as a parameter. "
             f"""
 [user id for users]
 Steklish(SKLS) - Антон [1911742158]
@@ -24,29 +24,29 @@ group_id - [{prefs.chat_to_interact}]
                     "message": genai.types.Schema(
                         type=genai.types.Type.STRING,
                     ),
-                    "user_id": genai.types.Schema(
+                    "chat_to_send_id": genai.types.Schema(
                         type=genai.types.Type.STRING,
                     ),
                 },
-                required=["message", "user_id"],
+                required=["message", "chat_to_send_id"],
             ),
         ),
     ]
 )
     
-def send_message(user_id: str, message: str):
-    print(f"{MAGENTA}[Private to {user_id}/{bot.get_chat(int(user_id)).username}]: {message}{RESET}")
+def send_message(chat_to_send_id: str, message: str):
     # print(fix_markdown_v2(message))
     try:
         bot.send_message(
-            int(user_id),  # Send to the specified user ID
-            fix_markdown_v2(message),
-            parse_mode="Markdown"
+            int(chat_to_send_id),  # Send to the specified user ID
+            message,
+            # parse_mode="Markdown"
         )
     
         return "send successfully"
     except Exception as e:
         print(e)
+        
         bot.send_message(
             prefs.TST_chat_id,
             f"🔴\n```Cannot_send_message \n(sm_rs)\n {str(e)}```", 

@@ -17,7 +17,7 @@ G_TOOLS = [
     google_create_memory_tool,
     google_send_message_tool,
     google_instruct_tool,
-    google_update_info_tool,
+    google_update_status_tool,
     google_web_search_tool,
     analyze_url_tool,
     send_sticker_tool,

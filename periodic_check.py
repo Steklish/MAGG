@@ -8,6 +8,7 @@ from stuff import *
 import tools_package.tools as tools
 import prefs
 from random import randint
+from main import struggle_till_message
 
 async def check_state():
     while True:
@@ -16,12 +17,7 @@ async def check_state():
         # repeat every 5 minutes
         
         if randint(0, 100) == 50:
-            while 1: 
-                calls = ai_handler.smart_response(func_mode="ANY")
-                if 'send_message' in calls or 'send_group_message' in calls:
-                    break
-                if calls == []:
-                    break    
+            struggle_till_message
         await asyncio.sleep(5*60)
         
         
@@ -81,18 +77,19 @@ def reminder_check():
     
     for task in to_remind:
         found = True
-        while 1:
-            calls = ai_handler.smart_response(
-                func_mode="ANY", 
-                messages=[
-                            *ai_handler.convert_conversation(),
-                            ai_handler.convert_single_as_function(f"Поступила задача для выполнения: {task['content']}")
-                        ]
-                )
-            if 'send_message' in calls or 'send_group_message' in calls:
-                break
-
-            print(RED, "did not send a message (from task handler) retrying", RESET)            
+        msgs = []
+        with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
+            msgs = json.loads(f.read())        
+            
+        msgs.append(
+            {
+                "role": "model",
+                "content": f"The directive, formulated on {task['date_date created']}, is now slated for execution. Below is the detailed instruction: [instruction] {task['content']}"
+            }
+        )
+        with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
+            f.write(json.dumps(msgs, indent=4, ensure_ascii=False))    
+        struggle_till_message()
         bot.send_message(
             prefs.TST_chat_id,
             "`TASK complete`", parse_mode="Markdown"

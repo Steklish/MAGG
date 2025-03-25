@@ -14,7 +14,7 @@ google_instruct_tool = types.Tool(
                     "memory": genai.types.Schema(
                         type=genai.types.Type.STRING,
                         description=(
-                            "Describe in details what exactly you will need to do. May also include instructions on setting following instructions."
+                            "Describe in details what exactly you will need to do. May also include instructions on setting following instructions. Describe also what information you will need to execute the instruction. Include some options of performing the task."
                         ),
                     ),
                     "time_to_exec": genai.types.Schema(

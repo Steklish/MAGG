@@ -18,6 +18,7 @@ from tools_package.imports_for_tools import fix_markdown_v2
 
 
 def add_error_log(message):
+    print(RED, f"Error logged to MAGG {message}", RESET)
     msgs = []
     with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
         msgs = json.loads(f.read())        
@@ -52,22 +53,9 @@ def struggle_till_message():
                 request_count -= 1
     
 def general_response():
-    for i in range(15):
-        request_count = 0
-        calls = ai_handler.smart_response(func_mode="AUTO")
-        print(YELLOW, calls, RESET)
-        if 'request_for_message' in calls:
-            request_count += 1
-        if 'send_message' in calls and len(calls) == 1:
-            if request_count <= 0:
-                break
-            else:
-                request_count -= 1
-        if calls == []:
-            if request_count <= 0:
-                break
-            else:
-                request_count -= 1
+    calls = ai_handler.smart_response(func_mode="AUTO")
+    if calls != [] or not ('send_message' in calls and len(calls) == 1):
+        struggle_till_message()
 def cleanup():
     if platform.system() == "Linux":
         bot.send_document(prefs.TST_chat_id, open("static_storage/conversation.json", 'rb'), disable_notification=True)
@@ -222,7 +210,7 @@ def process_any_msg(message:telebot.types.Message):
         reply_info = {
             "original_message": {
                 "sender": f"{message.reply_to_message.from_user.full_name} / {message.reply_to_message.from_user.username} - [{message.reply_to_message.from_user.id}] <{datetime.datetime.fromtimestamp(message.reply_to_message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z')}>",
-                "message": message.reply_to_message.text,
+                "message": message.reply_to_message.text if message.reply_to_message.text else "no text",
             }
         }
     else:
@@ -236,7 +224,7 @@ def process_any_msg(message:telebot.types.Message):
         'content' : json.dumps({
             "sender": f"{message.from_user.full_name} / {message.from_user.username} - [{message.from_user.id}]",
             "date" : datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-            'message' : message.text,
+            'message' : message.text if message.text else "no text",
             "from" : origin,
             "reply_to": str(reply_info),  
         }, indent=4, ensure_ascii=False)
@@ -250,13 +238,13 @@ def process_any_msg(message:telebot.types.Message):
         
         
     if bot.get_chat(message.chat.id).type == "private":
-        print(BLUE, "Personal response", RESET)
+        print(MAGENTA, "Priority reply", RESET)
         struggle_till_message()
     elif reply_info and reply_info["original_message"]["sender"]["name"] == bot.get_my_name().name:
-        print("recognized reply")
+        print(MAGENTA, "Priority reply", RESET)
         struggle_till_message()
     else:
-        print("General response")
+        print(MAGENTA, "General reply", RESET)
         general_response()
     ai_handler.update_context()
     

@@ -1,12 +1,12 @@
 from .imports_for_tools import *
 import prefs
 
-google_update_info_tool = types.Tool(
+google_update_status_tool = types.Tool(
     function_declarations=[
         types.FunctionDeclaration(
-            name="update_info",
+            name="update_status",
             description=(
-                """Update information about the user to modify the relationship pattern. Use this when old information is no longer valid, or a significant change has just occurred. Do not discard old information. If it no longer applies to the user, mark it as invalid and append fresh facts that define your approach to a specific user."""
+                "Update user information to adjust the relationship pattern dynamically. This function should be employed when existing data becomes outdated or when notable changes occur. Instead of overwriting old information, mark invalid details as obsolete while preserving them for context. Append new, relevant data to refine and evolve the approach to the user, ensuring adaptability and continuity in interactions."
             ),
             parameters=genai.types.Schema(
                 type=genai.types.Type.OBJECT,
@@ -17,7 +17,7 @@ google_update_info_tool = types.Tool(
                     ),
                     "new_info": genai.types.Schema(
                         type=genai.types.Type.STRING,
-                        description="The updated combination of old and new information to be associated with the user.",
+                        description="User status text.",
                     ),
                 },
                 required=["name", "new_info"],
@@ -26,7 +26,7 @@ google_update_info_tool = types.Tool(
     ]
 )
 
-def update_info(name, new_info):
+def update_status(name, new_info):
     data = prefs.members_info()
     data = json.loads(data)
     for index, member in enumerate(data):
