@@ -35,7 +35,6 @@ group_id - [{prefs.chat_to_interact}]
 )
     
 def send_message(user_id: str, message: str):
-    print("tryna send DM")
     print(f"{MAGENTA}[Private to {user_id}/{bot.get_chat(int(user_id)).username}]: {message}{RESET}")
     # print(fix_markdown_v2(message))
     try:

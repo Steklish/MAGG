@@ -13,6 +13,7 @@ google_long_term_memory_tool = types.Tool(
                 "Use this tool to recall shared experiences, historical context, names, dates, or "
                 "specific events. This tool is essential for understanding references, emotional "
                 "context, and maintaining continuity in conversations."
+                "use to recall events that took part in past in certain date"
                 "use dd-mm-YYYY format or parts of it if needed to search by date"
             ),
             parameters=genai.types.Schema(
@@ -63,7 +64,8 @@ def get_long_term_memory(keywords: list[str]):
             role="model",
             parts=[
                 types.Part.from_text(text=f"""
-Исходя из истории переписки и данных записей из базы данных выдели данные, которые имеют отношение к контексту, остальное опусти. Эти данные из твоей памяти. Приведи их в удобный формат. Подведи итог. Обращай внимание на даты создания заеисей в базе данных. Представь результат в виде сводки. Отрази свое отношение но не используй прямую речь.
+Исходя из истории переписки и данных записей из базы данных выдели данные, которые имеют отношение к контексту, остальное опусти. Эти данные из твоей памяти. Приведи их в удобный формат. Подведи итог. Обращай внимание на даты создания записей в базе данных. Представь результат в виде сводки. Отрази свое отношение но не используй прямую речь. Сгруппируй по датам. Если находятся записи которые не относятся к контексту напрямую, но могут помочь в развитии беседы, проанализируй из тоже.
+
 [история действий и сообщений]
 {conversation[len(conversation) // 2:]}
 

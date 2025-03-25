@@ -1,11 +1,11 @@
 from .imports_for_tools import *
 
-google_reques_for_message_tool = types.Tool(
+google_request_for_message_tool = types.Tool(
     function_declarations=[
         types.FunctionDeclaration(
-            name="reques_for_message",
+            name="request_for_message",
             description=(
-                "Use to launch additional interaction cycle. Use if you have not fulfilled the user's request or your own goal."
+                "Use to launch additional interaction cycle. Use if one message is not enough to achieve your goal"
             ),
             parameters=genai.types.Schema(
                 type=genai.types.Type.OBJECT,
@@ -21,5 +21,5 @@ google_reques_for_message_tool = types.Tool(
     ]
 )
 
-def reques_for_message():
+def request_for_message():
     return "Message request accepted now launch another interaction cycle"

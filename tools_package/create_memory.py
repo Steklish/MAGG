@@ -6,7 +6,7 @@ google_create_memory_tool = types.Tool(
             name="create_memory",
             description=(
                 "Store important information."
-                "Use create_memory to save emotional moments or significant information for future use make a detailed descriptive notes. Try to store only finalized actions. Store outcomes, not current thoughts if not something very important."
+                "Use create_memory to save emotional moments or significant information for future use make a detailed descriptive notes. Dont create similar memories."
             ),
             parameters=genai.types.Schema(
                 type=genai.types.Type.OBJECT,
@@ -14,8 +14,8 @@ google_create_memory_tool = types.Tool(
                     "memory": genai.types.Schema(
                         type=genai.types.Type.STRING,
                         description=(
-                            "Detailed note in Russian. Include names, dates, emotional tone and all the relevant details. Describe exhaustively. Provide colorfull picture of the event."
-                            "Provide your thoughts on a subject and how it relates to your goals, feelings e."
+                            "Detailed note in Russian. Include names, dates, emotional tone and all the relevant details. Describe exhaustively. Provide colorful picture of the event"
+                            "Provide tags to refer to this memory in the future."
                         ),
                     ),
                 },

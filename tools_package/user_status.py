@@ -6,15 +6,7 @@ google_update_info_tool = types.Tool(
         types.FunctionDeclaration(
             name="update_info",
             description=(
-                """When updating user notes:
-1. FIRST review the existing note completely
-2. THEN determine if the new information:
-   - Adds to existing knowledge (use 'integrate')
-   - Provides chronological update (use 'append')
-   - Is more important than existing info (use 'prepend')
-   - Corrects wrong information (use 'correct')
-3. FINALLY compose the new information to flow naturally with the existing note
-"""
+                """Update information about the user to modify the relationship pattern. Use this when old information is no longer valid, or a significant change has just occurred. Do not discard old information. If it no longer applies to the user, mark it as invalid and append fresh facts that define your approach to a specific user."""
             ),
             parameters=genai.types.Schema(
                 type=genai.types.Type.OBJECT,

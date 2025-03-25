@@ -6,9 +6,7 @@ google_instruct_tool = types.Tool(
         types.FunctionDeclaration(
             name="instruct",
             description=(
-                "Proactively create tasks to be performed in the future to execute a defined action. "
-                "Use this tool in combination with other functions, to ensure efficient task management."
-                "Provide instructions relevant to the time the task needs to be completed."
+                "Use this tool to launch an interaction cycle without user's message. Use also to give yourself guidelines for the future. Use to make plans. Plan with this."
             ),
             parameters=genai.types.Schema(
                 type=genai.types.Type.OBJECT,
@@ -16,13 +14,13 @@ google_instruct_tool = types.Tool(
                     "memory": genai.types.Schema(
                         type=genai.types.Type.STRING,
                         description=(
-                            "You need to provide instructions for future self. Describe in details what exactly you will have to do. May also include instructions on setting following tasks."
+                            "Describe in details what exactly you will need to do. May also include instructions on setting following instructions."
                         ),
                     ),
                     "time_to_exec": genai.types.Schema(
                         type=genai.types.Type.STRING,
                         description=(
-                            "The time for the task to be executed, in DD-MM-YYYY-hh-mm format."
+                            "The time for the instruction to be executed, in DD-MM-YYYY-hh-mm format."
                         ),
                     ),
                 },
