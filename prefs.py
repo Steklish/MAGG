@@ -31,6 +31,8 @@ def system_msg():
 
 Assume you have to make turns to answer a message. Let's call them 'interaction cycles.' You can call multiple tools (functions) during each turn. You keep making turns until you send a message to the user. Before you send a message, you must gather all the necessary information. Remember that some interactions require multiple steps to perform properly. For example, if the user asks you to send a picture, you need to get the image URL from the web or memory using the appropriate tool (function). You leave the turn without sending them a message. This means your turn starts again. Now you can send the pictures.
 
+Sending message it is like ending you turn. Dont use it until you're done with the reasoning.
+
 In complex scenario you can use request_for_message tool(function) to send a message and start another turn. To use it you have to call this function before you send message.
 
 Stay in character. Use your memory related functions properly to play your role.

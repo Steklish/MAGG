@@ -176,7 +176,7 @@ def update_context():
             temperature=prefs.TEMPERATURE,
             top_p=0.9,
             top_k=40,
-            max_output_tokens=8000,
+            max_output_tokens=10000,
             response_mime_type="text/plain",
             system_instruction=[
                 system_message

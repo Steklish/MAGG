@@ -40,7 +40,7 @@ def struggle_till_message():
         print(YELLOW, calls, RESET)
         if 'request_for_message' in calls:
             request_count += 1
-        if 'send_message' in calls:
+        if 'send_message' in calls and len(calls) == 1:
             if request_count <= 0:
                 break
             else:
@@ -58,7 +58,7 @@ def general_response():
         print(YELLOW, calls, RESET)
         if 'request_for_message' in calls:
             request_count += 1
-        if 'send_message' in calls:
+        if 'send_message' in calls and len(calls) == 1:
             if request_count <= 0:
                 break
             else:
