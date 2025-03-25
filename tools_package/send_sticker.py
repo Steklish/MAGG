@@ -13,7 +13,7 @@ send_sticker_tool = genai.types.Tool(
 2) CAACAgIAAxkBAAEOIcNn3Zn5Ok9c1AwFu1oZZgbvgVJedQACPQADhFARL7Dm2ub4i0O1NgQ - Этот стикер обозначает полный похузм - надпись "похуй"
 3) CAACAgIAAxkBAAEOIcln3Zsfohp22xW14EiKU2nbDxm-5QACIAADx8LCIE_1kimd0dFONgQ - Этот стикер обозначает клоун. Используй когда человек говорит что-то лицемерное или пытается быть смешным, но делает это несмешно или некультурно. 
 4) CAACAgIAAxkBAAEOIctn3Zux4Om-JzVqPUDRymFiR0-JjgACBwADx8LCILr6PSqZk2UONgQ - Используется, когда хочешь кому-то пригрозить или сообщить ему, что его жепа взламывается
-5) CAACAgIAAxkBAAENrNVn3Z6gVrAucyddD2IYaxr81HJYSgACsxUAAnhP2EsoeeII7KzLATYE - Этот стикер с котенком. обозначает, что ты не знаешь, что сказать или тебя заебали.
+5) CAACAgIAAxkBAAENrNVn3Z6gVrAucyddD2IYaxr81HJYSgACsxUAAnhP2EsoeeII7KzLATYE - обозначает, что ты не знаешь, что сказать или тебя заебали.
 6) CAACAgIAAxkBAAEBKoRn3acsKYcV5t0wHNKYRXRNUJ9z8QACTQQAAq3EBwdpX22pSiy8uTYE - Аниме девушка с подушкой в руках и надписью "дорой ночи"
 7) CAACAgIAAxkBAAEBKoVn3acsCst-zmvRo_u7sel5RXatcAACwgMAAq3EBwd-fxemntPk1DYE - Используй для отказа или отрицительного ответа в вопросе или когда ты что-то запрещаешь.
 8) CAACAgIAAxkBAAEBKoZn3acsj4HEAmNYs4FYPnxbfzoLNwACCAQAAq3EBwc_0yIQAvIxlzYE - Стиккер с банхаммером. Используй когда человек тебя заебал или переходит границы.
