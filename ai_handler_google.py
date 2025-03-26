@@ -67,7 +67,7 @@ def smart_response(
         print(f"{GREEN}Smart message launched{RESET}")
         current_datetime = datetime.datetime.now(prefs.timezone).strftime('%D-%M-%Y %H:%M:%S %Z')
         if not system_message:
-            system_message = types.Part.from_text(text=f"Current time is {current_datetime} {prefs.system_msg()}")   
+            system_message = types.Part.from_text(text=f"Current time is {current_datetime} {prefs.system_msg() or ''}")   
             
         print("sys message created")
         
@@ -145,7 +145,7 @@ def update_context():
         
         
             
-        system_message = types.Part.from_text(text=f"Current time is {current_datetime} {prefs.system_msg()}")   
+        system_message = types.Part.from_text(text=f"Current time is {current_datetime} {prefs.system_msg() or ''}")   
         
         with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
             conversation = json.load(f)
@@ -190,16 +190,14 @@ def update_context():
             config=generate_content_config,
         ):
             if not chunk.function_calls:
-                plain_text += chunk.text
+                plain_text += str(chunk.text)
            
         with open("static_storage/context.txt", "w", encoding="utf-8") as f:
             f.write(plain_text)
 
-        
         print("context updated")
     except Exception as e:
         print(RED, e , RESET)
-        error_msg = f"Context_failure {str(e )}"
+        error_msg = f"Context_failure {str(e)}"
         bot.send_message(prefs.TST_chat_id, f"🔴\n```{error_msg}```", parse_mode="Markdown")
         return 1
-    
