@@ -17,8 +17,8 @@ import signal
 from tools_package.imports_for_tools import fix_markdown_v2
 
 
-
-    
+def get_time():
+    return datetime.datetime.now(prefs.timezone).strftime('%D-%M-%Y %H:%M:%S %Z')    
 
 def struggle_till_message():
     for i in range(15):
@@ -233,7 +233,7 @@ def process_any_msg(message:telebot.types.Message):
         print(MAGENTA, "General reply", RESET)
         general_response()
     ai_handler.update_context()
-    
+    print(MAGENTA, get_time(), RESET)
     
     
 #! file messages
@@ -304,6 +304,7 @@ def handle_files(message:telebot.types.Message):
         struggle_till_message()
     else:
         general_response()
+    print(MAGENTA, get_time(), RESET)
     ai_handler.update_context()
 
 

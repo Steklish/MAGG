@@ -31,10 +31,7 @@ def rewrite_attitude(new_info, old_info, user):
     try:
         
         print("starting attitude updating")
-        with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
-            conversation = json.load(f)
-        current_datetime = datetime.datetime.now(prefs.timezone).strftime('%D-%M-%Y %H:%M:%S %Z')    
-        system_message = types.Part.from_text(text=prefs.system_msg_char)   
+        system_message = types.Part.from_text(text=str(prefs.system_msg_char))   
         query = types.Content(
             role="model",
             parts=[
@@ -44,8 +41,6 @@ def rewrite_attitude(new_info, old_info, user):
 {old_info}
 [new info]
 {new_info}
-[история последних действий]
-{conversation[len(conversation):]}
 
 тебе не нужно отвечать на сообщение, только предоставить обновленный статус.
             """),
@@ -68,7 +63,7 @@ def rewrite_attitude(new_info, old_info, user):
             config=generate_content_config,
         ):
             if not chunk.function_calls:
-                plain_text += chunk.text
+                plain_text += str(chunk.text)
         print("status updated")
         return plain_text
     
@@ -91,14 +86,14 @@ def update_status(name, new_info):
             
             final_upd = rewrite_attitude(new_info, member["attitude"], member["name"])
             if final_upd != 1 and final_upd != "":
-                member["attitude"] = final_upd
+                member["attitude"] = str(final_upd)
                 
             print(MAGENTA, f"COMPILED STATUS {final_upd}", RESET)
             with open("static_storage/user_status.json", "w", encoding="utf-8") as f:
                 f.write(json.dumps(data, ensure_ascii=False, indent=4))
             bot.send_message(
                 prefs.TST_chat_id,
-                "🟡\n```STATUS_UPD \n status update for <" + name + ">\n [" + final_upd + "] ```", parse_mode="Markdown"
+                "🟡\n```STATUS_UPD \n status update for <" + str(name) + ">\n [" + str(final_upd) + "] ```", parse_mode="Markdown"
             )
             return "Update complete"
     return "Error - cant find user"
