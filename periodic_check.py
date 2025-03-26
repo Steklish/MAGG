@@ -84,7 +84,7 @@ def reminder_check():
         msgs.append(
             {
                 "role": "model",
-                "content": f"The directive, formulated on {task['date_date created']}, is now slated for execution. Below is the detailed instruction: [instruction] {task['content']}"
+                "content": f"The directive, formulated on {task['date created']}, is now slated for execution. Below is the detailed instruction: [instruction] {task['content']}"
             }
         )
         with open("static_storage/conversation.json", "w", encoding="utf-8") as f:

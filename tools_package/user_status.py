@@ -6,7 +6,7 @@ google_update_status_tool = types.Tool(
         types.FunctionDeclaration(
             name="update_status",
             description=(
-                "Update user information to adjust the relationship pattern dynamically. This function should be employed when existing data becomes outdated or when notable changes occur. Instead of overwriting old information, mark invalid details as obsolete while preserving them for context. Append new, relevant data to refine and evolve the approach to the user, ensuring adaptability and continuity in interactions."
+                "Use to append or update attitude to a user. Append the 'attitude' filed based on its old value and on current interactions history. Append oly with significant facts that should affect the way you behave towards the user. "
             ),
             parameters=genai.types.Schema(
                 type=genai.types.Type.OBJECT,
@@ -17,7 +17,7 @@ google_update_status_tool = types.Tool(
                     ),
                     "new_info": genai.types.Schema(
                         type=genai.types.Type.STRING,
-                        description="User status text.",
+                        description="Updated attitude and status of the user. Pass here the old info + the new one. Dont discard old info. You can only slightly change the old info. For example, if the old info was 'good', you can pass here 'good, but with some issues'.",
                     ),
                 },
                 required=["name", "new_info"],

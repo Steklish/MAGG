@@ -6,7 +6,7 @@ google_instruct_tool = types.Tool(
         types.FunctionDeclaration(
             name="instruct",
             description=(
-                "Use this tool to launch an interaction cycle without user's message. Use also to give yourself guidelines for the future. Use to make plans. Plan with this."
+                "Use this tool to launch an interaction cycle without user's message. Use also to give yourself guidelines for the future. Use to make plans. Plan with this. treat this as a programming of yourself. "
             ),
             parameters=genai.types.Schema(
                 type=genai.types.Type.OBJECT,
@@ -34,8 +34,19 @@ google_instruct_tool = types.Tool(
 def instruct(memory: str, time_to_exec:str):
     print("TASK ACCEPTED")
     memory = str(memory)
+    # Check if memory exists in the current tasks
+    try:
+        with open('static_storage/long_term_memory.json', 'r', encoding="utf-8") as f:
+            existing_memories = json.load(f)
+            for existing_memory in existing_memories:
+                if existing_memory.get('is_task') and existing_memory.get('content') == memory + " " + time_to_exec:
+                    print(RED,"TASK ALREADY EXISTS", RESET)
+                    return "[error]TASK ALREADY EXISTS"
+    except FileNotFoundError:
+        existing_memories = []
+
     new_memory = {
-        'is_task' : True,
+        'is_task': True,
         'date created': datetime.datetime.now(prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
         'content': memory + " " + time_to_exec
     }
