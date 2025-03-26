@@ -75,7 +75,7 @@ def extract_doc(url:str, file_path, message:telebot.types.Message=None):
                 model='gemini-2.0-flash',
                 contents=[
                     json.dumps(sys_m),
-                    'Describe what is inside the file. To do it use language of the document. Provide a detailed summary and dont miss importtant or interesting detailes. Take a message history into account when making conclusion' + "[file name]" + str(message.document.file_name) + f"{'[caption]' + message.caption if message.caption else "."}",
+                    'Describe what is inside the file. To do it use language of the document. Provide a detailed summary and dont miss important or interesting details. Take a message history into account when making conclusion' + "[file name]" + str(message.document.file_name) + f"{'[caption]' + message.caption if message.caption else "."}",
                     file,
                 ]
             )
@@ -84,7 +84,7 @@ def extract_doc(url:str, file_path, message:telebot.types.Message=None):
                 model='gemini-2.0-flash',
                 contents=[
                     json.dumps(sys_m),
-                    "Describe what is inside the file. To do it use language of the document. Provide a detailed summary and dont miss importtant or interesting detailes. Take a message history into account when making conclusion [file name]" + file_path,
+                    "Describe what is inside the file. To do it use language of the document. Provide a detailed summary and dont miss important or interesting details. Take a message history into account when making conclusion [file name]" + file_path,
                     file,
                 ]
             )
@@ -137,7 +137,7 @@ def extract_img(url:str, file_path, message:telebot.types.Message=None):
                 file,
             ]
         )
-    print(MAGENTA, "received responce from llm", RESET)
+    print(MAGENTA, "received response from llm", RESET)
     print(YELLOW, response.text, RESET)
     #update context of conversation
     msgs = []
@@ -205,7 +205,7 @@ def extract_voice(url:str, file_path, message:telebot.types.Message=None):
         model='gemini-2.0-flash',
         contents=[
             json.dumps(sys_m),
-            'Extract text from audio. It is likely to be in Russian. Describe emotions and intonations of the speaker. Consider the contet of the conversation. Example "*Тон: игривый, слышен смех* «Ну что, как успехи с проектом?»"',
+            'Extract text from audio. It is likely to be in Russian. Describe emotions and intonations of the speaker. Consider the conte of the conversation. Example "*Тон: игривый, слышен смех* «Ну что, как успехи с проектом?»"',
             file,
         ]
     )
