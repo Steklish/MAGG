@@ -186,54 +186,61 @@ def bio(message:telebot.types.Message):
 @bot.message_handler(func=lambda message: str(message.chat.id) == prefs.chat_to_interact or 
                      bot.get_chat(message.chat.id).type == "private")
 def process_any_msg(message:telebot.types.Message):
-    
-    #update context of conversation
-    msgs = []
-    with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
-        msgs = json.loads(f.read())        
-        
-    if message.reply_to_message:  # Check if the message is a reply
-        reply_info = {
-            "original_message": {
-                "sender": f"{message.reply_to_message.from_user.full_name} / {message.reply_to_message.from_user.username} - [{message.reply_to_message.from_user.id}] <{datetime.datetime.fromtimestamp(message.reply_to_message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z')}>",
-                "message": message.reply_to_message.text if message.reply_to_message.text else "no text",
+    try:
+        #update context of conversation
+        msgs = []
+        with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
+            msgs = json.loads(f.read())        
+            
+        if message.reply_to_message:  # Check if the message is a reply
+            reply_info = {
+                "original_message": {
+                    "sender": f"{message.reply_to_message.from_user.full_name} / {message.reply_to_message.from_user.username} - [{message.reply_to_message.from_user.id}] <{datetime.datetime.fromtimestamp(message.reply_to_message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z')}>",
+                    "message": message.reply_to_message.text if message.reply_to_message.text else "no text",
+                }
             }
+        else:
+            reply_info = None  # No reply-to message present
+        if bot.get_chat(message.chat.id).type == "private":
+            origin = "direct message"
+        else:
+            origin = f"group {message.chat.title} / {message.chat.id}"
+        msg = {
+            'role' : 'user',
+            'content' : json.dumps({
+                "sender": f"{message.from_user.full_name} / {message.from_user.username} - [{message.from_user.id}]",
+                "date" : datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
+                'message' : message.text if message.text else "no text",
+                "from" : origin,
+                "reply_to": reply_info if reply_info else "No reply",  
+            }, indent=4, ensure_ascii=False)
         }
-    else:
-        reply_info = None  # No reply-to message present
-    if bot.get_chat(message.chat.id).type == "private":
-        origin = "direct message"
-    else:
-        origin = f"group {message.chat.title} / {message.chat.id}"
-    msg = {
-        'role' : 'user',
-        'content' : json.dumps({
-            "sender": f"{message.from_user.full_name} / {message.from_user.username} - [{message.from_user.id}]",
-            "date" : datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-            'message' : message.text if message.text else "no text",
-            "from" : origin,
-            "reply_to": str(reply_info),  
-        }, indent=4, ensure_ascii=False)
-    }
-    msgs.append(msg)
-    if len(msgs)  > prefs.history_depth:
-        msgs = msgs[5:]
-    with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
-        f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
-        
-        
-        
-    if bot.get_chat(message.chat.id).type == "private":
-        print(MAGENTA, "Priority reply", RESET)
-        struggle_till_message()
-    elif reply_info and reply_info["original_message"]["sender"]["name"] == bot.get_my_name().name:
-        print(MAGENTA, "Priority reply", RESET)
-        struggle_till_message()
-    else:
-        print(MAGENTA, "General reply", RESET)
-        general_response()
-    ai_handler.update_context()
-    print(MAGENTA, get_time(), RESET)
+        msgs.append(msg)
+        if len(msgs)  > prefs.history_depth:
+            msgs = msgs[5:]
+        with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
+            f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
+            
+            
+            
+        if bot.get_chat(message.chat.id).type == "private":
+            print(MAGENTA, "Priority reply", RESET)
+            struggle_till_message()
+        elif reply_info and bot.get_my_name().name in reply_info["original_message"]["sender"]:
+            print(MAGENTA, "Priority reply", RESET)
+            struggle_till_message()
+        else:
+            print(MAGENTA, "General reply", RESET)
+            general_response()
+        ai_handler.update_context()
+        print(MAGENTA, get_time(), RESET)
+    except Exception as e:
+        add_error_log(f"error in message handler {str(e)}")
+        print(RED, f"error in message handler {str(e)}", RESET)
+        bot.send_message(
+            prefs.TST_chat_id,
+            "🔴\n```MESSAGE_Error: Cannot_send_response " + str(e) + "```", parse_mode="Markdown"
+        )
     
     
 #! file messages
