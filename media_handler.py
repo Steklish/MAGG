@@ -1,3 +1,8 @@
+import base64
+import os
+from google import genai
+from google.genai import types
+
 import mimetypes
 import mammoth
 from bot_instance import client_google as client
@@ -112,31 +117,44 @@ def extract_doc(url:str, file_path, message:telebot.types.Message=None):
 
 
 #!image
-def extract_img(url:str, file_path, message:telebot.types.Message=None):
+def extract_img(url:str, file_path, message:telebot.types.Message=None, magg_caption:str=None):
     print(MAGENTA, "starting img processing", RESET)
     file_path = file_path.split("/")[-1]
     os.makedirs("tmp", exist_ok=True)
     download_file(url,"tmp/" + file_path)
-    file = client.files.upload(file='tmp/'+file_path)
+    with open("tmp/" + file_path, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
     sys_m = {
         'role': 'system',
         'content': prefs.system_msg()
     }
     
-    message_text = "no cation"
+    message_text = None
     
     if message and message.caption:
         message_text = message.caption
+    mime_type = mimetypes.guess_type("tmp/" + file_path)[0] or 'image/jpeg'
     
-    should_delete = False
     response = client.models.generate_content(
-            model='gemini-2.0-flash',
-            contents=[
-                json.dumps(sys_m),
-                "Make a detailed description of the image. Describe what is inside the file. Extract every label on the photo. Use russian. \n[caption]" + message_text,
-                file,
-            ]
-        )
+        model='gemini-2.0-flash',
+        contents=[
+            types.Content(
+                role="user",
+                parts=[
+                    types.Part.from_bytes(
+                        mime_type=mime_type,
+                        data=base64.b64decode(
+                        encoded_string
+                        ),
+                    ),
+                    types.Part.from_text(text="""what is th photo? Make a brief analysis in russian.""" if magg_caption is None else magg_caption),
+                ],
+            ),
+        ]
+    )
+    
+    print(BLUE, "IMG ANALYSIS PROMPT" , ("Make a detailed description of the image. Describe what is inside the file. Extract every label on the photo. Use russian. \n[caption]" + str(message_text)) if magg_caption is None else str(magg_caption), RESET)
+    
     print(MAGENTA, "received response from llm", RESET)
     print(YELLOW, response.text, RESET)
     #update context of conversation
@@ -147,20 +165,14 @@ def extract_img(url:str, file_path, message:telebot.types.Message=None):
         origin = "group"
     with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
         msgs = json.loads(f.read())
-    
-    # if message.caption:
-    #     msgs[-1]["content"]["message"] +=  "\n[caption] "
-    #     msgs[-1]["content"]["message"] +=  message.caption
     if message is None:
         return response.text
     else:
         msg = {
-            "role": "user",
+            "role": "model",
             "content": json.dumps({
-                "sender": f"{message.from_user.full_name} / {message.from_user.username} - [{message.from_user.id}]",
-                "from" : str(origin),
                 "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-                "message": "[photo] " + str(response.text) + f"{'[caption]' + str(message.caption) if message.caption else "."}"
+                "message": "[brief analysis of the photo by magg] " + url + str(response.text)
             }, indent=4, ensure_ascii=False)
         }
     
@@ -171,12 +183,7 @@ def extract_img(url:str, file_path, message:telebot.types.Message=None):
         msgs = msgs[10:]
     with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
         f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
-
-    # delete every file stored
-    for file_google in client.files.list():
-        client.files.delete(name=file_google.name)
-        print("file deleted")
-            
+   
     delete_files_in_directory("tmp")
     print("Done with the img")
     
@@ -205,7 +212,7 @@ def extract_voice(url:str, file_path, message:telebot.types.Message=None):
         model='gemini-2.0-flash',
         contents=[
             json.dumps(sys_m),
-            'Extract text from audio. It is likely to be in Russian. Describe emotions and intonations of the speaker. Consider the conte of the conversation. Example "*Тон: игривый, слышен смех* «Ну что, как успехи с проектом?»"',
+            'Extract text from audio. It is likely to be in Russian. Describe emotions and intonations of the speaker. Consider the conte of the conversation. Example "*Тон: игривый, слышен смех* «Ну что, как успехи с проектом?», mak full analysis of the audio"',
             file,
         ]
     )
@@ -272,7 +279,7 @@ def extract_sticker(message: telebot.types.Message):
         f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
 
     
-def media_handler(url: str):
+def media_handler(url: str, magg_prompt=None):
     # Extract filename from url
     file_path = url.split('/')[-1]
     # Get file extension from the URL
@@ -282,7 +289,7 @@ def media_handler(url: str):
     if file_extension in ['txt', 'doc', 'docx']:
         return extract_doc(url, file_path)
     elif file_extension in ['jpg', 'jpeg', 'png', 'gif']:
-        return extract_img(url, file_path)
+        return extract_img(url, file_path, magg_caption=magg_prompt)
     elif file_extension in ['ogg', 'mp3', 'wav']:
         return extract_voice(url, file_path)
     else:

@@ -36,12 +36,42 @@ group_id - [{prefs.chat_to_interact}]
     
 def send_message(chat_to_send_id: str, message: str):
     # print(fix_markdown_v2(message))
+    urls = re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', message)
+    print(MAGENTA, f"urls: {urls}", RESET)
+    # Send each URL as a separate document
+    for url in urls:
+        try:
+            # Check if it's a Telegram link
+            if 'telegram' in url:
+                # Create tmp directory if it doesn't exist
+                os.makedirs('./tmp', exist_ok=True)
+                # Download file from Telegram link
+                response = requests.get(url)
+                filename = os.path.join('./tmp', url.split('/')[-1])
+                with open(filename, 'wb') as f:
+                    f.write(response.content)
+                # Send downloaded file
+                with open(filename, 'rb') as f:
+                    bot.send_document(int(chat_to_send_id), f)
+                # Clean up
+                os.remove(filename)
+                # Handle regular image URLs
+            elif any(url.lower().endswith(ext) for ext in ['.jpg', '.jpeg', '.png', '.gif', '.bmp']):
+                bot.send_photo(int(chat_to_send_id), url)
+            else:
+                bot.send_document(int(chat_to_send_id), url)
+            message = message.replace(url, '').strip()
+        except Exception as e:
+            print(RED, f"URL EXCEPTION {str(e)}", RESET)
+            continue
     try:
-        bot.send_message(
-            int(chat_to_send_id),  # Send to the specified user ID
-            message,
-            # parse_mode="Markdown"
-        )
+        print(MAGENTA, f"message(no urls): {message}", RESET)
+        if message.replace("\n", " ").strip():
+            bot.send_message(
+                int(chat_to_send_id),  # Send to the specified user ID
+                fix_markdown_v2(message),
+                parse_mode="Markdown"
+            )
     
         return "send successfully"
     except Exception as e:

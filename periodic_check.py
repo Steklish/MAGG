@@ -8,16 +8,18 @@ from stuff import *
 import tools_package.tools as tools
 import prefs
 from random import randint
-from main import struggle_till_message
+from main import struggle_till_message, general_response
+from daily_memory import check_for_date
 
 async def check_state():
     while True:
         print(YELLOW, "tick", RESET)
         reminder_check()
+        check_for_date()
         # repeat every 5 minutes
         
-        if randint(0, 100) == 50:
-            struggle_till_message
+        if randint(0, 50) == 1:
+            general_response
         await asyncio.sleep(5*60)
         
         
@@ -95,3 +97,5 @@ def reminder_check():
             "`TASK complete`", parse_mode="Markdown"
         )   
     return found
+
+

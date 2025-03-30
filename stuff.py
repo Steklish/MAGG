@@ -1,4 +1,3 @@
-import functools
 import json
 import requests
 import os
@@ -115,18 +114,3 @@ BACKGROUND_BRIGHT_WHITE = '\033[107m'
 RESET = '\033[0m'
 
 
-def add_error_log(message):
-    print(RED, f"Error logged to MAGG {message}", RESET)
-    msgs = []
-    with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
-        msgs = json.loads(f.read())        
-        
-    msgs.append(
-        {
-            "role": "model",
-            "content": f"[error] {message}"
-        }
-    )
-    with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
-        f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
-        

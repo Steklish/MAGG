@@ -201,3 +201,57 @@ def update_context():
         error_msg = f"Context_failure {str(e)}"
         bot.send_message(prefs.TST_chat_id, f"🔴\n```{error_msg}```", parse_mode="Markdown")
         return 1
+
+
+
+def summarize_file(filename: str):
+    try:
+        with open(filename, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        system_message = types.Part.from_text(text=f"[character] {prefs.system_msg_char} [context] {prefs.get_context()}")
+        query = types.Content(
+            role="user",
+            parts=[
+                types.Part.from_text(text=f"Summarize yesterdays message history:\n{content}"),
+            ],
+        )
+
+        generate_content_config = types.GenerateContentConfig(
+            temperature=0.3,
+            top_p=0.9,
+            top_k=40,
+            max_output_tokens=1000,
+            response_mime_type="text/plain",
+            system_instruction=[system_message]
+        )
+
+        summary = ""
+        for chunk in client.models.generate_content_stream(
+            model=prefs.model_gemini,
+            contents=[query],
+            config=generate_content_config,
+        ):
+            if not chunk.function_calls:
+                summary += str(chunk.text)
+
+        timestamp = (datetime.datetime.now(prefs.timezone) - datetime.timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S %Z')
+        memory_entry = {
+            "date created": timestamp,
+            "content": summary
+        }
+
+        try:
+            with open("static_storage/long_term_memory.json", "r", encoding="utf-8") as f:
+                memories = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            return
+
+        memories.append(memory_entry)
+        with open("static_storage/long_term_memory.json", "w", encoding="utf-8") as f:
+            json.dump(memories, f, indent=4, ensure_ascii=False)
+
+        return summary
+    except Exception as e:
+        print(RED, f"Summarization error: {e}", RESET)
+        return None

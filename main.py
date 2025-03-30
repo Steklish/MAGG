@@ -250,6 +250,7 @@ def process_any_msg(message:telebot.types.Message):
 def handle_files(message:telebot.types.Message):
     file_url = None
     try:
+        file_received(message)
         if message.document:
             try:
                 file_info = bot.get_file(message.document.file_id)
@@ -315,8 +316,79 @@ def handle_files(message:telebot.types.Message):
     ai_handler.update_context()
 
 
-
+def add_error_log(message):
+    print(RED, f"Error logged to MAGG {message}", RESET)
+    msgs = []
+    with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
+        msgs = json.loads(f.read())        
+        
+    msgs.append(
+        {
+            "role": "model",
+            "content": f"[error] {message}"
+        }
+    )
+    with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
+        f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
+    
+def file_received(message:telebot.types.Message):
+    print(CYAN, f"FIle received", RESET)
+    msgs = []
+    with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
+        msgs = json.loads(f.read())        
+    
+    
+    file_name = "undefined"
+    file_type = "undefined"
+    file_url = "undefined"
+    
+    if message.document:
+        file_name = message.document.file_name
+        file_url = bot.get_file(message.document.file_id).file_path
+        file_type = "document"
+    elif message.audio:
+        file_name = message.audio.file_name
+        file_url = bot.get_file(message.audio.file_id).file_path
+        file_type = "audio"
+    elif message.voice:
+        file_name = message.voice.file_name
+        file_url = bot.get_file(message.voice.file_id).file_path
+        file_type = "voice"
+    elif message.photo:
+        file_name = message.photo[-1].file_id
+        file_url = bot.get_file(message.photo[-1].file_id).file_path
+        file_type = "photo"
+    if bot.get_chat(message.chat.id).type == "private":
+        origin = "direct message"
+    else:
+        origin = f"group {message.chat.title} / {message.chat.id}"
+    if message.reply_to_message:  # Check if the message is a reply
+        reply_info = {
+            "original_message": {
+                "sender": f"{message.reply_to_message.from_user.full_name} / {message.reply_to_message.from_user.username} - [{message.reply_to_message.from_user.id}] <{datetime.datetime.fromtimestamp(message.reply_to_message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z')}>",
+                "message": message.reply_to_message.text if message.reply_to_message.text else "no text",
+            }
+        }
+    else:
+        reply_info = None  # No reply-to message present
+    msgs.append(
+        {
+            "role": "user",
+            'content' : json.dumps({
+                "sender": f"{message.from_user.full_name} / {message.from_user.username} - [{message.from_user.id}]",
+                "date" : datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
+                'message' : f"[file ({file_type})] {file_url} {str(f"with caption {message.caption}" if message.caption else '')}",
+                "from" : origin,
+                "reply_to": reply_info if reply_info else "No reply",  
+            }, indent=4, ensure_ascii=False)
+        }
+    )
+    with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
+        f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
+        
 
 
 if __name__ == "__main__":
     asyncio.run(main())
+    
+    
