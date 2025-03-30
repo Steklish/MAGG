@@ -2,6 +2,7 @@ import platform
 import threading
 import ai_handler_google as ai_handler
 import telebot
+from daily_memory import log_message_with_sender
 from stuff import *
 import prefs
 import json
@@ -205,6 +206,7 @@ def process_any_msg(message:telebot.types.Message):
             origin = "direct message"
         else:
             origin = f"group {message.chat.title} / {message.chat.id}"
+        log_message_with_sender(message.text, "RECEIVED", str(origin) + f"{message.from_user.full_name} / {message.from_user.username} - [{message.from_user.id}]")
         msg = {
             'role' : 'user',
             'content' : json.dumps({
@@ -362,6 +364,7 @@ def file_received(message:telebot.types.Message):
         origin = "direct message"
     else:
         origin = f"group {message.chat.title} / {message.chat.id}"
+    log_message_with_sender(file_url, "RECEIVED", str(origin) + f"{message.from_user.full_name} / {message.from_user.username} - [{message.from_user.id}]")
     if message.reply_to_message:  # Check if the message is a reply
         reply_info = {
             "original_message": {

@@ -5,6 +5,7 @@ import json
 import datetime
 import time
 from ai_handler_google import *
+import ai_handler_google
 
 def log_message_with_sender(message:str, direction, sender=None):
     today = datetime.datetime.now().strftime('%Y-%m-%d')
@@ -31,6 +32,6 @@ def check_yesterday_log():
 
 def check_for_date():
     if check_yesterday_log() != -1:
-        res = summarize_file(check_yesterday_log())
+        res = ai_handler_google.summarize_file(check_yesterday_log())
         bot.send_message(prefs.TST_chat_id, res)
         os.remove(check_yesterday_log())

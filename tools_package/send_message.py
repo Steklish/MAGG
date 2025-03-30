@@ -1,4 +1,5 @@
 from .imports_for_tools import *
+from daily_memory import log_message_with_sender
 
 google_send_message_tool = genai.types.Tool(
     function_declarations=[
@@ -35,6 +36,7 @@ group_id - [{prefs.chat_to_interact}]
 )
     
 def send_message(chat_to_send_id: str, message: str):
+    log_message_with_sender(message, "SEND", "MAGG")
     # print(fix_markdown_v2(message))
     urls = re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', message)
     print(MAGENTA, f"urls: {urls}", RESET)
