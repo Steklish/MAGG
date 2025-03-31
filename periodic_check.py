@@ -44,10 +44,10 @@ async def check_state():
         
         if randint(0, 10) == 1:
             general_response
-        time_passed = minutes_since_last_change("static_storage\conversation.json")
-        if time_passed < 2:
+        time_passed = minutes_since_last_change("static_storage/conversation.json")
+        if time_passed < 1:
             await asyncio.sleep(5)
-        elif time_passed < 5:
+        elif time_passed < 2:
             await asyncio.sleep(30)
         else:
             await asyncio.sleep(5*60)
