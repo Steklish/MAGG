@@ -1,5 +1,6 @@
 import platform
 import threading
+import traceback
 import ai_handler_google as ai_handler
 import telebot
 from daily_memory import log_message_with_sender
@@ -25,6 +26,7 @@ def struggle_till_message():
     for i in range(15):
         request_count = 0
         calls = ai_handler.smart_response(func_mode="ANY")
+        if calls == None: calls = []
         print(YELLOW, calls, RESET)
         if 'request_for_message' in calls:
             request_count += 1
@@ -41,8 +43,11 @@ def struggle_till_message():
     
 def general_response():
     calls = ai_handler.smart_response(func_mode="AUTO")
+    if calls == None: calls = []
     if calls != [] or not ('send_message' in calls and len(calls) == 1):
         struggle_till_message()
+        
+        
 def cleanup():
     if platform.system() == "Linux":
         bot.send_document(prefs.TST_chat_id, open("static_storage/conversation.json", 'rb'), disable_notification=True)
@@ -66,6 +71,7 @@ def start_loop():
     try:    
         bot.polling(non_stop=True)
     except Exception as e:
+        e = traceback.format_exc()
         add_error_log(f"Some telegram exception {str(e)}")
         bot.send_message(
             prefs.TST_chat_id,
@@ -150,6 +156,7 @@ def check_attitude(message: telebot.types.Message):
             bot.reply_to(message, f"`No attitude data found for {target_username}`", parse_mode="Markdown")
             
     except Exception as e:
+        e = traceback.format_exc()
         bot.send_message(prefs.TST_chat_id, f"```Error checking attitude: {str(e)}```", parse_mode="Markdown")
 
 @bot.message_handler(commands=['chat'])
@@ -237,6 +244,7 @@ def process_any_msg(message:telebot.types.Message):
         ai_handler.update_context()
         print(MAGENTA, get_time(), RESET)
     except Exception as e:
+        e = traceback.format_exc()
         add_error_log(f"error in message handler {str(e)}")
         print(RED, f"error in message handler {str(e)}", RESET)
         bot.send_message(
@@ -261,6 +269,8 @@ def handle_files(message:telebot.types.Message):
                 print("DOCUMENT")
                 extract_doc(url=file_url, message=message, file_path=file_path)
             except Exception as e:
+                
+                e = traceback.format_exc()
                 add_error_log(f"error in file handler {str(e)}")
                 bot.send_message(
                     prefs.TST_chat_id,
@@ -274,6 +284,7 @@ def handle_files(message:telebot.types.Message):
                 print("PHOTO")
                 extract_img(url=file_url, message=message, file_path=file_path)
             except Exception as e:
+                e = traceback.format_exc()
                 add_error_log(f"error in image handler {str(e)}")
                 bot.send_message(
                     prefs.TST_chat_id,
@@ -287,6 +298,7 @@ def handle_files(message:telebot.types.Message):
                 print("VOICE", file_url)
                 extract_voice(url=file_url, message=message, file_path=file_path)
             except Exception as e:
+                e = traceback.format_exc()
                 add_error_log(f"error in voice handler {str(e)}")
                 bot.send_message(
                     prefs.TST_chat_id,

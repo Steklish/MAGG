@@ -1,3 +1,4 @@
+import time
 import prefs
 from bot_instance import client, bot
 import datetime
@@ -115,14 +116,26 @@ def smart_response(
                 for call in chunk.function_calls:
                     
                     if call is None:
-                        print("THe call is none")
+                        print("The call is none")
                         continue
                     function_calls.append(call.name)
-                    result = tools.execute_tool(call.name, call.args)   
+                    # Start the timer
+                    start_time = time.time()
+
+                    # Call the function
+                    result = tools.execute_tool(call.name, call.args)
+
+                    # End the timer
+                    end_time = time.time()
+
+                    # Calculate the elapsed time in seconds
+                    execution_time = end_time - start_time 
+                    if call.name != "send_message":
+                        log_message_with_sender(result, f"function{call.name} ({call.args})", "MAGG")
                     raw_messages.append(
                         {                        
                             "role":"model",
-                            "content" : f"The result of calling the {call.name} function with parameters ({call.args}) was: {result}."
+                            "content" : f"The result of calling the {call.name} function with parameters ({call.args}) was: {result}.  [additional info] execution time {execution_time} s. "
                         }
                     )
                     if len(raw_messages) > prefs.history_depth:
@@ -213,7 +226,7 @@ def summarize_file(filename: str):
         query = types.Content(
             role="user",
             parts=[
-                types.Part.from_text(text=f"Summarize yesterdays message history:\n{content}"),
+                types.Part.from_text(text=f"Summarize todays message history:\n{content}"),
             ],
         )
 

@@ -42,6 +42,14 @@ def send_message(chat_to_send_id: str, message: str):
     print(MAGENTA, f"urls: {urls}", RESET)
     # Send each URL as a separate document
     for url in urls:
+        message_pre = message.split(url)[0]
+        message_post = message.split(url)[1]
+        if message_pre.replace("\n", " ").strip():
+            bot.send_message(
+                int(chat_to_send_id),  # Send to the specified user ID
+                fix_markdown_v2(message),
+                parse_mode="Markdown"
+            )
         try:
             # Check if it's a Telegram link
             if 'telegram' in url:
@@ -66,6 +74,7 @@ def send_message(chat_to_send_id: str, message: str):
         except Exception as e:
             print(RED, f"URL EXCEPTION {str(e)}", RESET)
             continue
+        message = message_post
     try:
         print(MAGENTA, f"message(no urls): {message}", RESET)
         if message.replace("\n", " ").strip():

@@ -10,6 +10,30 @@ import prefs
 from random import randint
 from main import struggle_till_message, general_response
 from daily_memory import check_for_date
+import os
+import time
+
+def minutes_since_last_change(file_path):
+    """
+    Calculates the number of minutes that have passed since the file was last modified.
+
+    Parameters:
+        file_path (str): The path to the file.
+
+    Returns:
+        float: The number of minutes since the file was last modified.
+               Returns None if the file doesn't exist.
+    """
+    if os.path.exists(file_path):
+        # Get the current time
+        current_time = time.time()
+        # Get the last modification time
+        mod_time = os.path.getmtime(file_path)
+        # Calculate the difference in minutes
+        return (current_time - mod_time) / 60
+    else:
+        print(f"File {file_path} does not exist.")
+        return None
 
 async def check_state():
     while True:
@@ -18,9 +42,15 @@ async def check_state():
         check_for_date()
         # repeat every 5 minutes
         
-        if randint(0, 50) == 1:
+        if randint(0, 10) == 1:
             general_response
-        await asyncio.sleep(5*60)
+        time_passed = minutes_since_last_change("static_storage\conversation.json")
+        if time_passed < 2:
+            await asyncio.sleep(5)
+        elif time_passed < 5:
+            await asyncio.sleep(30)
+        else:
+            await asyncio.sleep(5*60)
         
         
 

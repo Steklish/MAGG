@@ -1,7 +1,10 @@
+import datetime
 import json
 import requests
 import os
 import chardet
+
+import prefs
 
 def delete_files_in_directory(directory_path):
     # Check if the directory exists
@@ -114,3 +117,18 @@ BACKGROUND_BRIGHT_WHITE = '\033[107m'
 RESET = '\033[0m'
 
 
+
+def log_message_with_sender(message:str, direction, sender=None):
+    today = datetime.datetime.now(prefs.timezone).strftime('%Y-%m-%d')
+    log_file = f'logs/{today}.txt'
+    
+    timestamp = datetime.datetime.now(prefs.timezone).strftime('%Y-%m-%d %H:%M:%S')
+    sender_info = f" from {sender}" if sender else ""
+    log_entry = f"[{timestamp}] {direction}{sender_info}: {message}\n"
+    
+    if not os.path.exists('logs'):
+        os.makedirs('logs')
+    
+    with open(log_file, 'a', encoding='utf-8') as f:
+        f.write(log_entry)
+        
