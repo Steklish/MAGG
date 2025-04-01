@@ -122,7 +122,7 @@ def toggle_nfs(message:telebot.types.Message):
     for chunk in context_chunks:
         bot.send_message(
             message.chat.id,
-            text=f"```{chunk}```",
+            text=f"```{chunk.replace("`", "")}```",
             parse_mode="Markdown"
         )
 
@@ -221,7 +221,7 @@ def process_any_msg(message:telebot.types.Message):
                 "date" : datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
                 'message' : message.text if message.text else "no text",
                 "from" : origin,
-                "reply_to": reply_info if reply_info else "No reply",  
+                "is_reply_to": reply_info if reply_info else "No reply",  
             }, indent=4, ensure_ascii=False)
         }
         msgs.append(msg)
@@ -232,16 +232,16 @@ def process_any_msg(message:telebot.types.Message):
             
             
             
-        if bot.get_chat(message.chat.id).type == "private":
-            print(MAGENTA, "Priority reply", RESET)
-            struggle_till_message()
-        elif reply_info and bot.get_my_name().name in reply_info["original_message"]["sender"]:
-            print(MAGENTA, "Priority reply", RESET)
-            struggle_till_message()
-        else:
-            print(MAGENTA, "General reply", RESET)
-            general_response()
-        ai_handler.update_context()
+        # if bot.get_chat(message.chat.id).type == "private":
+        #     print(MAGENTA, "Priority reply", RESET)
+        #     struggle_till_message()
+        # elif reply_info and bot.get_my_name().name in reply_info["original_message"]["sender"]:
+        #     print(MAGENTA, "Priority reply", RESET)
+        #     struggle_till_message()
+        # else:
+        #     print(MAGENTA, "General reply", RESET)
+        #     general_response()
+        # ai_handler.update_context()
         print(MAGENTA, get_time(), RESET)
     except Exception as e:
         e = traceback.format_exc()
@@ -321,13 +321,13 @@ def handle_files(message:telebot.types.Message):
             prefs.TST_chat_id,
             "🔴\n```GENERAL_Error: General_error_in_handle_files " + str(e) + "```", parse_mode="Markdown"
         )
-    if bot.get_chat(message.chat.id).type == "private":
-        print("private file")
-        struggle_till_message()
-    else:
-        general_response()
-    print(MAGENTA, get_time(), RESET)
-    ai_handler.update_context()
+    # if bot.get_chat(message.chat.id).type == "private":
+    #     print("private file")
+    #     struggle_till_message()
+    # else:
+    #     general_response()
+    # print(MAGENTA, get_time(), RESET)
+    # ai_handler.update_context()
 
 
 def add_error_log(message):
@@ -352,7 +352,6 @@ def file_received(message:telebot.types.Message):
         msgs = json.loads(f.read())        
     
     
-    file_name = "undefined"
     file_type = "undefined"
     file_url = "undefined"
     
@@ -394,7 +393,7 @@ def file_received(message:telebot.types.Message):
                 "date" : datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
                 'message' : f"[file ({file_type})] {file_url} {str(f"with caption {message.caption}" if message.caption else '')}",
                 "from" : origin,
-                "reply_to": reply_info if reply_info else "No reply",  
+                "is_reply_to": reply_info if reply_info else "No reply",  
             }, indent=4, ensure_ascii=False)
         }
     )

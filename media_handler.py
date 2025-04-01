@@ -16,6 +16,9 @@ from bot_instance import bot
 import google.genai as genai
 import base64
 from PIL import Image
+import requests
+from bs4 import BeautifulSoup
+from urllib.parse import urlparse
 
 def convert_docx_to_html(docx_path):
     with open("tmp/" + docx_path, "rb") as docx_file:
@@ -268,7 +271,7 @@ def extract_sticker(message: telebot.types.Message):
             "sender": f"{message.from_user.full_name} / {message.from_user.username} - [{message.from_user.id}]",
             "from" : origin,
             "date": datetime.datetime.fromtimestamp(message.date, prefs.timezone).strftime('%d-%m-%Y %H:%M:%S %Z'),
-            "message": "[sticker] " + str(message.sticker.emoji)
+            "message": "[sticker] " + str(message.sticker.emoji) + "[sticker id]" + str(message.sticker.custom_emoji_id)
         }, indent=4, ensure_ascii=False)
     }
     
@@ -278,19 +281,53 @@ def extract_sticker(message: telebot.types.Message):
     with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
         f.write(json.dumps(msgs, indent=4, ensure_ascii=False))
 
-    
-def media_handler(url: str, magg_prompt=None):
-    # Extract filename from url
-    file_path = url.split('/')[-1]
-    # Get file extension from the URL
-    file_extension = file_path.split('.')[-1].lower()
+        
+    def media_handler(url: str, magg_prompt=None):
+        # Extract filename from url
 
-    # Handle different file types
-    if file_extension in ['txt', 'doc', 'docx']:
-        return extract_doc(url, file_path)
-    elif file_extension in ['jpg', 'jpeg', 'png', 'gif']:
-        return extract_img(url, file_path, magg_caption=magg_prompt)
-    elif file_extension in ['ogg', 'mp3', 'wav']:
-        return extract_voice(url, file_path)
-    else:
-        return extract_doc(url, file_path)
+        # Check if the URL is a web page
+        try:
+            parsed_url = urlparse(url)
+            if parsed_url.scheme in ['http', 'https'] and not any(url.endswith(ext) for ext in ['.txt', '.doc', '.docx', '.jpg', '.jpeg', '.png', '.gif', '.ogg', '.mp3', '.wav']):
+                response = requests.get(url)
+                soup = BeautifulSoup(response.text, 'html.parser')
+                # Extract text content from the webpage
+                text = ' '.join([p.get_text() for p in soup.find_all(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'])])
+                return client.models.generate_content(
+                model='gemini-2.0-flash',
+                contents=[
+                    "Summarize this webpage content: ",
+                    text[:8000]  # Limit text length to avoid token limits
+                ]
+                ).text
+        except Exception as e:
+            print(f"Error processing webpage: {e}")
+            # Continue with file processing if webpage handling fails
+        
+        file_path = url.split('/')[-1]
+        # Get file extension from the URL
+        file_extension = file_path.split('.')[-1].lower()
+
+        # Handle different file types
+        if file_extension in ['txt', 'doc', 'docx']:
+            return extract_doc(url, file_path)
+        elif file_extension in ['jpg', 'jpeg', 'png', 'gif']:
+            return extract_img(url, file_path, magg_caption=magg_prompt)
+        elif file_extension in ['ogg', 'mp3', 'wav']:
+            return extract_voice(url, file_path)
+        else:
+            return extract_doc(url, file_path)
+            
+        file_path = url.split('/')[-1]
+        # Get file extension from the URL
+        file_extension = file_path.split('.')[-1].lower()
+
+        # Handle different file types
+        if file_extension in ['txt', 'doc', 'docx']:
+            return extract_doc(url, file_path)
+        elif file_extension in ['jpg', 'jpeg', 'png', 'gif']:
+            return extract_img(url, file_path, magg_caption=magg_prompt)
+        elif file_extension in ['ogg', 'mp3', 'wav']:
+            return extract_voice(url, file_path)
+        else:
+            return extract_doc(url, file_path)

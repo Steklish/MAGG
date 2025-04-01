@@ -6,7 +6,7 @@ google_instruct_tool = types.Tool(
         types.FunctionDeclaration(
             name="instruct",
             description=(
-                "Use this tool to launch an interaction cycle without user's message. Use also to give yourself guidelines for the future. Use to make plans or preform complex interactions. Plan with this. treat this as a programming of yourself. "
+                "Use this tool to launch an interaction cycle in a certain time. Instruct yourself with this tool."
             ),
             parameters=genai.types.Schema(
                 type=genai.types.Type.OBJECT,
@@ -14,7 +14,7 @@ google_instruct_tool = types.Tool(
                     "memory": genai.types.Schema(
                         type=genai.types.Type.STRING,
                         description=(
-                            "Describe in details what exactly you will need to do. May also include instructions on setting following instructions. May include conditions rather than plain commands. Describe also what information you will need to execute the instruction. Include some options of performing the task. Provide date that will be useful for execution in future."
+                            "Information of what you wanna do. May also include instructions on setting following instructions. May include conditions rather than plain commands. Describe also what information you will need to execute the instruction. Include some options of performing the task. Provide date that will be useful for execution in future. format this as inner thoughts or plans."
                         ),
                     ),
                     "time_to_exec": genai.types.Schema(

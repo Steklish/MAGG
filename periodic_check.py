@@ -1,3 +1,5 @@
+
+import portalocker
 from bot_instance import bot
 import datetime
 import json
@@ -12,6 +14,21 @@ from main import struggle_till_message, general_response
 from daily_memory import check_for_date
 import os
 import time
+
+def is_user_last_change(file_path):
+    if os.path.exists(file_path):
+        # Get the current time
+        with open(file_path, 'r', encoding="utf-8") as f:
+            portalocker.lock(f, portalocker.LOCK_EX)
+            actions = json.load(f)
+            portalocker.unlock(f) 
+        if len(actions) == 0:
+            return False
+        return (actions[-1]["role"] == "user")
+    else:
+        print(f"File {file_path} does not exist.")
+        return None
+    
 
 def minutes_since_last_change(file_path):
     """
@@ -36,21 +53,40 @@ def minutes_since_last_change(file_path):
         return None
 
 async def check_state():
+    print(GREEN, "started check state", RESET)
+    last_step_time = time.time()
+    delay_time = 5
     while True:
-        print(YELLOW, "tick", RESET)
+        print(YELLOW, ".", RESET, end='')
+        
+        await asyncio.sleep(1)
         reminder_check()
         check_for_date()
         # repeat every 5 minutes
         
-        if randint(0, 10) == 1:
-            general_response
+        
+        
+        if time.time() - last_step_time > delay_time:
+            last_step_time = time.time()
+            calls = ai_handler.smart_response(func_mode="AUTO")
+            if calls != []:
+                ai_handler.update_context()
+            
+                
         time_passed = minutes_since_last_change("static_storage/conversation.json")
-        if time_passed < 1:
-            await asyncio.sleep(5)
+        
+        if time_passed < 10 and is_user_last_change("static_storage/conversation.json"):
+            calls = ai_handler.smart_response(func_mode="AUTO")
+            if calls != []:
+                ai_handler.update_context()
+        await asyncio.sleep(1)
+    
+        if time_passed < 0.5:
+            delay_time = 5
         elif time_passed < 2:
-            await asyncio.sleep(30)
+            delay_time = 30
         else:
-            await asyncio.sleep(5*60)
+            delay_time = 5 * 60
         
         
 
@@ -116,7 +152,7 @@ def reminder_check():
         msgs.append(
             {
                 "role": "model",
-                "content": f"The directive, formulated on {task['date created']}, is now slated for execution. Below is the detailed instruction: [instruction] {task['content']}"
+                "content": f"Below is the detailed instruction, formulated on {task['date created']}: [instruction] {task['content']}"
             }
         )
         with open("static_storage/conversation.json", "w", encoding="utf-8") as f:

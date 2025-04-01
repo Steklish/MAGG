@@ -93,7 +93,7 @@ def update_status(name, new_info):
                 f.write(json.dumps(data, ensure_ascii=False, indent=4))
             bot.send_message(
                 prefs.TST_chat_id,
-                "🟡\n```STATUS_UPD \n status update for <" + str(name) + ">\n [" + str(final_upd) + "] ```", parse_mode="Markdown"
+                "🟡\n```STATUS_UPD \n status update for <" + str(name) + ">\n [" + str(final_upd).replace('`', '') + "] ```", parse_mode="Markdown"
             )
             return "Update complete"
     return "Error - cant find user"

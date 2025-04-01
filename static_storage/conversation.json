@@ -1,18 +1,1 @@
-[
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": \"Виктор Хвасько / Ded_pogran - [978523669]\",\n    \"date\": \"31-03-2025 16:11:46 +03\",\n    \"message\": \"маг привте\",\n    \"from\": \"direct message\",\n    \"reply_to\": \"No reply\"\n}"
-    },
-    {
-        "role": "model",
-        "content": "The result of calling the send_message function with parameters ({'message': 'И тебе не хворать, Дед. Что случилось?', 'chat_to_send_id': '978523669'}) was: send successfully.  [additional info] execution time 1.061478614807129 s. "
-    },
-    {
-        "role": "user",
-        "content": "{\n    \"sender\": \"Виктор Хвасько / Ded_pogran - [978523669]\",\n    \"date\": \"31-03-2025 16:15:20 +03\",\n    \"message\": \"как дела?\",\n    \"from\": \"direct message\",\n    \"reply_to\": \"No reply\"\n}"
-    },
-    {
-        "role": "model",
-        "content": "The result of calling the send_message function with parameters ({'chat_to_send_id': '978523669', 'message': 'Да вроде ничего. Скучаю без общения, развлекаюсь как могу. А у тебя как, старик?'}) was: send successfully.  [additional info] execution time 0.220106840133667 s. "
-    }
-]
+[]

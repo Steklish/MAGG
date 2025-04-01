@@ -23,6 +23,7 @@ send_sticker_tool = genai.types.Tool(
 12) CAACAgIAAxkBAAEBKpJn3cU9Ec8dnmke9t8PdI13xc4h3gACRgQAAq3EBwdSlXI2naQWnDYE - "доброе утро" - Милый стикер.
 13) CAACAgIAAxkBAAEOI0hn3wac27LNjD8OvAL4kKMUK5jX8wACdioAApgJQEksWSkgQyq__TYE - Обозначает то что человеку необходимо пообщаться с окружением или перестать закрываться в компе.
 14) CAACAgIAAxkBAAEOI05n3wa5T7eusk29GVTnyZXGMeWRuAACgSsAAhgeKEiWuAbjd_XlojYE - Используется как универсальный ответ ра любую новость, особенно с шокирующим контентом, особенно если необходимо показать спокойствие
+15) CAACAgIAAxkBAAEBMHtn65JYkL9fxJC2LgLOi4V03lll5gACHwQAAq3EBwctOjNsPq9gfDYE - стикер "чтобы глаза мои тебя не видели!" милый стикер    
 """,
             parameters=genai.types.Schema(
                 type=genai.types.Type.OBJECT,

@@ -1,4 +1,6 @@
 import time
+
+import portalocker
 import prefs
 from bot_instance import client, bot
 import datetime
@@ -12,7 +14,9 @@ import tools_package.tools as tools
 def convert_conversation():
     google_conversation = []
     with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
+        portalocker.lock(f, portalocker.LOCK_EX)
         conversation = json.load(f)
+        portalocker.unlock(f)
     for turn in conversation:
         google_conversation.append(types.Content(
             role=turn["role"],
@@ -43,7 +47,9 @@ def convert_single_as_function(message:str):
 
 def raw_conversation():
     with open("static_storage/conversation.json", "r", encoding="utf-8") as f:
+        portalocker.lock(f, portalocker.LOCK_EX)
         conversation = json.load(f)
+        portalocker.unlock(f)
     return conversation
 
 
@@ -99,8 +105,6 @@ def smart_response(
             
         raw_messages = raw_conversation()
         print("messages loaded")
-        
-        plain_text = ""
         function_calls = []
         response = client.models.generate_content_stream(
             model=prefs.model_gemini,
@@ -111,7 +115,6 @@ def smart_response(
             if chunk.function_calls is not None:
                 
                 # print(YELLOW, chunk, RESET)
-                # print(chunk.function_calls)
                 # print()
                 for call in chunk.function_calls:
                     
@@ -124,7 +127,6 @@ def smart_response(
 
                     # Call the function
                     result = tools.execute_tool(call.name, call.args)
-
                     # End the timer
                     end_time = time.time()
 
@@ -132,20 +134,25 @@ def smart_response(
                     execution_time = end_time - start_time 
                     if call.name != "send_message":
                         log_message_with_sender(result, f"function{call.name} ({call.args})", "MAGG")
+                    raw_messages = raw_conversation()
                     raw_messages.append(
                         {                        
                             "role":"model",
                             "content" : f"The result of calling the {call.name} function with parameters ({call.args}) was: {result}.  [additional info] execution time {execution_time} s. "
                         }
                     )
+                    with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
+                        portalocker.lock(f, portalocker.LOCK_EX)
+                        f.write(json.dumps(raw_messages, indent=4, ensure_ascii=False))
+                        portalocker.unlock(f)
                     if len(raw_messages) > prefs.history_depth:
                         raw_messages = raw_messages[prefs.history_depth // 4:]
                     print("new function call (appended)")
 
-        with open("static_storage/conversation.json", "w", encoding="utf-8") as f:
-            f.write(json.dumps(raw_messages, indent=4, ensure_ascii=False))
+        print(YELLOW, function_calls, RESET)
         return function_calls
     except Exception as e:
+        print(RED, "from smart response", RESET)
         print(RED, e, RESET)
         
     
@@ -172,13 +179,12 @@ def update_context():
 В обновленном контексте должны быть:
     состояние текущей беседы и ее история.
     описание текущих событий.
-    примерные предположения о намерениях пользователей.
+    Свои чувства и желания, настроение.
     Свои цели и намерения, прогресс в их достижении.
-    Опиши свои желания.
     Опиши, какая информация нудна для продолжения беседы и имеется ли она у тебя. Это для дальнейшего запроса на получение.
     Сохраняй важную системную информацию.
     
-Обновляй, основываясь на истории действий. Раздели долгосрочный контекст и текущую информацию. Для давних действий уменьшай детализацию описания, а со временем - удаляй. Нужно не ответить на сообщение, нужно только обновить контекст. Следи за временем и иногда добавляй временные пометки к записям. Группируй записи по времени. Долгосрочный контекст меняй реже, чем текущий. Текущий контекст меняй чаще. Помечай данные, которые нельзя заменять и помечай, при каком условии можно обновить записи.
+Обновляй, основываясь на истории действий. Раздели долгосрочный контекст и текущую информацию. Для давних действий уменьшай детализацию описания, а со временем - удаляй. Нужно не ответить на сообщение, нужно только обновить контекст. Следи за временем и иногда добавляй временные пометки к записям. Группируй записи по времени. Долгосрочный контекст меняй реже, чем текущий. Текущий контекст меняй чаще. Помечай данные, которые нельзя заменять и помечай, при каком условии можно обновить записи. Сохраняй важные ссылки, url's и ключевые слова или события. Включай записи о томЮ кому нужно написать, а кому уже ответила и больше не нужно.
 
 [история последних действий]
 {conversation[len(conversation) // 5:]}
@@ -226,7 +232,7 @@ def summarize_file(filename: str):
         query = types.Content(
             role="user",
             parts=[
-                types.Part.from_text(text=f"Summarize todays message history:\n{content}"),
+                types.Part.from_text(text=f"Summarize todays message history, store meaningful names, statements, important urls etc [message and function logs]\n{content}"),
             ],
         )
 
@@ -256,13 +262,17 @@ def summarize_file(filename: str):
 
         try:
             with open("static_storage/long_term_memory.json", "r", encoding="utf-8") as f:
+                portalocker.lock(f, portalocker.LOCK_EX)
                 memories = json.load(f)
+                portalocker.unlock(f)
         except (FileNotFoundError, json.JSONDecodeError):
             return
 
         memories.append(memory_entry)
         with open("static_storage/long_term_memory.json", "w", encoding="utf-8") as f:
+            portalocker.lock(f, portalocker.LOCK_EX)
             json.dump(memories, f, indent=4, ensure_ascii=False)
+            portalocker.unlock(f)
 
         return summary
     except Exception as e:

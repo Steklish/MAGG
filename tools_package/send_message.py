@@ -5,7 +5,7 @@ google_send_message_tool = genai.types.Tool(
     function_declarations=[
         genai.types.FunctionDeclaration(
             name="send_message",
-            description="Use to send a text message. Always use when need to send a message. If you need to answer to group chat use this function too and pass group id as a parameter. "
+            description="Use to send a message to a user. THIS IS A PRIMARY TOOL. USE IT ANYTIME. Always use when need to send a message. If you need to answer to group chat use this function too and pass group id as a parameter.  Use if there is a message you didn't answer to. Also allowed to use whenever you want to send a message to a user."
             f"""
 [user id for users]
 Steklish(SKLS) - Антон [1911742158]
@@ -44,6 +44,10 @@ def send_message(chat_to_send_id: str, message: str):
     for url in urls:
         message_pre = message.split(url)[0]
         message_post = message.split(url)[1]
+        
+        message_pre.replace(url, '').strip()
+        message_post.replace(url, '').strip()
+        
         if message_pre.replace("\n", " ").strip():
             bot.send_message(
                 int(chat_to_send_id),  # Send to the specified user ID
