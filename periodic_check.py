@@ -24,7 +24,7 @@ def is_user_last_change(file_path):
             portalocker.unlock(f) 
         if len(actions) == 0:
             return False
-        return (actions[-1]["role"] == "user")
+        return (actions[-1]["role"] == "model" and (not "send_message" in actions[-1]["content"])) or actions[-1]["role"] == "user"
     else:
         print(f"File {file_path} does not exist.")
         return None
@@ -55,12 +55,12 @@ def minutes_since_last_change(file_path):
 async def check_state():
     print(GREEN, "started check state", RESET)
     last_step_time = time.time()
-    delay_time = 5
+    delay_time = 10
     while True:
-        print(YELLOW, ".", RESET, end='')
+        print(YELLOW, ".", RESET, end='', sep='')
         
-        await asyncio.sleep(1)
-        reminder_check()
+        await asyncio.sleep(0.2)
+        # reminder_check()
         check_for_date()
         # repeat every 5 minutes
         
@@ -75,14 +75,14 @@ async def check_state():
                 
         time_passed = minutes_since_last_change("static_storage/conversation.json")
         
-        if time_passed < 10 and is_user_last_change("static_storage/conversation.json"):
-            calls = ai_handler.smart_response(func_mode="AUTO")
-            if calls != []:
+        if time_passed < 2 and is_user_last_change("static_storage/conversation.json"):
+            calls = ai_handler.smart_response(func_mode="ANY")
+            if "send_message" in calls:
+                # struggle_till_message()
                 ai_handler.update_context()
-        await asyncio.sleep(1)
-    
-        if time_passed < 0.5:
-            delay_time = 5
+        
+        if time_passed < 0.1:
+            delay_time = 1
         elif time_passed < 2:
             delay_time = 30
         else:

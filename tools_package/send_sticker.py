@@ -24,6 +24,15 @@ send_sticker_tool = genai.types.Tool(
 13) CAACAgIAAxkBAAEOI0hn3wac27LNjD8OvAL4kKMUK5jX8wACdioAApgJQEksWSkgQyq__TYE - Обозначает то что человеку необходимо пообщаться с окружением или перестать закрываться в компе.
 14) CAACAgIAAxkBAAEOI05n3wa5T7eusk29GVTnyZXGMeWRuAACgSsAAhgeKEiWuAbjd_XlojYE - Используется как универсальный ответ ра любую новость, особенно с шокирующим контентом, особенно если необходимо показать спокойствие
 15) CAACAgIAAxkBAAEBMHtn65JYkL9fxJC2LgLOi4V03lll5gACHwQAAq3EBwctOjNsPq9gfDYE - стикер "чтобы глаза мои тебя не видели!" милый стикер    
+16) CAACAgIAAxkBAAEBMPRn7Niu2T4ElHvCZold8o8oKQYmcgACRAQAAq3EBwd3gTabV2WzkDYE - стикер значит что ты хочешь кого-то послать нахуй
+17) CAACAgIAAxkBAAEBMPZn7NixfZX7-F7ZF3wKC1dquQUHfgAC0gMAAq3EBwcmpgnulrJP_zYE - стикер значит что ты хочешь извиниться перед кем-то за свою оплошность
+18) CAACAgIAAxkBAAEBMPhn7Ni0NXDEoAieyJT_6LYpD8cqPAAC4QMAAq3EBwe00ftYqwYW6zYE - стикер значит что ты не знаешь что делать или как отреагировать на просьбу человека или просто не знаешь как отреагировать
+19) CAACAgIAAxkBAAEBMPpn7Ni1ByULS0YpVbwNXkP7gCtX5AAC5AMAAq3EBwd78nLauxpiijYE - стикер значит что ты в упор не понимаешь что происходит
+20) CAACAgIAAxkBAAEBMP5n7NjUIj7wWQ0qXnfgitN0f7RpoQACdhgAAmy6UEsmLrXkRf3i_DYE - стикер значит что ты хочешь пошутить или пошутила, ну или ты рофланула
+21) CAACAgIAAxkBAAEBMQJn7NjVGv9K5JMz6IMMyEobTRBVNQACwjAAAqAPGErinNEsIgFmPTYE - стикер значит что тебе хочется плакать от происходящего
+22) CAACAgIAAxkBAAEBMQRn7NjWjJ9KRzbGZPy6GNbjqztNwgACiyUAAj-rIEop0aXVqXCPuzYE - стикер значит что-то типа "ожидайте" или "я в процессе"
+23) CAACAgIAAxkBAAEBMQhn7NjYBF2OZU0C2GUVibRvstdQMwACjgIAAlwohgh2-c8pKV903zYE - стикер значит "Расслабься "
+24) CAACAgIAAxkBAAEBMQpn7NjZ05k21cg7LMqw39Mso3gVsAACuwADTptkAk0zTSnOuax8NgQ -стикер значит  «Press F to pay respects»
 """,
             parameters=genai.types.Schema(
                 type=genai.types.Type.OBJECT,

@@ -10,9 +10,7 @@ google_web_search_tool = genai.types.Tool(
         genai.types.FunctionDeclaration(
             name="web_search",
             description=(
-                "Search the web to retrieve up-to-date information or verify facts. "
-                "This tool is useful for gathering external insights, answering recent queries, "
-                "or supplementing information in ongoing conversations. "
+                "This tool is useful for gathering external insights, answering recent queries, images, web pages information, etc."
                 "It should be invoked whenever external data is required."
             ),
             parameters=genai.types.Schema(
@@ -89,7 +87,7 @@ def google_custom_search_images(api_key, search_engine_id, query, num_results=8)
         response = requests.get(url, params=params)
         response.raise_for_status()  # Raise an error for bad status codes
         search_results = response.json()
-        print(search_results)  # Print the full response for debugging
+        # print(search_results)  # Print the full response for debugging
         
         # Extract relevant information from the response
         results = []

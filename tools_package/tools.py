@@ -16,12 +16,12 @@ G_TOOLS = [
     google_long_term_memory_tool,
     # google_create_memory_tool,
     google_send_message_tool,
-    google_instruct_tool,
+    # google_instruct_tool,
     google_update_status_tool,
     google_web_search_tool,
     url_analysis_tool,
-    send_sticker_tool,
-    google_request_for_message_tool
+    send_sticker_tool
+    # google_request_for_message_tool
 ]
 
 
